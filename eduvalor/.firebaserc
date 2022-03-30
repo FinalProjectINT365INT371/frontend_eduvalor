@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "eduvalor-official"
+  },
+  "targets": {
+    "eduvalor-official": {
+      "hosting": {
+        "dev": [
+          "eduvalor-official-dev"
+        ],
+        "prod": [
+          "eduvalor-official"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+  {
+    "hosting": [
+      {
+        "target": "dev",
+        "public": "y",
+        "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+        "rewrites": [
+          {
+            "source": "**",
+            "destination": "/index.html"
+          }
+        ]
+      },
+      {
+        "target": "prod",
+        "public": "y",
+        "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+        "rewrites": [
+          {
+            "source": "**",
+            "destination": "/index.html"
+          }
+        ]
+      }
+    ]
+  }
