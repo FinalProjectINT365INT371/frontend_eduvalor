@@ -1,44 +1,35 @@
 <template>
-        <div id="app">
-            <v-app id="inspire">
-                <v-form v-model="valid" @submit.prevent="submit">
-                    <v-container>
+    <div id="app" class="overflow-auto ">
+        <v-form v-model="valid" @submit.prevent="submit">
+            <div class="d-flex-justify-content justify-center test">
 
-                        <v-col cols="12" md="4">
-                            <v-text-field v-model="title" :rules="titleRules" :counter="50" label="Blog Title" required>
-                            </v-text-field>
-                        </v-col>
+                <v-text-field class="input-style blog_title" v-model="title" :rules="titleRules" :counter="50"
+                    label="Blog Ttile" required>
+                </v-text-field>
 
-                        <v-col cols="12" md="4">
-                            <v-text-field v-model="firstname" :rules="nameRules" :counter="10" label="First name"
-                                required></v-text-field>
-                        </v-col>
+                <v-text-field class="input-style" v-model="author_name" :rules="nameRules" :counter="10"
+                    label="Author Name" required>
+                </v-text-field>
 
-                        <v-col cols="12" md="4">
-                            <v-text-field v-model="email" :rules="emailRules" label="E-mail" required>
-                            </v-text-field>
-                        </v-col>
-                        <TextEditor v-model="textEditorContent"/>
+                <quill-editor class="quill" ref="myQuillEditor" v-model="textEditorContent" :options="editorOption" />
+                <button type="submit" :disabled="invalid"> Submit</button>
+            </div>
+        </v-form>
 
-                        <button type="submit" :disabled="invalid"> Submit</button>
-                    </v-container>
-                </v-form>
 
-            </v-app>
-          
-
-        </div>
+    </div>
 </template>
 <script>
-import TextEditor from '../components/TextEditor.vue'
+// import { from } from 'webpack-sources/lib/CompatSource';
+import axios from 'axios';
+
 export default {
     components: {
-        TextEditor
     },
 
     data: () => ({
         valid: false,
-        firstname: '',
+        author_name: '',
         nameRules: [
             v => !!v || 'Name is required',
             v => v.length <= 10 || 'Name must be less than 10 characters',
@@ -48,18 +39,86 @@ export default {
             v => !!v || 'Blog Title is required',
             v => v.length <= 50 || 'Blog Title must be less than 50 characters',
         ],
-        email: '',
-        emailRules: [
-            v => !!v || 'E-mail is required',
-            v => /.+@.+/.test(v) || 'E-mail must be valid',
-        ],
+        editorOption: {
+            debug: 'info',
+            modules: {
+                toolbar: [
+                    [{ header: [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                    ['image']
+                ]
+            },
+            placeholder: 'Compose an epic...',
+            readOnly: true,
+            theme: 'snow'
+        },
+        delta: undefined,
         textEditorContent: ''
     }),
     methods: {
         submit() {
             // this.$refs.observer.validate()
-            console.log(this.title,this.firstname,this.email,this.textEditorContent);
-        }
-    }
+            this.delta = this.$refs.myQuillEditor.quill.getContents();
+            // console.log('Blog Title :' + this.title, 'Author Name : ' + this.author_name, 'Content :' + this.delta);
+            // const fromData = new fromData();
+            // fromData.append("Header",this.title)
+            // fromData.append("TextData",this.title)
+            // this.delta = document.getElementsByClassName('ql-editor')[0].innerHTML
+
+            // console.log(this.delta);
+            // console.log(this.textEditorContent);
+            const childNodes = document.getElementsByClassName('ql-editor')[0].childNodes
+            const unknow = []
+            childNodes.forEach((data) => {
+                data.childNodes.forEach(
+                    (data) => {
+                        if (String(data.nodeName) === 'IMG') {
+                            unknow.push(data)
+                        }
+                    }
+                )
+            })
+            const srcArray = []
+            unknow.forEach((data) => {
+                String(data.src).split('data:image/png;base64,');
+                let stringbuffer = String(data.src).split('data:image/png;base64,')[1]
+                data.src = ""
+                console.log(stringbuffer);
+                stringbuffer = stringbuffer.split('">')[0]
+                srcArray.push(stringbuffer)
+            })
+            const formData = new FormData()
+            formData.append('Header', this.title)
+            formData.append('TextData', this.textEditorContent)
+            formData.append('ContentCategory', '01')
+            formData.append('CreateBy', this.author_name)
+            formData.append('DeleteFlag', false)
+            srcArray.forEach(
+                (data) => {
+                    formData.append('ImageFiles', data)
+                    console.log("formData:" + data);
+                }
+            )
+            for (var value of formData.values()) {
+                console.log(value);
+            }
+            axios.post('https://www.eduvalor.ml/backendDev/content/addcontent', formData)
+            this.delta.forEach(array => console.log(array))
+        },
+        // editorTypeCheck() {
+        //     this.delta.forEach(array => console.log(array))
+        // },
+    },
 }
 </script>
+
+<style scoped>
+.input-style,
+.quill {
+    width: 50%;
+}
+
+.test {
+    background-color: aquamarine;
+}
+</style>
