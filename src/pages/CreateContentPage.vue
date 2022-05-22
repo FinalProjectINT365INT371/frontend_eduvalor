@@ -1,18 +1,21 @@
 <template>
     <div id="app" class="overflow-auto ">
         <v-form v-model="valid" @submit.prevent="submit">
-            <div class="d-flex-justify-content justify-center test">
+            <div class="d-flex justify-center test" >
+                <div class="inputs">
 
-                <v-text-field class="input-style blog_title" v-model="title" :rules="titleRules" :counter="50"
-                    label="Blog Ttile" required>
-                </v-text-field>
+                    <v-text-field class="input-style blog_title" v-model="title" :rules="titleRules" :counter="50"
+                        label="Blog Ttile" required>
+                    </v-text-field>
 
-                <v-text-field class="input-style" v-model="author_name" :rules="nameRules" :counter="10"
-                    label="Author Name" required>
-                </v-text-field>
+                    <v-text-field class="input-style" v-model="author_name" :rules="nameRules" :counter="10"
+                        label="Author Name" required>
+                    </v-text-field>
 
-                <quill-editor class="quill" ref="myQuillEditor" v-model="textEditorContent" :options="editorOption" />
-                <button type="submit" :disabled="invalid"> Submit</button>
+                    <quill-editor class="quill" ref="myQuillEditor" v-model="textEditorContent" :options="editorOption"
+                        required />
+                    <button type="submit" :disabled="invalid" class="submit"> Submit</button>
+                </div>
             </div>
         </v-form>
 
@@ -113,6 +116,11 @@ export default {
 </script>
 
 <style scoped>
+.submit {
+    background-color: brown;
+    display: inline;
+}
+
 .input-style,
 .quill {
     width: 50%;
@@ -120,5 +128,10 @@ export default {
 
 .test {
     background-color: aquamarine;
+
+}
+
+.inputs{
+    background-color: blueviolet;
 }
 </style>
