@@ -1,33 +1,32 @@
 <template>
-  <v-app>
-
-    <!-- <v-main style="padding: 0%;"> -->
-      <NavBar />
-
-    <!-- </v-main> -->
-  </v-app>
+  <div id="app">
+    <nav>
+      <router-link to="/">Home</router-link> |
+      <router-link to="/CreateContent">Create Content</router-link>
+    </nav>
+    <router-view/>
+  </div>
 </template>
 
-<script>
-import NavBar from './components/NavBar';
-import Vue from 'vue'
-import VueQuillEditor from 'vue-quill-editor'
+<style lang="scss">
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 
-import 'quill/dist/quill.core.css' // import styles
-import 'quill/dist/quill.snow.css' // for snow theme
-import 'quill/dist/quill.bubble.css' // for bubble theme
+nav {
+  padding: 30px;
 
-Vue.use(VueQuillEditor, /* { default global options } */)
-export default {
-  name: 'App',
+  a {
+    font-weight: bold;
+    color: #2c3e50;
 
-  components: {
-    // HelloWorld, 
-    NavBar
-  },
-
-  data: () => ({
-    //
-  }),
-};
-</script>
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
+}
+</style>
