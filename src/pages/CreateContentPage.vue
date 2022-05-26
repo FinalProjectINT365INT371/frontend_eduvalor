@@ -96,7 +96,6 @@ export default {
 
             console.log(this.textEditorContent);
             this.delta = document.getElementsByClassName('ql-editor')[0].innerHTML
-            console.log(this.delta)
             const formData = new FormData();
             formData.append("Header", this.title);
             formData.append("TextData", this.delta);
@@ -110,7 +109,7 @@ export default {
                 console.log(value);
             }
             axios.post(
-                "https://www.eduvalor.ml/backendDev/content/addcontent",
+                process.env.VUE_APP_BACKEND_API+"/content/addcontent",
                 formData
             );
             this.delta.forEach((array) => console.log(array));
@@ -128,10 +127,10 @@ export default {
     display: inline;
 }
 
-.input-style,
+/* .input-style,
 .quill {
     width: 50%;
-}
+} */
 
 .test {
     background-color: aquamarine;
