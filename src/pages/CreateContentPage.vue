@@ -21,10 +21,17 @@
 </template>
 <script>
 // import { from } from 'webpack-sources/lib/CompatSource';
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+
+import { quillEditor } from 'vue-quill-editor'
 import axios from "axios";
 
 export default {
-    components: {},
+    components: {
+            quillEditor,
+
+    },
 
     data: () => ({
         valid: false,

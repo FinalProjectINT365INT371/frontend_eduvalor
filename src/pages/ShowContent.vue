@@ -1,16 +1,15 @@
 <template>
-  <div>
-    <v-card-title>{{ content._id }} : {{ content.Header }}</v-card-title>
-    <v-card-text class="content-box"> {{ content.TextData }} </v-card-text>
+  <div class="d-flex justify-center">
+    <div>
+      <v-card-title> <h2>{{ content.Header }}</h2></v-card-title>
+      <v-card-text class="content-box"> {{ content.TextData }} </v-card-text>
 
 
-    <v-card-subtitle>
-      โดย {{ content.CreateBy }}
-    </v-card-subtitle>
-
-    <v-card-subtitle>
-      เมื่อ {{ content.CreateDate }}
-    </v-card-subtitle>
+      <v-card-subtitle>
+        โดย {{ content.CreateBy }} เมื่อ {{ content.CreateDate }}
+      </v-card-subtitle>
+      <router-link to="/"> Back</router-link>
+    </div>
   </div>
 </template>
 
@@ -30,7 +29,7 @@ export default {
     let id = window.localStorage.getItem("content")
     let textBuffer;
     let buffer;
-    const res = axios.get(process.env.VUE_APP_BACKEND_API+"/content/getContentByID?id=" + id);
+    const res = axios.get(process.env.VUE_APP_BACKEND_API + "/content/getContentByID?id=" + id);
     res.then(result => {
       buffer = result.data;
       this.content = result.data;
@@ -58,7 +57,6 @@ export default {
     this.content = buffer;
     this.textDataObj = textBuffer;
     console.log(buffer);
-
     // this.changeImgSize();
 
     // console.log(this.contents);
@@ -67,7 +65,6 @@ export default {
 </script>
 
 <style>
-
 @media screen and (max-width: 2000px) {
   .img-sizing {
     width: 30%;
