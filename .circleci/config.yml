@@ -25,10 +25,10 @@ jobs:
       - run:
           name: check software update
           command: sudo apt-get update -y ;
-      - run:
-          name: Build for current environment.
-          command: yarn build
-          build:
+          #- run:
+              #name: Build for current environment.
+          #command: yarn build
+          #build: 
       - add_ssh_keys:
           fingerprints:
             - "e7:7c:3c:ea:31:01:27:f2:da:7d:e1:0f:6b:65:47:59"
