@@ -31,7 +31,7 @@ jobs:
           #build: 
       - add_ssh_keys:
           fingerprints:
-            - 'e7:7c:3c:ea:31:01:27:f2:da:7d:e1:0f:6b:65:47:59'
+            - ${SSH_FINGERPRINT}
       - run:
           name: deploy
           command: ssh -o StrictHostKeyChecking=no $VM_USERNAME@$VM_PUB_IP 
