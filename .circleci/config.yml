@@ -1,34 +1,9 @@
 version: 2.1
 
-executors:
-  node14:
+jobs:
+  development:
     docker:
-      - image: cimg/node:14.18.0
-    working_directory: ~/project
-
-commands:
-  # env-prod:
-  #   description: "test .env variable"
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: "What a number in this .env"
-  #         command: touch .env ; echo "API_URL=$API_URL_PROD" >> .env
-  #     - run:
-  #         name: "Check file .env"
-  #         command: ls -la ; cat .env
-  env-dev:
-    description: "test .env variable"
-    steps:
-      - checkout
-      - run:
-          name: "What a number in this .env"
-          command: touch .env ; echo "VUE_APP_BACKEND_API=$VUE_APP_BACKEND_API" >> .env ;
-      - run:
-          name: "Check file .env"
-          command: cat .env
-  build:
-    description: 'Builds the project'
+      - image: 'cimg/node:17.9.0'
     steps:
       - checkout
       - restore_cache:
@@ -45,54 +20,38 @@ commands:
           paths:
             - ./node_modules
       - run:
-          name: Firebase install
-          command: yarn add firebase-tools
+          name: check directory
+          command: ls -la ; 
+      - run:
+          name: check software update
+          command: sudo apt-get update -y ;
       - run:
           name: Build for current environment.
           command: yarn build
           build:
+      - add_ssh_keys:
+          fingerprints:
+            - "e7:7c:3c:ea:31:01:27:f2:da:7d:e1:0f:6b:65:47:59"
       - run:
-          name: check that firebase.json
-          command: cat firebase.json
-  deploy:
-    description: 'Deploy project to the designated environment'
-    parameters:
-      env:
-        type: string
-        default: 'dev'
-    steps:
-      - checkout
-      - run:
-          name: Firebase Deploy
-          command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN" --non-interactive --only hosting:<< parameters.env >>
-
-jobs:
-  build-deploy-dev:
-    executor: node14
-    steps:
-      # - env-dev
-      - build
-      - deploy:
-          env: 'dev'
-  build-deploy-production:
-    executor: node14
-    steps:
-      # - env-prod
-      - build
-      - deploy:
-          env: 'prod'
+          name: deploy
+          command: ssh -o StrictHostKeyChecking=no $VM_USERNAME@$VM_PUB_IP 
+                   "cd frontend_eduvalor ;
+                   ls -la ;
+                   git checkout dev2 ;
+                   git branch ;
+                   git pull origin dev2 ; 
+                   rm -rf .env ; 
+                   touch .env ; 
+                   echo 'VUE_APP_BACKEND_API=$VUE_APP_BACKEND_API' >> .env ;
+                   chmod +x ./deploy_dev.sh ; 
+                   ./deploy_dev.sh"
 
 workflows:
   version: 2
-  dev:
+  build-test-deploy:
     jobs:
-      - build-deploy-dev:
+      - development:
           filters:
             branches:
-              only: dev
-  production:
-    jobs:
-      - build-deploy-production:
-          filters:
-            branches:
-              only: main
+              only: dev2
+
