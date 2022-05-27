@@ -11,14 +11,17 @@
                         label="Author Name" required>
                     </v-text-field>
 
-                    <quill-editor class="quill" ref="myQuillEditor" v-model="textEditorContent"
-                        :options="editorOption" />
-                    <router-link to="/"> <div class="div-submit"><button type="submit" :disabled="invalid"><img src="../assets/paper-plane.png"></button></div></router-link>
+                    <quill-editor class="quill" ref="myQuillEditor" v-model="textEditorContent" :options="editorOption"
+                         :rules="quillRules" required/>
+                    <router-link to="/">
+                        <p class="div-submit"><button type="submit" :disabled="invalid"><img
+                                    src="../assets/paper-plane.png"></button></p>
+                    </router-link>
                 </div>
-                
+
             </div>
         </v-form>
-        
+
     </div>
 </template>
 <script>
@@ -31,7 +34,7 @@ import axios from "axios";
 
 export default {
     components: {
-            quillEditor,
+        quillEditor,
 
     },
 
@@ -47,6 +50,12 @@ export default {
             (v) => !!v || "Blog Title is required",
             (v) => v.length <= 50 || "Blog Title must be less than 50 characters",
         ],
+        quill: "",
+        quillRules: [
+            (v) => !!v || "Content is required",
+            (v) => v != null || "Must contain some Content",
+        ],
+
         editorOption: {
             debug: "info",
             modules: {
@@ -118,7 +127,7 @@ export default {
                 console.log(value);
             }
             axios.post(
-                process.env.VUE_APP_BACKEND_API+"/content/addcontent",
+                process.env.VUE_APP_BACKEND_API + "/content/addcontent",
                 formData
             );
             this.delta.forEach((array) => console.log(array));
@@ -148,30 +157,32 @@ export default {
 }
 
 @media screen and (max-width: 2000px) {
-.test {
-    width: 45%;
-  }
+    .test {
+        width: 45%;
+    }
 }
 
 @media screen and (max-width: 1023px) {
-  .test {
-    /* width: 40%; */
-    width: 60%;
+    .test {
+        /* width: 40%; */
+        width: 60%;
 
-  }
+    }
 }
 
 @media screen and (max-width: 767px) {
- .test{
+    .test {
         width: 90%;
- }
-  }
+    }
+}
 
-button{
-    padding-top: 3%;}
+button {
+    padding-top: 3%;
+    display: inline;
+}
 
-.div-submit{
+.div-submit {
     display: flex;
     justify-content: end;
-    }
+}
 </style>

@@ -13,7 +13,7 @@
           โดย <b>{{ content.CreateBy }}</b> เมื่อ <b>{{ content.CreateDate }}</b>
         </v-card-subtitle>
         <button>
-          <router-link to="/"> <img src="../assets/left-arrow.png" /> Back </router-link>
+          <router-link to="/"> <img src="../assets/left-arrow.png" /> </router-link>
         </button>
       </v-container>
     </div>
