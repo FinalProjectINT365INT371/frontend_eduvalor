@@ -12,11 +12,10 @@
                     </v-text-field>
 
                     <quill-editor class="quill" ref="myQuillEditor" v-model="textEditorContent" :options="editorOption"
-                         :rules="quillRules" required/>
-                    <router-link to="/">
+                         required/>
                         <p class="div-submit"><button type="submit" :disabled="invalid"><img
                                     src="../assets/paper-plane.png"></button></p>
-                    </router-link>
+                    <router-link to="/">  <img src="../assets/left-arrow.png" /> </router-link>
                 </div>
 
             </div>

@@ -6,7 +6,7 @@
 
         <v-img src="https://www.traveldb.me/wp-content/uploads/2021/01/bangkok-sea-life-ocean-world.jpg"></v-img>
         <v-img :src="`${_id.imgSrc}`" class="thumbnails"></v-img>
-        <v-card-title class="test-underline">{{ _id._id }} : {{ _id.Header }}</v-card-title>
+        <v-card-title class="test-underline">{{ _id.Header }}</v-card-title>
 
         <v-card-subtitle color="white">
           โดย {{ _id.CreateBy }}
