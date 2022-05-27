@@ -3,7 +3,7 @@
         <v-form v-model="valid" @submit.prevent="submit">
             <div class="d-flex justify-center">
                 <div class="d-inline  test">
-                    <v-text-field class="input-style blog_title" v-model="title" :rules="titleRules" :counter="50"
+                    <v-text-field class="input-style blog_title" v-model="title" :rules="titleRules" :counter="60"
                         label="Blog Ttile" required>
                     </v-text-field>
 
@@ -12,12 +12,12 @@
                     </v-text-field>
 
                     <quill-editor class="quill" ref="myQuillEditor" v-model="textEditorContent" :options="editorOption"
-                         required/>
-                        <p class="div-submit"><button type="submit" :disabled="invalid"><img
-                                    src="../assets/paper-plane.png"></button></p>
-                    <router-link to="/">  <img src="../assets/left-arrow.png" /> </router-link>
+                        required />
+                    <p class="div-submit">
+                        <router-link to="/"> <button type="submit" :disabled="invalid"><img
+                                    src="../assets/paper-plane.png"></button></router-link>
+                    </p>
                 </div>
-
             </div>
         </v-form>
 
@@ -47,7 +47,7 @@ export default {
         title: "",
         titleRules: [
             (v) => !!v || "Blog Title is required",
-            (v) => v.length <= 50 || "Blog Title must be less than 50 characters",
+            (v) => v.length <= 60 || "Blog Title must be less than 50 characters",
         ],
         quill: "",
         quillRules: [
