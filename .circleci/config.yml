@@ -43,8 +43,8 @@ jobs:
                    rm -rf .env ; 
                    touch .env ; 
                    echo 'VUE_APP_BACKEND_API=$VUE_APP_BACKEND_API' >> .env ;
-                   chmod +x ./deploy_dev.sh ; 
-                   ./deploy_dev.sh"
+                   chmod +x ./deploy-fe-dev.sh ; 
+                   ./deploy-fe-dev.sh"
 
 workflows:
   version: 2
