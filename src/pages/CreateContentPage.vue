@@ -13,10 +13,12 @@
 
                     <quill-editor class="quill" ref="myQuillEditor" v-model="textEditorContent"
                         :options="editorOption" />
-                    <button type="submit" :disabled="invalid">Submit</button>
+                    <router-link to="/"> <div class="div-submit"><button type="submit" :disabled="invalid"><img src="../assets/paper-plane.png"></button></div></router-link>
                 </div>
+                
             </div>
         </v-form>
+        
     </div>
 </template>
 <script>
@@ -140,11 +142,36 @@ export default {
 } */
 
 .test {
-    background-color: aquamarine;
-
+    margin: 1.5%;
+    padding: 1.5%;
+    /* background-color: aquamarine; */
 }
 
-.inputs {
-    background-color: blueviolet;
+@media screen and (max-width: 2000px) {
+.test {
+    width: 45%;
+  }
 }
+
+@media screen and (max-width: 1023px) {
+  .test {
+    /* width: 40%; */
+    width: 60%;
+
+  }
+}
+
+@media screen and (max-width: 767px) {
+ .test{
+        width: 90%;
+ }
+  }
+
+button{
+    padding-top: 3%;}
+
+.div-submit{
+    display: flex;
+    justify-content: end;
+    }
 </style>

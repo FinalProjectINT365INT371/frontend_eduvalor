@@ -1,14 +1,21 @@
 <template>
-  <div class="d-flex justify-center">
-    <div>
-      <v-card-title> <h2>{{ content.Header }}</h2></v-card-title>
-      <v-card-text class="content-box"> {{ content.TextData }} </v-card-text>
+  <div class="div-content">
+    <div class="d-flex justify-center">
+      <v-container class="content-container">
+        <v-card-title>
+          <h2>{{ content.Header }}</h2>
+        </v-card-title>
+        <img src="https://www.traveldb.me/wp-content/uploads/2021/01/bangkok-sea-life-ocean-world.jpg" class="sealife">
+        <v-card-text class="content-box"> {{ textDataObj.TextData }} </v-card-text>
 
 
-      <v-card-subtitle>
-        โดย {{ content.CreateBy }} เมื่อ {{ content.CreateDate }}
-      </v-card-subtitle>
-      <router-link to="/"> Back</router-link>
+        <v-card-subtitle>
+          โดย <b>{{ content.CreateBy }}</b> เมื่อ <b>{{ content.CreateDate }}</b>
+        </v-card-subtitle>
+        <button>
+          <router-link to="/"> <img src="../assets/left-arrow.png" /> Back </router-link>
+        </button>
+      </v-container>
     </div>
   </div>
 </template>
@@ -72,28 +79,37 @@ export default {
 }
 
 @media screen and (max-width: 1023px) {
+
+  .sealife,
   .img-sizing {
-    width: 40%;
+    /* width: 40%; */
+    width: 100%;
+
   }
 }
 
 @media screen and (max-width: 767px) {
+
+  .sealife,
   .img-sizing {
     width: 75%;
   }
 }
 
+.sealife {
+  display: flex;
+  justify-self: center;
+  max-width: auto;
+}
 
+.content-container {
+  padding: 1.5%;
+  margin: 1.5%;
+}
 
-
-
-
-
-
-
-
-.content-box p~img {
-  width: auto;
+.div-content {
+  display: flex;
+  justify-content: center;
 }
 </style>
 
