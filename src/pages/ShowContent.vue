@@ -40,7 +40,7 @@ export default {
     res.then(result => {
       buffer = result.data;
       this.content = result.data;
-      console.log(buffer);
+      // console.log(buffer);
 
       textBuffer = result.data.TextData[0];
       this.textDataObj = result.data.TextData[0];
@@ -57,13 +57,13 @@ export default {
           }
         });
       });
-      console.log(unknow);
-      console.log(textBuffer);
+      // console.log(unknow);
+      // console.log(textBuffer);
     });
     // this.content = buffer
     this.content = buffer;
     this.textDataObj = textBuffer;
-    console.log(buffer);
+    // console.log(buffer);
     // this.changeImgSize();
 
     // console.log(this.contents);
