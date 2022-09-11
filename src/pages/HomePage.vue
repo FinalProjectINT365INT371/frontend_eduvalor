@@ -61,7 +61,7 @@
               </v-row>
             </v-col>
           </v-row>
-          <p class="p-addition" @click="filterContent">
+          <p class="p-addition cursor" @click="filterContent">
             ดูบทความล่าสุดเพิ่มเติม >
           </p>
         </div>
@@ -100,7 +100,7 @@
               </v-slide-item>
             </v-slide-group>
           </v-sheet>
-          <p class="p-addition" @click="filterContent">
+          <p class="p-addition cursor" @click="filterContent">
             ดูบทความรีวิวเพิ่มเติม >
           </p>
         </div>
@@ -179,7 +179,7 @@
               </v-row>
             </v-col>
           </v-row>
-          <p class="p-addition" @click="filterContent">
+          <p class="p-addition cursor" @click="filterContent">
             ดูบทความทั้งหมดเพิ่มเติม >
           </p>
         </div>
@@ -219,7 +219,7 @@
               </v-slide-item>
             </v-slide-group>
           </v-sheet>
-          <p class="p-addition" @click="filterContent">
+          <p class="p-addition cursor" @click="filterContent">
             ดูบทความแนะนำโดยบ.ก. เพิ่มเติม >
           </p>
         </div>
