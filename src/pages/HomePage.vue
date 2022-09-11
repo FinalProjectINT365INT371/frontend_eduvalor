@@ -61,7 +61,7 @@
               </v-row>
             </v-col>
           </v-row>
-          <p class="p-addition">ดูบทความล่าสุดเพิ่มเติม ></p>
+          <p class="p-addition" @click="filterContent">ดูบทความล่าสุดเพิ่มเติม ></p>
         </div>
 
         <div>
@@ -98,7 +98,7 @@
               </v-slide-item>
             </v-slide-group>
           </v-sheet>
-          <p class="p-addition">ดูบทความล่าสุดเพิ่มเติม ></p>
+          <p class="p-addition" @click="filterContent">ดูบทความล่าสุดเพิ่มเติม ></p>
         </div>
 
         <div>
@@ -175,7 +175,7 @@
               </v-row>
             </v-col>
           </v-row>
-          <p class="p-addition">ดูบทความล่าสุดเพิ่มเติม ></p>
+          <p class="p-addition" @click="filterContent">ดูบทความล่าสุดเพิ่มเติม ></p>
         </div>
         <div>
           <p class="pic-cover mb-0">บ.ก. EduValor ขอแนะนำ!</p>
@@ -213,7 +213,7 @@
               </v-slide-item>
             </v-slide-group>
           </v-sheet>
-          <p class="p-addition">ดูบทความล่าสุดเพิ่มเติม ></p>
+          <p class="p-addition" @click="filterContent">ดูบทความล่าสุดเพิ่มเติม ></p>
         </div>
       </div>
     </div>
@@ -333,8 +333,10 @@ export default {
           break;
       }
     },
-    filterContent(select) {
-      console.log(select);
+    filterContent() {
+          this.$router.push({
+    path: '/SeeMore'
+    })
     },
   },
   mounted() {
