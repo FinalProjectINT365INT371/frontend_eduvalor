@@ -61,7 +61,9 @@
               </v-row>
             </v-col>
           </v-row>
-          <p class="p-addition" @click="filterContent">ดูบทความล่าสุดเพิ่มเติม ></p>
+          <p class="p-addition" @click="filterContent">
+            ดูบทความล่าสุดเพิ่มเติม >
+          </p>
         </div>
 
         <div>
@@ -98,7 +100,9 @@
               </v-slide-item>
             </v-slide-group>
           </v-sheet>
-          <p class="p-addition" @click="filterContent">ดูบทความล่าสุดเพิ่มเติม ></p>
+          <p class="p-addition" @click="filterContent">
+            ดูบทความรีวิวเพิ่มเติม >
+          </p>
         </div>
 
         <div>
@@ -155,8 +159,8 @@
               sm="12"
               md="6"
               lg="6"
-                            @click="navTo(items._id)"
-                                          class="cursor"
+              @click="navTo(items._id)"
+              class="cursor"
             >
               <v-row>
                 <v-col cols="12" sm="12" md="7" lg="7">
@@ -175,7 +179,9 @@
               </v-row>
             </v-col>
           </v-row>
-          <p class="p-addition" @click="filterContent">ดูบทความล่าสุดเพิ่มเติม ></p>
+          <p class="p-addition" @click="filterContent">
+            ดูบทความทั้งหมดเพิ่มเติม >
+          </p>
         </div>
         <div>
           <p class="pic-cover mb-0">บ.ก. EduValor ขอแนะนำ!</p>
@@ -213,7 +219,9 @@
               </v-slide-item>
             </v-slide-group>
           </v-sheet>
-          <p class="p-addition" @click="filterContent">ดูบทความล่าสุดเพิ่มเติม ></p>
+          <p class="p-addition" @click="filterContent">
+            ดูบทความแนะนำโดยบ.ก. เพิ่มเติม >
+          </p>
         </div>
       </div>
     </div>
@@ -282,10 +290,10 @@ export default {
   }),
 
   methods: {
-    navTo (articleId) {
-    this.$router.push({
-    path: '/article/' + articleId
-    })
+    navTo(articleId) {
+      this.$router.push({
+        path: "/article/" + articleId,
+      });
     },
     selectOne(index) {
       switch (index) {
@@ -334,9 +342,9 @@ export default {
       }
     },
     filterContent() {
-          this.$router.push({
-    path: '/SeeMore'
-    })
+      this.$router.push({
+        path: "/SeeMore",
+      });
     },
   },
   mounted() {
@@ -355,7 +363,10 @@ export default {
       });
 
       for (let index = 0; index < this.contents.length; index++) {
-        let Url = this.contents[index].ImageUrl[this.contents[index].ImageUrl.length-1];
+        let Url =
+          this.contents[index].ImageUrl[
+            this.contents[index].ImageUrl.length - 1
+          ];
         let textCategory = this.contents[index].ContentCategory[0];
         if (textCategory.includes("รีวิว")) {
           reviewBuffer.push(this.contents[index]);
@@ -398,7 +409,7 @@ export default {
       this.scienceNews = this.scienceNews.slice(0, 4);
       this.musicNews = this.musicNews.slice(0, 4);
       this.politicsNews = this.politicsNews.slice(0, 4);
-      console.log(this.contents)
+      console.log(this.contents);
     });
   },
 };

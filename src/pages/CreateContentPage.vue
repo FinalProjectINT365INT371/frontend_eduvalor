@@ -71,6 +71,9 @@
                 :options="editorOption"
                 required
               />
+                            <p v-if="params != undefined" class="text-red">
+                กรุณาใส่รูปใหม่ทุกครั้งที่มีการแก้ไข
+              </p>
             </div>
 
             <div id="tag-relate" class="pb-10">
@@ -435,7 +438,7 @@ export default {
               process.env.VUE_APP_BACKEND_API + "/content/addcontent",
               formData
             )
-            .then(this.backHome(), location.reload());
+            .then(this.backHome());
         } else {
           axios
             .put(
@@ -444,7 +447,7 @@ export default {
                 this.params,
               formData
             )
-            .then(this.backHome(), location.reload());
+            .then(this.backHome());
         }
       }
       // this.delta.forEach((array) => console.log(array));
