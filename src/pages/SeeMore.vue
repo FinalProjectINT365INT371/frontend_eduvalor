@@ -120,6 +120,11 @@ export default {
     };
   },
   methods: {
+     navTo(articleId) {
+      this.$router.push({
+        path: "/article/" + articleId,
+      });
+    },
     backHome() {
       this.$router.push({
         path: "/",
