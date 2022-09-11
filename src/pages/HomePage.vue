@@ -34,15 +34,28 @@
             />บทความล่าสุด
           </p>
           <v-row>
-            <v-col v-for="(items, index) in news" :key="index" cols="12" sm="12" md="6" lg="6">
+            <v-col
+              v-for="(items, index) in news"
+              :key="index"
+              cols="12"
+              sm="12"
+              md="6"
+              lg="6"
+              @click="navTo(items._id)"
+            >
               <v-row>
-                <v-col cols="12" sm="12" md="7" lg="7" >
-                  <img src="../assets/demo/img2.png" alt="" width="100%" />
+                <v-col cols="12" sm="12" md="7" lg="7">
+                  <v-img
+                    :src="items.imgSrc"
+                    alt=""
+                    width="100%"
+                    max-height="188"
+                  />
                 </v-col>
                 <v-col cols="12" sm="12" md="5" lg="5">
-                  <p class="p-title">{{ items.title }}</p>
-                  <p class="p-author">โดย {{ items.author }}</p>
-                  <p class="p-date">เมื่อ {{ items.date }}</p>
+                  <p class="p-title">{{ items.Header }}</p>
+                  <p class="p-author">โดย {{ items.CreateBy }}</p>
+                  <p class="p-date">เมื่อ {{ items.UpdateDate }}</p>
                 </v-col>
               </v-row>
             </v-col>
@@ -52,14 +65,12 @@
 
         <div>
           <p class="pic-cover mb-0">รีวิวแนะนำแหล่งเรียนรู้</p>
-          <p class="p-subtitle">
-            รวมบทความรีวิวสถานที่น่าสนใจทั้งหมด
-          </p>
+          <p class="p-subtitle">รวมบทความรีวิวสถานที่น่าสนใจทั้งหมด</p>
           <v-sheet class="mx-auto" max-width="100%">
             <v-slide-group v-model="model" class="pa-4">
               <v-slide-item
-                v-for="(items, index) in news"
-                :key="s + index"
+                v-for="(items, index) in reviewNews"
+                :key="'s' + index"
                 v-slot="{ active, toggle }"
               >
                 <v-card
@@ -68,13 +79,18 @@
                   elevation="0"
                   width="400"
                   height="345"
-                  @click="toggle"
+                  @click="toggle, navTo(items._id)"
                 >
-                  <img src="../assets/demo/img2.png" alt="" width="100%" />
+                  <v-img
+                    :src="items.imgSrc"
+                    alt=""
+                    width="100%"
+                    max-height="188"
+                  />
                   <v-row>
                     <v-col cols="12">
-                      <p class="p-title-slide">{{ items.title }}</p>
-                      <p class="p-author">โดย {{ items.author }}</p>
+                      <p class="p-title-slide">{{ items.Header }}</p>
+                      <p class="p-author">โดย {{ items.CreateBy }}</p>
                     </v-col>
                   </v-row>
                 </v-card>
@@ -92,14 +108,14 @@
           <div class="mb-4">
             <v-btn
               elevation="2"
-              @click="b1 = !b1"
+              @click="selectOne(1)"
               outlined
               :class="{ 'button-active': b1 }"
               >ทั้งหมด</v-btn
             >
             <v-btn
               elevation="2"
-              @click="b2 = !b2"
+              @click="selectOne(2)"
               outlined
               :class="{ 'button-active': b2 }"
               class="mx-2"
@@ -107,7 +123,7 @@
             >
             <v-btn
               elevation="2"
-              @click="b3 = !b3"
+              @click="selectOne(3)"
               outlined
               class="mx-2"
               :class="{ 'button-active': b3 }"
@@ -115,7 +131,7 @@
             >
             <v-btn
               elevation="2"
-              @click="b4 = !b4"
+              @click="selectOne(4)"
               outlined
               class="mx-2"
               :class="{ 'button-active': b4 }"
@@ -123,7 +139,7 @@
             >
             <v-btn
               elevation="2"
-              @click="b5 = !b5"
+              @click="selectOne(5)"
               outlined
               class="mx-2"
               :class="{ 'button-active': b5 }"
@@ -131,22 +147,35 @@
             >
           </div>
           <v-row>
-            <v-col v-for="(items, index) in news" :key="index" cols="12" sm="12" md="6" lg="6">
+            <v-col
+              v-for="(items, index) in knowledge"
+              :key="index"
+              cols="12"
+              sm="12"
+              md="6"
+              lg="6"
+                            @click="navTo(items._id)"
+            >
               <v-row>
-                <v-col cols="12" sm="12" md="7" lg="7" >
-                  <img src="../assets/demo/img2.png" alt="" width="100%" />
+                <v-col cols="12" sm="12" md="7" lg="7">
+                  <v-img
+                    :src="items.imgSrc"
+                    alt=""
+                    width="100%"
+                    max-height="188"
+                  />
                 </v-col>
                 <v-col cols="12" sm="12" md="5" lg="5">
-                  <p class="p-title">{{ items.title }}</p>
-                  <p class="p-author">โดย {{ items.author }}</p>
-                  <p class="p-date">เมื่อ {{ items.date }}</p>
+                  <p class="p-title">{{ items.Header }}</p>
+                  <p class="p-author">โดย {{ items.CreateBy }}</p>
+                  <p class="p-date">เมื่อ {{ items.UpdateDate }}</p>
                 </v-col>
               </v-row>
             </v-col>
           </v-row>
           <p class="p-addition">ดูบทความล่าสุดเพิ่มเติม ></p>
         </div>
-                    <div>
+        <div>
           <p class="pic-cover mb-0">บ.ก. EduValor ขอแนะนำ!</p>
           <p class="p-subtitle">
             รวมบทความจากบ.ก. และจากทางบ้านที่บ.ก. อยากแนะนำ
@@ -154,8 +183,8 @@
           <v-sheet class="mx-auto" max-width="100%">
             <v-slide-group v-model="model" class="pa-4">
               <v-slide-item
-                v-for="(items, index) in news"
-                :key="s + index"
+                v-for="(items, index) in eduvalor"
+                :key="'s' + index"
                 v-slot="{ active, toggle }"
               >
                 <v-card
@@ -164,13 +193,18 @@
                   elevation="0"
                   width="400"
                   height="345"
-                  @click="toggle"
+                  @click="toggle, navTo(items._id)"
                 >
-                  <img src="../assets/demo/img2.png" alt="" width="100%" />
+                  <v-img
+                    :src="items.imgSrc"
+                    alt=""
+                    width="100%"
+                    max-height="188"
+                  />
                   <v-row>
                     <v-col cols="12">
-                      <p class="p-title-slide">{{ items.title }}</p>
-                      <p class="p-author">โดย {{ items.author }}</p>
+                      <p class="p-title-slide">{{ items.Header }}</p>
+                      <p class="p-author">โดย {{ items.CreateBy }}</p>
                     </v-col>
                   </v-row>
                 </v-card>
@@ -181,8 +215,6 @@
         </div>
       </div>
     </div>
-
-
 
     <!-- <router-link to="/ShowContent" >
       <v-card hover shaped class="mx-auto content-thumbnail" @click="selectContent(_id._id)" max-width="400"
@@ -213,7 +245,15 @@ export default {
     b3: false,
     b4: false,
     b5: false,
+    model: "",
     getImg: [],
+    reviewNews: [],
+    eduvalor: [],
+    envNews: [],
+    scienceNews: [],
+    musicNews: [],
+    politicsNews: [],
+    knowledge: [],
     news: [
       {
         title:
@@ -240,17 +280,67 @@ export default {
   }),
 
   methods: {
-    selectContent(selected) {
-      const selectData = this.contents.find((c) => (c._id = selected))._id;
-      window.localStorage.setItem("content", selectData);
-      //console.log(selectData);
+    navTo (articleId) {
+    this.$router.push({
+    path: '/article/' + articleId
+    })
+    },
+    selectOne(index) {
+      switch (index) {
+        case 1:
+          this.b1 = true;
+          this.b2 = false;
+          this.b3 = false;
+          this.b4 = false;
+          this.b5 = false;
+          this.knowledge = this.news;
+          break;
+        case 2:
+          this.b1 = false;
+          this.b2 = true;
+          this.b3 = false;
+          this.b4 = false;
+          this.b5 = false;
+          this.knowledge = this.musicNews;
+          break;
+        case 3:
+          this.b1 = false;
+          this.b2 = false;
+          this.b3 = true;
+          this.b4 = false;
+          this.b5 = false;
+          this.knowledge = this.scienceNews;
+          break;
+        case 4:
+          this.b1 = false;
+          this.b2 = false;
+          this.b3 = false;
+          this.b4 = true;
+          this.b5 = false;
+          this.knowledge = this.politicsNews;
+          break;
+        case 5:
+          this.b1 = false;
+          this.b2 = false;
+          this.b3 = false;
+          this.b4 = false;
+          this.b5 = true;
+          this.knowledge = this.envNews;
+          break;
+        default:
+          break;
+      }
+    },
+    filterContent(select) {
+      console.log(select);
     },
   },
-
   mounted() {
     // let buffer;
-    const res = axios.get(process.env.VUE_APP_BACKEND_API + "/content/");
+    const res = axios.get("https://www.eduvalor.ml/backendDev/content/");
+    console.log(res);
     res.then((result) => {
+      let reviewBuffer = [];
       // buffer = result.data;
       this.contents = result.data;
       //console.log(result.data);
@@ -262,6 +352,25 @@ export default {
 
       for (let index = 0; index < this.contents.length; index++) {
         let Url = this.contents[index].ImageUrl[0];
+        let textCategory = this.contents[index].ContentCategory[0];
+        if (textCategory.includes("รีวิว")) {
+          reviewBuffer.push(this.contents[index]);
+        }
+        if (textCategory.includes("สิ่งแวดล้อม")) {
+          this.envNews.push(this.contents[index]);
+        }
+        if (textCategory.includes("วิทยาศาสตร์")) {
+          this.scienceNews.push(this.contents[index]);
+        }
+        if (textCategory.includes("ศิลป์และดนตรี")) {
+          this.musicNews.push(this.contents[index]);
+        }
+        if (textCategory.includes("สังคมและการเมือง")) {
+          this.politicsNews.push(this.contents[index]);
+        }
+        if (this.contents[index].CreateBy == "EduValor") {
+          this.eduvalor.push(this.contents[index]);
+        }
         //console.log(Url);
         const resImg = axios.get(
           process.env.VUE_APP_BACKEND_API +
@@ -278,6 +387,14 @@ export default {
           //console.log(this.contents.imgSrc);
         });
       }
+      this.news = this.contents.slice(0, 4);
+      this.knowledge = this.contents.slice(0, 4);
+      this.reviewNews = reviewBuffer.slice(0, 4);
+      this.envNews = this.envNews.slice(0, 4);
+      this.scienceNews = this.scienceNews.slice(0, 4);
+      this.musicNews = this.musicNews.slice(0, 4);
+      this.politicsNews = this.politicsNews.slice(0, 4);
+      console.log(this.contents)
     });
   },
 };

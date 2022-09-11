@@ -13,10 +13,9 @@
           <div class="inside-width ma-auto">
             <v-text-field
               class="input-style blog_title"
-              v-model="title"
-              error-messages="กรุณาใส่ชื่อบทความ"
+              v-model="article_name"
               :rules="titleRules"
-              :counter="90"
+              :counter="50"
               required
             >
               <template #label>
@@ -29,7 +28,6 @@
             <v-text-field
               class="input-style"
               v-model="author_name"
-              error-messages="กรุณาใส่ชื่อนักเขียน"
               :rules="nameRules"
               :counter="90"
               required
@@ -41,11 +39,25 @@
               </template>
             </v-text-field>
 
-            <p class="pic-cover">
-              รูปหน้าปกบทความ<span style="color: red">*</span>
-            </p>
-            <v-file-input hide-input truncate-length="15"></v-file-input>
-            <p class="sub-detail">ขนาดขั้นต่ำควรเป็น 400 x 188 px</p>
+            <v-row>
+              <v-col cols="4">
+                <p class="pic-cover">
+                  รูปหน้าปกบทความ<span style="color: red">*</span>
+                </p>
+                <p class="sub-detail">ขนาดขั้นต่ำควรเป็น 400 x 188 px</p>
+              </v-col>
+              <v-col cols="1">
+                <v-file-input
+                  v-model="image"
+                  @change="Preview_image"
+                  hide-input
+                  truncate-length="15"
+                ></v-file-input>
+              </v-col>
+              <v-col cols="7">
+                <v-img :src="url" />
+              </v-col>
+            </v-row>
 
             <div id="body-block">
               <p class="pic-cover pb-5">
@@ -73,7 +85,7 @@
               <div>
                 <v-btn
                   elevation="2"
-                  @click="b1 = !b1"
+                  @click="activeButton(0)"
                   rounded
                   outlined
                   :class="{ 'button-active': b1 }"
@@ -81,7 +93,7 @@
                 >
                 <v-btn
                   elevation="2"
-                  @click="b2 = !b2"
+                  @click="activeButton(1)"
                   rounded
                   outlined
                   :class="{ 'button-active': b2 }"
@@ -90,7 +102,7 @@
                 >
                 <v-btn
                   elevation="2"
-                  @click="b3 = !b3"
+                  @click="activeButton(2)"
                   rounded
                   outlined
                   class="mx-2"
@@ -99,7 +111,7 @@
                 >
                 <v-btn
                   elevation="2"
-                  @click="b4 = !b4"
+                  @click="activeButton(3)"
                   rounded
                   outlined
                   class="mx-2"
@@ -108,7 +120,7 @@
                 >
                 <v-btn
                   elevation="2"
-                  @click="b5 = !b5"
+                  @click="activeButton(4)"
                   rounded
                   outlined
                   class="mx-2"
@@ -134,7 +146,12 @@
               แต่ส่วนนี้จะแสดงผลเป็นลิงก์ไปยัง Map แทน (ไม่บังคับ)
             </p>
             <div class="d-flex justify-center">
-              <v-btn elevation="1" x-large color="#AD9F86"
+              <v-btn
+                elevation="1"
+                x-large
+                color="#AD9F86"
+                class="text-white"
+                @click="submit1"
                 ><img
                   class="py-3 pr-3 img-middle"
                   src="../assets/icon/save.png"
@@ -170,13 +187,17 @@ export default {
   data: () => ({
     valid: false,
     author_name: "",
+    article_name: "",
+    counter: 0,
+    image: null,
+    url: null,
     nameRules: [
-      (v) => !!v || "Name is required",
+      (v) => !!v || "กรุณาใส่ชื่อนักเขียน",
       (v) => v.length <= 10 || "Name must be less than 10 characters",
     ],
     title: "",
     titleRules: [
-      (v) => !!v || "Blog Title is required",
+      (v) => !!v || "กรุณาใส่ชื่อบทความ",
       (v) => v.length <= 60 || "Blog Title must be less than 50 characters",
     ],
     quill: "",
@@ -200,6 +221,7 @@ export default {
     },
     delta: undefined,
     textEditorContent: "",
+    params: undefined,
     b1: false,
     b2: false,
     b3: false,
@@ -213,21 +235,112 @@ export default {
       b5: "non-active",
     },
   }),
-  computed: {},
   methods: {
+    Preview_image() {
+      this.url = URL.createObjectURL(this.image);
+    },
     getClassButton(index) {
       return this.button[index];
     },
-    activeButton(index) {
-      let text = this.button[index];
-      text == "non-active"
-        ? (this.button[index] = "button-active")
-        : (this.button[index] = "non-active");
-      console.log(this.button[index]);
+    checkCounter() {
+      let rawArray = [this.b1, this.b2, this.b3, this.b4, this.b5];
+      let counter = 0;
+      rawArray.forEach((e) => {
+        console.log(e);
+        if (e == true) {
+          counter = counter + 1;
+        }
+      });
+      if (counter > 2) {
+        return false;
+      } else {
+        return true;
+      }
     },
+    activeButton(index) {
+      let rawArray = [this.b1, this.b2, this.b3, this.b4, this.b5];
+      if (rawArray[index] == true) {
+        switch (index) {
+          case 0:
+            this.b1 = false;
+            break;
+          case 1:
+            this.b2 = false;
+            break;
+          case 2:
+            this.b3 = false;
+            break;
+          case 3:
+            this.b4 = false;
+            break;
+          case 4:
+            this.b5 = false;
+            break;
+          default:
+            break;
+        }
+      } else {
+        if (this.checkCounter()) {
+          switch (index) {
+            case 0:
+              this.b1 = true;
+              break;
+            case 1:
+              this.b2 = true;
+              break;
+            case 2:
+              this.b3 = true;
+              break;
+            case 3:
+              this.b4 = true;
+              break;
+            case 4:
+              this.b5 = true;
+              break;
+            default:
+              break;
+          }
+        }
+      }
+      // let text = this.button[index];
+      // text == "non-active"
+      //   ? (this.button[index] = "button-active")
+      //   : (this.button[index] = "non-active");
+      // console.log(this.button[index]);
+    },
+    addCategory(arrayCate) {
+      arrayCate.forEach(e => {
+      switch (e) {
+        case "รีวิว":
+          this.b1 = true
+          break;
+        case "ศิลป์และดนตรี":
+          this.b2 = true
+          break;
+        case "วิทยาศาสตร์":
+          this.b3 = true
+          break;
+        case "สังคมและการเมือง":
+                    this.b4 = true
+          break;
+        case "สิ่งแวดล้อม":
+                    this.b5 = true
+          break;
+        default:
+          break;
+      }
+      })
+    },
+
+    submit1() {
+      console.log(this.valid);
+      if (this.valid === true) {
+        console.log(this.valid);
+      }
+    },
+
     submit() {
       this.delta = this.$refs.myQuillEditor.quill.getContents();
-
       const childNodes =
         document.getElementsByClassName("ql-editor")[0].childNodes;
       const unknow = [];
@@ -265,28 +378,77 @@ export default {
       });
 
       // console.log(this.textEditorContent);
+      let rawArray = [this.b1, this.b2, this.b3, this.b4, this.b5];
+      let bufferArray = [];
+      for (let index = 0; index < rawArray.length; index++) {
+        if (rawArray[index] == true) {
+          switch (index) {
+            case 0:
+              bufferArray.push("รีวิว");
+              break;
+            case 1:
+              bufferArray.push("ศิลป์และดนตรี");
+              break;
+            case 2:
+              bufferArray.push("วิทยาศาสตร์");
+              break;
+            case 3:
+              bufferArray.push("สังคมและการเมือง");
+              break;
+            case 4:
+              bufferArray.push("สิ่งแวดล้อม");
+              break;
+            default:
+              break;
+          }
+        }
+      }
+      console.log(bufferArray);
+
       this.delta = document.getElementsByClassName("ql-editor")[0].innerHTML;
       const formData = new FormData();
-      formData.append("Header", this.title);
-      formData.append("TextData", this.delta);
-      formData.append("ContentCategory", "01");
+      formData.append("Header", this.article_name);
+      formData.append("TextData[]", this.delta);
+      formData.append("ContentCategory[]", bufferArray);
       formData.append("CreateBy", this.author_name);
       formData.append("DeleteFlag", false);
       srcArray.forEach((data) => {
         formData.append("ImageFiles", data);
       });
-      // for (var value of formData.values()) {
-      //     console.log(value);
-      // }
-      axios.post(
-        process.env.VUE_APP_BACKEND_API + "/content/addcontent",
-        formData
-      );
+      if (this.params == undefined) {
+        axios.post(
+          "https://www.eduvalor.ml/backendDev" + "/content/addcontent",
+          formData
+        );
+      } else {
+        axios.put(
+          "https://www.eduvalor.ml/backendDev" +
+            "/content/editcontent?id=" +
+            this.params,
+          formData
+        );
+      }
       // this.delta.forEach((array) => console.log(array));
     },
     // editorTypeCheck() {
     //     this.delta.forEach(array => console.log(array))
     // },
+  },
+  async mounted() {
+    let head = this.$route.params;
+    if (head != undefined) {
+      this.params = head.id;
+      const res = await axios.get(
+        "https://www.eduvalor.ml/backendDev/content/getContentByID?id=" +
+          head.id
+      );
+      console.log(res.data);
+      this.article_name = res.data.Header;
+      this.author_name = res.data.CreateBy;
+      this.addCategory(res.data.ContentCategory[0].split(","))
+      document.getElementsByClassName("ql-editor")[0].innerHTML =
+        res.data.TextData[0];
+    }
   },
 };
 </script>
@@ -422,5 +584,8 @@ button {
   top: 6px;
   white-space: nowrap;
   pointer-events: none;
+}
+.text-white {
+  color: white;
 }
 </style>

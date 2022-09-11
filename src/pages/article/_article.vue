@@ -1,0 +1,147 @@
+<template>
+  <div class="all-content wid-80 ma-auto">
+    <v-row class="my-2">
+      <v-col cols="8">
+        <p class="sub-detail">
+          <img
+            class="pr-3 img-middle"
+            src="../../assets/icon/left-arrow.png"
+          />กลับหน้าแรก
+        </p>
+      </v-col>
+      <v-col cols="4">
+        <v-row>
+          <v-col>
+            <div class="d-flex justify-center">
+              <v-btn elevation="0" color="#AD9F86" class="text-white"
+              @click="navTo()"
+                ><img
+                  class="py-3 pr-3 img-middle"
+                  src="../../assets/icon/edit_white.png"
+                />แก้ไขเนื้อหา</v-btn
+              >
+            </div>
+          </v-col>
+          <v-col>
+            <div class="d-flex justify-center">
+              <v-btn elevation="0" class="text-brown"
+                ><img
+                  class="py-3 pr-3 img-middle"
+                  src="../../assets/icon/trash.png"
+                />ลบบทความ</v-btn
+              >
+            </div>
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="9">
+        <p class="user-name">
+          <img class="pr-3 img-middle" src="../../assets/icon/user.png" />{{
+            author
+          }}
+        </p>
+      </v-col>
+      <v-col cols="3">
+        <img
+          class="pr-3 img-middle"
+          src="../../assets/icon/brown_clock.png"
+        />{{ date }}
+      </v-col>
+    </v-row>
+
+    <h1 class="header-content">{{ title }}</h1>
+    <div class="body-content wid-80"></div>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+export default {
+  data() {
+    return {
+      author: "",
+      date: "",
+      title: "",
+      bodyContent: "",
+      id: "",
+    };
+  },
+  methods: {
+    navTo() {
+        console.log(this.id)
+    this.$router.push({
+    path: '/CreateContent/' + this.id
+    })
+    }
+  },
+  async mounted() {
+    let head = this.$route.params;
+    this.id = head.id
+    // slug = slug.split('/article/')
+    // console.log(slug[1])
+    const res = await axios.get(
+      "https://www.eduvalor.ml/backendDev/content/getContentByID?id=" + head.id
+    );
+    this.title = res.data.Header;
+    this.date = res.data.CreateDate;
+    this.author = res.data.CreateBy;
+    this.bodyContent = res.data.TextData;
+    console.log(res);
+    document.getElementsByClassName("body-content")[0].innerHTML =
+      res.data.TextData;
+  },
+};
+</script>
+
+<style>
+.wid-80 {
+  width: 80%;
+  font-family: "Bai Jamjuree";
+}
+.header-content {
+  font-family: "Kanit";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 54px;
+}
+.sub-detail {
+  font-family: "Bai Jamjuree";
+  font-style: normal;
+  font-weight: 400;
+  color: #ad9f86;
+  font-size: 24px;
+}
+.user-name {
+  font-family: "Bai Jamjuree";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 35px;
+  color: #ad9f86;
+}
+.img-middle {
+  vertical-align: middle;
+}
+.text-white {
+  color: white !important;
+  font-family: "Kanit";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+}
+.text-brown {
+  color: #ad9f86 !important;
+  border: 1px solid #ad9f86 !important;
+  background-color: white;
+  border-radius: 10px;
+  font-family: "Kanit";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+}
+</style>
