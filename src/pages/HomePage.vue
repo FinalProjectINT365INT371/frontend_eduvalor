@@ -42,6 +42,7 @@
               md="6"
               lg="6"
               @click="navTo(items._id)"
+              class="cursor"
             >
               <v-row>
                 <v-col cols="12" sm="12" md="7" lg="7">
@@ -155,6 +156,7 @@
               md="6"
               lg="6"
                             @click="navTo(items._id)"
+                                          class="cursor"
             >
               <v-row>
                 <v-col cols="12" sm="12" md="7" lg="7">
@@ -351,7 +353,7 @@ export default {
       });
 
       for (let index = 0; index < this.contents.length; index++) {
-        let Url = this.contents[index].ImageUrl[0];
+        let Url = this.contents[index].ImageUrl[this.contents[index].ImageUrl.length-1];
         let textCategory = this.contents[index].ContentCategory[0];
         if (textCategory.includes("รีวิว")) {
           reviewBuffer.push(this.contents[index]);
@@ -534,5 +536,8 @@ export default {
   line-height: 23px;
   text-align: center;
   color: #4c4c4c;
+}
+.cursor {
+  cursor: pointer;
 }
 </style>>

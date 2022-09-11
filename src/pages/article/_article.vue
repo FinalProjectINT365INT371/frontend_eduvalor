@@ -2,7 +2,7 @@
   <div class="all-content wid-80 ma-auto">
     <v-row class="my-2">
       <v-col cols="8">
-        <p class="sub-detail">
+        <p class="sub-detail backHome" @click="backHome">
           <img
             class="pr-3 img-middle"
             src="../../assets/icon/left-arrow.png"
@@ -11,10 +11,13 @@
       </v-col>
       <v-col cols="4">
         <v-row>
-          <v-col>
+          <v-col v-if="login">
             <div class="d-flex justify-center">
-              <v-btn elevation="0" color="#AD9F86" class="text-white"
-              @click="navTo()"
+              <v-btn
+                elevation="0"
+                color="#AD9F86"
+                class="text-white"
+                @click="navTo()"
                 ><img
                   class="py-3 pr-3 img-middle"
                   src="../../assets/icon/edit_white.png"
@@ -22,9 +25,9 @@
               >
             </div>
           </v-col>
-          <v-col>
+          <v-col v-if="login">
             <div class="d-flex justify-center">
-              <v-btn elevation="0" class="text-brown"
+              <v-btn elevation="0" class="text-brown" @click="deleteArticle"
                 ><img
                   class="py-3 pr-3 img-middle"
                   src="../../assets/icon/trash.png"
@@ -52,7 +55,7 @@
     </v-row>
 
     <h1 class="header-content">{{ title }}</h1>
-    <div class="body-content wid-80"></div>
+    <div class="body-content width: 100%;"></div>
   </div>
 </template>
 
@@ -66,21 +69,40 @@ export default {
       title: "",
       bodyContent: "",
       id: "",
+      login: false
     };
   },
   methods: {
     navTo() {
-        console.log(this.id)
-    this.$router.push({
-    path: '/CreateContent/' + this.id
-    })
-    }
+      console.log(this.id);
+      this.$router.push({
+        path: "/CreateContent/" + this.id,
+      });
+    },
+    backHome() {
+      this.$router.push({
+        path: "/",
+      });
+    },
+    deleteArticle() {
+      axios
+        .delete(
+          "https://www.eduvalor.ml/backendDev/content/deletecontent?id=" +
+            this.id
+        )
+        .then(
+          this.backHome(),
+          location.reload());
+    },
   },
   async mounted() {
     let head = this.$route.params;
-    this.id = head.id
+    this.id = head.id;
     // slug = slug.split('/article/')
     // console.log(slug[1])
+    if (localStorage.getItem('login') == 'true') {
+      this.login = true
+    }
     const res = await axios.get(
       "https://www.eduvalor.ml/backendDev/content/getContentByID?id=" + head.id
     );
@@ -99,6 +121,9 @@ export default {
 .wid-80 {
   width: 80%;
   font-family: "Bai Jamjuree";
+}
+.sub-wid {
+  width: 90%;
 }
 .header-content {
   font-family: "Kanit";
@@ -143,5 +168,8 @@ export default {
   font-weight: 400;
   font-size: 20px;
   line-height: 30px;
+}
+.backHome {
+  cursor: pointer;
 }
 </style>

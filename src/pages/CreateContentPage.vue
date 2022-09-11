@@ -1,9 +1,9 @@
 <template>
   <div id="app" class="overflow-auto">
-    <v-form v-model="valid" @submit.prevent="submit">
+    <v-form v-model="valid" @submit.prevent="submit" ref="form">
       <div class="d-flex justify-center">
         <div class="d-inline test">
-          <p class="sub-detail">
+          <p class="sub-detail backHome" @click="backHome">
             <img
               class="pr-3 img-middle"
               src="../assets/icon/left-arrow.png"
@@ -51,6 +51,7 @@
                   v-model="image"
                   @change="Preview_image"
                   hide-input
+                  :rules="imageRules"
                   truncate-length="15"
                 ></v-file-input>
               </v-col>
@@ -128,6 +129,9 @@
                   >สิ่งแวดล้อม</v-btn
                 >
               </div>
+              <p v-if="categoryValidate" class="text-red">
+                กรุณาเลือกแท็กที่เกี่ยวข้อง
+              </p>
             </div>
             <p class="pic-cover">
               <img
@@ -151,7 +155,7 @@
                 x-large
                 color="#AD9F86"
                 class="text-white"
-                @click="submit1"
+                @click="submit"
                 ><img
                   class="py-3 pr-3 img-middle"
                   src="../assets/icon/save.png"
@@ -193,12 +197,13 @@ export default {
     url: null,
     nameRules: [
       (v) => !!v || "กรุณาใส่ชื่อนักเขียน",
-      (v) => v.length <= 10 || "Name must be less than 10 characters",
+      (v) => v.length <= 30 || "Name must be less than 30 characters",
     ],
     title: "",
+    imageRules: [(v) => !!v || "กรุณาเพิ่มไฟล์"],
     titleRules: [
       (v) => !!v || "กรุณาใส่ชื่อบทความ",
-      (v) => v.length <= 60 || "Blog Title must be less than 50 characters",
+      (v) => v.length <= 60 || "Blog Title must be less than 60 characters",
     ],
     quill: "",
     quillRules: [
@@ -227,6 +232,7 @@ export default {
     b3: false,
     b4: false,
     b5: false,
+    categoryValidate: true,
     button: {
       b1: false,
       b2: "non-active",
@@ -281,6 +287,7 @@ export default {
         }
       } else {
         if (this.checkCounter()) {
+          this.categoryValidate = false;
           switch (index) {
             case 0:
               this.b1 = true;
@@ -308,50 +315,46 @@ export default {
       //   : (this.button[index] = "non-active");
       // console.log(this.button[index]);
     },
+    backHome() {
+      this.$router.push({
+        path: "/",
+      });
+    },
     addCategory(arrayCate) {
-      arrayCate.forEach(e => {
-      switch (e) {
-        case "รีวิว":
-          this.b1 = true
-          break;
-        case "ศิลป์และดนตรี":
-          this.b2 = true
-          break;
-        case "วิทยาศาสตร์":
-          this.b3 = true
-          break;
-        case "สังคมและการเมือง":
-                    this.b4 = true
-          break;
-        case "สิ่งแวดล้อม":
-                    this.b5 = true
-          break;
-        default:
-          break;
-      }
-      })
+      arrayCate.forEach((e) => {
+        switch (e) {
+          case "รีวิว":
+            this.b1 = true;
+            break;
+          case "ศิลป์และดนตรี":
+            this.b2 = true;
+            break;
+          case "วิทยาศาสตร์":
+            this.b3 = true;
+            break;
+          case "สังคมและการเมือง":
+            this.b4 = true;
+            break;
+          case "สิ่งแวดล้อม":
+            this.b5 = true;
+            break;
+          default:
+            break;
+        }
+      });
     },
 
-    submit1() {
-      console.log(this.valid);
-      if (this.valid === true) {
-        console.log(this.valid);
-      }
+    checkTag() {
+      let rawArray = [this.b1, this.b2, this.b3, this.b4, this.b5];
+      rawArray.forEach((e) => {
+        if (e === true) {
+          this.categoryValidate = false;
+        }
+      });
     },
 
     submit() {
-      this.delta = this.$refs.myQuillEditor.quill.getContents();
-      const childNodes =
-        document.getElementsByClassName("ql-editor")[0].childNodes;
-      const unknow = [];
-      childNodes.forEach((data) => {
-        data.childNodes.forEach((data) => {
-          if (String(data.nodeName) === "IMG") {
-            unknow.push(data);
-          }
-        });
-      });
-
+      this.checkTag();
       function DataURIToBlob(dataURI) {
         const splitDataURI = dataURI.split(",");
         const byteString =
@@ -366,67 +369,83 @@ export default {
 
         return new Blob([ia], { type: mimeString });
       }
-      const srcArray = [];
-      unknow.forEach((data) => {
-        let convertImage = DataURIToBlob(data.src);
-        // String(data.src).split("data:image/png;base64,");
-        // let stringbuffer = String(data.src).split("data:image/png;base64,")[1];
-        data.src = "";
-        // console.log(stringbuffer);
-        // stringbuffer = stringbuffer.split('">')[0];
-        srcArray.push(convertImage);
-      });
+      if (this.$refs.form.validate() && this.categoryValidate == false) {
+        this.delta = this.$refs.myQuillEditor.quill.getContents();
+        const childNodes =
+          document.getElementsByClassName("ql-editor")[0].childNodes;
+        const unknow = [];
+        childNodes.forEach((data) => {
+          data.childNodes.forEach((data) => {
+            if (String(data.nodeName) === "IMG") {
+              unknow.push(data);
+            }
+          });
+        });
+        const srcArray = [];
+        unknow.forEach((data) => {
+          let convertImage = DataURIToBlob(data.src);
+          // String(data.src).split("data:image/png;base64,");
+          // let stringbuffer = String(data.src).split("data:image/png;base64,")[1];
+          data.src = "";
+          // console.log(stringbuffer);
+          // stringbuffer = stringbuffer.split('">')[0];
+          srcArray.push(convertImage);
+        });
 
-      // console.log(this.textEditorContent);
-      let rawArray = [this.b1, this.b2, this.b3, this.b4, this.b5];
-      let bufferArray = [];
-      for (let index = 0; index < rawArray.length; index++) {
-        if (rawArray[index] == true) {
-          switch (index) {
-            case 0:
-              bufferArray.push("รีวิว");
-              break;
-            case 1:
-              bufferArray.push("ศิลป์และดนตรี");
-              break;
-            case 2:
-              bufferArray.push("วิทยาศาสตร์");
-              break;
-            case 3:
-              bufferArray.push("สังคมและการเมือง");
-              break;
-            case 4:
-              bufferArray.push("สิ่งแวดล้อม");
-              break;
-            default:
-              break;
+        // console.log(this.textEditorContent);
+        let rawArray = [this.b1, this.b2, this.b3, this.b4, this.b5];
+        let bufferArray = [];
+        for (let index = 0; index < rawArray.length; index++) {
+          if (rawArray[index] == true) {
+            switch (index) {
+              case 0:
+                bufferArray.push("รีวิว");
+                break;
+              case 1:
+                bufferArray.push("ศิลป์และดนตรี");
+                break;
+              case 2:
+                bufferArray.push("วิทยาศาสตร์");
+                break;
+              case 3:
+                bufferArray.push("สังคมและการเมือง");
+                break;
+              case 4:
+                bufferArray.push("สิ่งแวดล้อม");
+                break;
+              default:
+                break;
+            }
           }
         }
-      }
-      console.log(bufferArray);
-
-      this.delta = document.getElementsByClassName("ql-editor")[0].innerHTML;
-      const formData = new FormData();
-      formData.append("Header", this.article_name);
-      formData.append("TextData[]", this.delta);
-      formData.append("ContentCategory[]", bufferArray);
-      formData.append("CreateBy", this.author_name);
-      formData.append("DeleteFlag", false);
-      srcArray.forEach((data) => {
-        formData.append("ImageFiles", data);
-      });
-      if (this.params == undefined) {
-        axios.post(
-          "https://www.eduvalor.ml/backendDev" + "/content/addcontent",
-          formData
-        );
-      } else {
-        axios.put(
-          "https://www.eduvalor.ml/backendDev" +
-            "/content/editcontent?id=" +
-            this.params,
-          formData
-        );
+        this.delta = document.getElementsByClassName("ql-editor")[0].innerHTML;
+        const formData = new FormData();
+        formData.append("Header", this.article_name);
+        formData.append("TextData[]", this.delta);
+        formData.append("ContentCategory[]", bufferArray);
+        formData.append("CreateBy", this.author_name);
+        formData.append("ImageCover", this.image);
+        formData.append("DeleteFlag", false);
+        srcArray.forEach((data) => {
+          formData.append("ImageFiles", data);
+        });
+        if (this.params == undefined) {
+          axios
+            .post(
+              "https://www.eduvalor.ml/backendDev" + "/content/addcontent",
+              formData
+            )
+            .then(this.backHome(), location.reload());
+        } else {
+          axios
+            .put(
+              "https://www.eduvalor.ml/backendDev" +
+                "/content/editcontent?id=" +
+                this.params,
+              formData
+            )
+            .then(this.backHome(), location.reload());
+        }
       }
       // this.delta.forEach((array) => console.log(array));
     },
@@ -445,7 +464,7 @@ export default {
       console.log(res.data);
       this.article_name = res.data.Header;
       this.author_name = res.data.CreateBy;
-      this.addCategory(res.data.ContentCategory[0].split(","))
+      this.addCategory(res.data.ContentCategory[0].split(","));
       document.getElementsByClassName("ql-editor")[0].innerHTML =
         res.data.TextData[0];
     }
@@ -587,5 +606,11 @@ button {
 }
 .text-white {
   color: white;
+}
+.backHome {
+  cursor: pointer;
+}
+.text-red {
+  color: red;
 }
 </style>

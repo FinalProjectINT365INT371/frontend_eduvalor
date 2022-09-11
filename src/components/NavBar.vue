@@ -8,11 +8,20 @@
     <v-tabs fixed-tabs color="white" dark background-color="#202120" >
       <v-tab class="font-tab white--text"> Contents </v-tab>
       <v-tab class="font-tab white--text"> Create Content </v-tab>
+      <v-tab class="font-tab white--text" @click="login = true" v-if="!login"> Login </v-tab>
+      <v-tab class="font-tab white--text" @click="login = true" v-if="login"><img class="pr-3 img-middle" src="../../assets/icon/user.png" /></v-tab>
+      <v-tab class="font-tab white--text" @click="login = false" v-if="login"> Logout </v-tab>
       <v-tab-item >
         <HomePage style="background-color: red;" />
       </v-tab-item>
 
       <v-tab-item>
+        <CreateContentPage />
+      </v-tab-item>
+            <v-tab-item>
+        <CreateContentPage />
+      </v-tab-item>
+            <v-tab-item>
         <CreateContentPage />
       </v-tab-item>
 
@@ -32,6 +41,11 @@ export default {
     HomePage,
     CreateContentPage,
   },
+  data() {
+    return {
+      login:false
+    }
+  }
 };
 </script>
 <style scoped>
