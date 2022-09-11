@@ -189,7 +189,7 @@ export default {
   },
   mounted() {
     // let buffer;
-    const res = axios.get(process.env.VUE_APP_BACKEND_API +"/content/");
+    const res = axios.get(process.env.VUE_APP_BACKEND_API_PROD +"/content/");
     console.log(res);
     res.then((result) => {
       let reviewBuffer = [];
@@ -227,7 +227,7 @@ export default {
           this.eduvalor.push(this.contents[index]);
         }
         const resImg = axios.get(
-          process.env.VUE_APP_BACKEND_API +
+          process.env.VUE_APP_BACKEND_API_PROD +
             "/content/getImageContentByName?imageName=" +
             Url
         );

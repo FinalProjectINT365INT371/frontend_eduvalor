@@ -36,7 +36,7 @@ export default {
     let id = window.localStorage.getItem("content")
     let textBuffer;
     let buffer;
-    const res = axios.get(process.env.VUE_APP_BACKEND_API + "/content/getContentByID?id=" + id);
+    const res = axios.get(process.env.VUE_APP_BACKEND_API_PROD + "/content/getContentByID?id=" + id);
     res.then(result => {
       buffer = result.data;
       this.content = result.data;

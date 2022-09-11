@@ -89,7 +89,7 @@ export default {
     deleteArticle() {
       axios
         .delete(
-          "https://www.eduvalor.ml/backendDev/content/deletecontent?id=" +
+          process.env.VUE_APP_BACKEND_API_PROD+"/content/deletecontent?id=" +
             this.id
         )
         .then(
@@ -103,7 +103,7 @@ export default {
     // slug = slug.split('/article/')
     // console.log(slug[1])
     const res = await axios.get(
-      process.env.VUE_APP_BACKEND_API +"/content/getContentByID?id=" + head.id
+      process.env.VUE_APP_BACKEND_API_PROD +"/content/getContentByID?id=" + head.id
     );
     this.title = res.data.Header;
     this.date = res.data.CreateDate;
@@ -112,7 +112,7 @@ export default {
     console.log(res.data)
     let Url = res.data.ImageUrl[res.data.ImageUrl.length - 1] 
     const resImg = axios.get(
-          process.env.VUE_APP_BACKEND_API +
+          process.env.VUE_APP_BACKEND_API_PROD +
             "/content/getImageContentByName?imageName=" +
             Url
         );
