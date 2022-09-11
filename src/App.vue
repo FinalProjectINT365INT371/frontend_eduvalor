@@ -1,60 +1,103 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
     <v-main>
-      <HelloWorld/>
+      <div id="app">
+        <div class="logo-banner d-flex justify-center">
+          <router-link to="/"
+            ><img src="./assets/eduvalor-white-200-new.png"
+          /></router-link>
+        </div>
+
+        <nav>
+          <v-tabs fixed-tabs color="#e6c164" background-color="#202120">
+            <v-tab class="white--text">
+              <router-link to="/"> Home </router-link>
+            </v-tab>
+            <v-tab class="white--text">
+              <router-link to="/CreateContent"> Create Content </router-link>
+            </v-tab>
+            <v-tab class="white--text login" @click="setLogin" v-if="!login">
+              Login 
+            </v-tab>
+            <!-- <v-tab class="white--text" @click="login = false" v-if="login">
+              <img class="pr-3 img-middle" src="/assets/icon/user.png" />
+            </v-tab> -->
+            <v-tab class="white--text login" @click="setLogout" v-if="login">
+              Logout 
+            </v-tab>
+          </v-tabs>
+        </nav>
+
+        <router-view />
+      </div>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
 
 export default {
-  name: 'App',
-
-  components: {
-    HelloWorld,
+  data() {
+    return {
+      login: false
+    }
   },
-
-  data: () => ({
-    //
-  }),
-};
+  methods:{
+    setLogin(){
+      localStorage.setItem('login',true)
+      location.reload()
+    },
+    setLogout(){
+      localStorage.removeItem('login')
+       location.reload()
+    }
+  },
+  created (){
+    if (localStorage.getItem('login') == 'true') {
+      this.login = true
+    }
+  }
+}
 </script>
+
+
+<style lang="scss" scoped>
+.login {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+        font-weight: bold;
+    color: white;
+    text-decoration-line: none;
+    text-align: center;
+}
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  // text-align: center;
+  color: #2c3e50;
+}
+
+nav {
+  // padding: 30px;
+  text-align: center;
+
+  a {
+    font-weight: bold;
+    color: white;
+    text-decoration-line: none;
+    text-align: center;
+
+    &.router-link-exact-active {
+      color: #e6c164;
+    }
+  }
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Lusitana&display=swap");
+
+.logo-banner {
+  background-color: #202120;
+  color: whitesmoke;
+}
+
+</style>
