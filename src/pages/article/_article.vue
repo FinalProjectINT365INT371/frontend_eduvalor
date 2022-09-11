@@ -9,7 +9,7 @@
           />กลับหน้าแรก
         </p>
       </v-col>
-      <v-col cols="4">
+      <v-col cols="12" sm="12" md="4" lg="4">
         <v-row>
           <v-col v-if="login">
             <div class="d-flex justify-center">
@@ -41,12 +41,12 @@
     <v-row>
       <v-col cols="9">
         <p class="user-name">
-          <img class="pr-3 img-middle" src="../../assets/icon/user.png" />{{
+          <img class="pr-3 img-middle" src="../../assets/icon/user.png"/>{{
             author
           }}
         </p>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="12" sm="12" md="3" lg="3">
         <img
           class="pr-3 img-middle"
           src="../../assets/icon/brown_clock.png"
@@ -100,9 +100,6 @@ export default {
     this.id = head.id;
     // slug = slug.split('/article/')
     // console.log(slug[1])
-    if (localStorage.getItem('login') == 'true') {
-      this.login = true
-    }
     const res = await axios.get(
       "https://www.eduvalor.ml/backendDev/content/getContentByID?id=" + head.id
     );
@@ -111,8 +108,10 @@ export default {
     this.author = res.data.CreateBy;
     this.bodyContent = res.data.TextData;
     console.log(res);
-    document.getElementsByClassName("body-content")[0].innerHTML =
-      res.data.TextData;
+    document.getElementsByClassName("body-content")[0].innerHTML =res.data.TextData;
+        if (localStorage.getItem('login') == 'true') {
+      this.login = true
+    }
   },
 };
 </script>

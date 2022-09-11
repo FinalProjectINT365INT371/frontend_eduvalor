@@ -17,10 +17,10 @@
         จำนวนทั้งหมด {{ news.length }} บทความ
     </p>
     <v-row justify="space-between" align="center">
-      <v-col cols="3">
+      <v-col cols="12" sm="12" md="3" lg="3">
         <v-text-field label="ค้นหาบทความ" v-model="inputNews"  @input="filterList($event)"          outlined></v-text-field>
       </v-col>
-      <v-col cols="8">
+      <v-col cols="12" sm="12" md="8" lg="8">
           <div class="mb-4">
             <v-btn
               elevation="2"

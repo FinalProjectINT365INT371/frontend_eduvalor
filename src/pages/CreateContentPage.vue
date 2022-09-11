@@ -40,13 +40,13 @@
             </v-text-field>
 
             <v-row>
-              <v-col cols="4">
+              <v-col cols="10" sm="11" md="4" lg="4">
                 <p class="pic-cover">
                   รูปหน้าปกบทความ<span style="color: red">*</span>
                 </p>
                 <p class="sub-detail">ขนาดขั้นต่ำควรเป็น 400 x 188 px</p>
               </v-col>
-              <v-col cols="1">
+              <v-col cols="1" sm="1" md="1" lg="1">
                 <v-file-input
                   v-model="image"
                   @change="Preview_image"
@@ -55,7 +55,7 @@
                   truncate-length="15"
                 ></v-file-input>
               </v-col>
-              <v-col cols="7">
+              <v-col cols="12" sm="12" md="7" lg="7">
                 <v-img :src="url" />
               </v-col>
             </v-row>
@@ -462,6 +462,7 @@ export default {
           head.id
       );
       console.log(res.data);
+      this.categoryValidate = false
       this.article_name = res.data.Header;
       this.author_name = res.data.CreateBy;
       this.addCategory(res.data.ContentCategory[0].split(","));
