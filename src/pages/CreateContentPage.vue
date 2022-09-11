@@ -461,7 +461,7 @@ export default {
     if (head != undefined) {
       this.params = head.id;
       const res = await axios.get(
-        "https://www.eduvalor.ml/backendDev/content/getContentByID?id=" +
+        process.env.VUE_APP_BACKEND_API +"/content/getContentByID?id=" +
           head.id
       );
       console.log(res.data);
