@@ -341,7 +341,7 @@ export default {
   },
   mounted() {
     // let buffer;
-    const res = axios.get("https://www.eduvalor.ml/backendDev/content/");
+    const res = axios.get(process.env.VUE_APP_BACKEND_API +"/content/");
     console.log(res);
     res.then((result) => {
       let reviewBuffer = [];

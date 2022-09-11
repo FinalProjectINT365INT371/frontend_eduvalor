@@ -432,14 +432,14 @@ export default {
         if (this.params == undefined) {
           axios
             .post(
-              "https://www.eduvalor.ml/backendDev" + "/content/addcontent",
+              process.env.VUE_APP_BACKEND_API + "/content/addcontent",
               formData
             )
             .then(this.backHome(), location.reload());
         } else {
           axios
             .put(
-              "https://www.eduvalor.ml/backendDev" +
+              process.env.VUE_APP_BACKEND_API +
                 "/content/editcontent?id=" +
                 this.params,
               formData
@@ -458,7 +458,7 @@ export default {
     if (head != undefined) {
       this.params = head.id;
       const res = await axios.get(
-        "https://www.eduvalor.ml/backendDev/content/getContentByID?id=" +
+        process.env.VUE_APP_BACKEND_API +"/content/getContentByID?id=" +
           head.id
       );
       console.log(res.data);
