@@ -55,6 +55,7 @@
     </v-row>
 
     <h1 class="header-content">{{ title }}</h1>
+    <v-img :src="imgSrc"></v-img>
     <div class="body-content width: 100%;"></div>
   </div>
 </template>
@@ -69,7 +70,8 @@ export default {
       title: "",
       bodyContent: "",
       id: "",
-      login: false
+      login: false,
+      imgSrc: ''
     };
   },
   methods: {
@@ -107,9 +109,23 @@ export default {
     this.date = res.data.CreateDate;
     this.author = res.data.CreateBy;
     this.bodyContent = res.data.TextData;
-    console.log(res);
+    console.log(res.data)
+    let Url = res.data.ImageUrl[res.data.ImageUrl.length - 1] 
+    const resImg = axios.get(
+          process.env.VUE_APP_BACKEND_API +
+            "/content/getImageContentByName?imageName=" +
+            Url
+        );
+            resImg.then((result) => {
+          this.getImg = result.data;
+          const srcUrl = this.getImg.split("imageUrl : ");
+          //console.log(srcUrl[1]);
+
+          this.imgSrc = srcUrl[1];
+          //console.log(this.contents.imgSrc);
+        });
     document.getElementsByClassName("body-content")[0].innerHTML =res.data.TextData;
-        if (localStorage.getItem('login') == 'true') {
+    if (localStorage.getItem('login') == 'true') {
       this.login = true
     }
   },
