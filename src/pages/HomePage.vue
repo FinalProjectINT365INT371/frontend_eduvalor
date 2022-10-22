@@ -2,15 +2,15 @@
   <div>
     <v-sheet class="mx-auto" max-width="100%">
       <v-slide-group v-model="model" class="pa-4" show-arrows>
-        <v-slide-item v-for="n in 5" :key="n" v-slot="{ active, toggle }">
+        <v-slide-item v-for="(topLoop,index) in eduvalor" :key="index" v-slot="{ active, toggle }">
           <v-card
             :color="active ? undefined : 'grey lighten-1'"
             class="ma-4"
             height="350"
             width="660"
-            @click="toggle"
+            @click="toggle, navTo(topLoop._id)"
           >
-            <img src="../assets/demo/img1.png" alt="" />
+            <v-img :src="topLoop.imgSrc" alt="" width="100%" />
             <v-row class="fill-height" align="center" justify="center"> </v-row>
           </v-card>
         </v-slide-item>
@@ -552,5 +552,8 @@ export default {
 }
 .cursor {
   cursor: pointer;
+}
+.v-btn > .v-btn__content .v-icon {
+    color: #A89B84;
 }
 </style>>
