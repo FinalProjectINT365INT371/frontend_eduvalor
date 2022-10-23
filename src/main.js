@@ -14,6 +14,9 @@ import VueGeoLocation from 'vue-browser-geolocation'
 import VueSocialSharing from 'vue-social-sharing'
 Vue.use(VueSocialSharing);
 
+import VueClipboard from 'vue2-clipboard' 
+Vue.use(VueClipboard)
+
 Vue.config.productionTip = false
 
 Vue.use(VueGoogleMaps, {

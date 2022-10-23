@@ -62,24 +62,35 @@
           </div>
         </div>
 
-        <div>
-          <ShareNetwork network="facebook" :url=(shareURL) :title=(title) :quote=title hashtags="EduValor" > 
-            <img src="../../assets/icon/f_logo_RGB-Blue_58 1.png">
+        <div class="d-flex justify-space-around">
+          <ShareNetwork network="facebook" :url=(shareURL) :title=(title) :quote=title hashtags="EduValor">
+            <img src="../../assets/icon/f_logo_RGB-Blue_58 1.png" height="48px">
           </ShareNetwork>
           <ShareNetwork network="twitter" :url=(shareURL) :title=title hashtags="EduValor">
-            <img src="../../assets/icon/Twitter social icons - circle - blue 1.png">
+            <img src="../../assets/icon/Twitter social icons - circle - blue 1.png" height="48px">
           </ShareNetwork>
-          <ShareNetwork network="line" :url=(shareURL) :title=title hashtags="EduValor" >
-            <img src="../../assets/icon/LINE_Brand_icon 1.png">
+          <ShareNetwork network="line" :url=(shareURL) :title=title hashtags="EduValor">
+            <img src="../../assets/icon/LINE_Brand_icon 1.png" height="48px">
           </ShareNetwork>
+          <button @click="copyClipboard"><img src="../../assets/icon/el_paper-clip-alt.png" height="48px"></button>
+          
+          <v-snackbar v-model="snackbar" color="#333333" >
+            {{ snackbarText }}
+
+            <template v-slot:action="{ attrs }">
+              <v-btn color="#AD9F86" text v-bind="attrs" @click="snackbar = false">
+                Close
+              </v-btn>
+            </template>
+          </v-snackbar>
+
         </div>
       </div>
       <v-divider inset></v-divider>
 
-    </div>
-
-    <div class="commentZone">
-      <comment-section />
+      <div class="commentZone">
+        <comment-section />
+      </div>
     </div>
   </div>
 </template>
@@ -99,7 +110,10 @@ export default {
       login: false,
       imgSrc: '',
 
-      shareURL: ''
+      shareURL: '',
+
+      snackbar: false,
+      snackbarText: `คัดลอกลิงก์ไปยัง Clipboard สำเร็จแล้ว`,
 
     };
   },
@@ -148,6 +162,17 @@ export default {
         }
       });
     },
+    copyClipboard() {
+      this.snackbar = true;
+      this.$clipboard(this.shareURL); // this.$clipboard copy any String/Array/Object you want
+    },
+    // clickHandler2() { },
+    // clipboardSuccessHandler() {
+    //   console.log("clipboardSuccessHandler");
+    // },
+    // clipboardErrorHandler() {
+    //   console.log("clipboardErrorHandler");
+    // }
   },
   async mounted() {
     let head = this.$route.params;
