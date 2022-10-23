@@ -57,12 +57,18 @@
     <h1 class="header-content">{{ title }}</h1>
     <v-img :src="imgSrc"></v-img>
     <div class="body-content width: 100%;"></div>
+
+    <div class="">
+      <comment-section/>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import CommentSection from '../../components/CommentSection.vue';
 export default {
+  components: { CommentSection },
   data() {
     return {
       author: "",

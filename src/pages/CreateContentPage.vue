@@ -142,11 +142,14 @@
                 src="../assets/icon/gps.png"
               />แหล่งเรียนรู้ที่เกี่ยวข้อง<span style="color: red">*</span>
             </p>
+            <div class="ggMapPin">
             <p class="sub-detail">
               กรอกตำแหน่ง 1 สถานที่ และส่วนนี้จะแสดงผลเป็น Street View
               (จะเป็นสถานที่แรกที่พูดถึงในบทความ, สถานที่ที่อยากแนะนำเป็นพิเศษ
               ฯลฯ ก็ได้)
             </p>
+            <g-g-map-pinning/>
+          </div>
             <p class="pic-cover">แหล่งเรียนรู้ที่เกี่ยวข้องอื่น ๆ</p>
             <p class="sub-detail">
               กรอกตำแหน่งสถานที่อื่น ๆ เพิ่มเติม
@@ -185,11 +188,13 @@ import "quill/dist/quill.snow.css";
 
 import { quillEditor } from "vue-quill-editor";
 import axios from "axios";
+import GGMapPinning from "../components/GGMapPinning.vue";
 
 export default {
   components: {
     quillEditor,
-  },
+    GGMapPinning
+},
 
   data: () => ({
     valid: false,
@@ -220,7 +225,7 @@ export default {
         toolbar: [
           [{ header: [1, 2, false] }],
           ["bold", "italic", "underline"],
-          ["image"],
+          ["image"],[{'color':[]}]
         ],
       },
       placeholder: "Compose an epic...",

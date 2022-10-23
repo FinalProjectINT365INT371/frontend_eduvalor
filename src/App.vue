@@ -17,7 +17,7 @@
                   v-if="login"
                   src="@/assets/icon/edit_brown.png"
               /></router-link>
-              <router-link to="/CreateContent" class="mx-2 my-auto"
+              <router-link to="/Profile" class="mx-2 my-auto"
                 ><img
                   class="mx-2 my-auto"
                   v-if="login"
@@ -95,6 +95,7 @@ export default {
       location.reload();
     },
   },
+  
   created() {
     if (localStorage.getItem("login") == "true") {
       this.login = true;
