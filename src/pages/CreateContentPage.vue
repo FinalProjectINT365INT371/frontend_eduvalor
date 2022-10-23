@@ -44,7 +44,7 @@
                 <p class="pic-cover">
                   รูปหน้าปกบทความ<span style="color: red">*</span>
                 </p>
-                <p class="sub-detail">ขนาดขั้นต่ำควรเป็น 400 x 188 px</p>
+                <p class="sub-detail">ขนาดขั้นต่ำควรเป็น 400 x 188px</p>
               </v-col>
               <v-col cols="1" sm="1" md="1" lg="1">
                 <v-file-input
@@ -225,7 +225,7 @@ export default {
         toolbar: [
           [{ header: [1, 2, false] }],
           ["bold", "italic", "underline"],
-          ["image"],[{'color':[]}]
+          ["image"],[{'color':[]}], [{ 'align': [] }],
         ],
       },
       placeholder: "Compose an epic...",
@@ -433,7 +433,6 @@ export default {
         formData.append("ContentCategory[]", bufferArray);
         formData.append("CreateBy", this.author_name);
         formData.append("ImageCover", this.image);
-        formData.append("DeleteFlag", false);
         srcArray.forEach((data) => {
           formData.append("ImageFiles", data);
         });

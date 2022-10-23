@@ -11,6 +11,8 @@ import router from './router'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import VueGeoLocation from 'vue-browser-geolocation'
  
+import VueSocialSharing from 'vue-social-sharing'
+Vue.use(VueSocialSharing);
 
 Vue.config.productionTip = false
 
