@@ -252,7 +252,7 @@ import NearbySuggest from "../components/NearbySuggest.vue";
 export default {
     data: () => ({
         contents: [],
-        b1: false,
+        b1: true,
         b2: false,
         b3: false,
         b4: false,

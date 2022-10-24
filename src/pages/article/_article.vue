@@ -50,14 +50,14 @@
             <img class="pr-3 img-relate" src="../../assets/icon/tag.png" />แท็กที่เกี่ยวข้อง
           </p>
           <div>
-            <v-btn elevation="2" rounded outlined :class="{ 'button-active': b1 }">รีวิว</v-btn>
-            <v-btn elevation="2" rounded outlined :class="{ 'button-active': b2 }" class="mx-2">
+            <v-btn v-if="b1" elevation="2" rounded outlined class="button-active">รีวิว</v-btn>
+            <v-btn v-if="b2" elevation="2" rounded outlined class="mx-2 button-active">
               ศิลป์และดนตรี</v-btn>
-            <v-btn elevation="2" rounded outlined class="mx-2" :class="{ 'button-active': b3 }">
+            <v-btn v-if="b3" elevation="2" rounded outlined class="mx-2 button-active">
               วิทยาศาสตร์</v-btn>
-            <v-btn elevation="2" rounded outlined class="mx-2" :class="{ 'button-active': b4 }">
+            <v-btn v-if="b4" elevation="2" rounded outlined class="mx-2 button-active">
               สังคมและการเมือง</v-btn>
-            <v-btn elevation="2" rounded outlined class="mx-2" :class="{ 'button-active': b5 }">
+            <v-btn v-if="b5" elevation="2" rounded outlined class="mx-2 button-active">
               สิ่งแวดล้อม</v-btn>
           </div>
         </div>
@@ -73,8 +73,8 @@
             <img src="../../assets/icon/LINE_Brand_icon 1.png" height="48px">
           </ShareNetwork>
           <button @click="copyClipboard"><img src="../../assets/icon/el_paper-clip-alt.png" height="48px"></button>
-          
-          <v-snackbar v-model="snackbar" color="#333333" >
+
+          <v-snackbar v-model="snackbar" color="#333333">
             {{ snackbarText }}
 
             <template v-slot:action="{ attrs }">
@@ -115,6 +115,11 @@ export default {
       snackbar: false,
       snackbarText: `คัดลอกลิงก์ไปยัง Clipboard สำเร็จแล้ว`,
 
+      b1: false,
+      b2: false,
+      b3: false,
+      b4: false,
+      b5: false,
     };
   },
   methods: {
@@ -196,7 +201,6 @@ export default {
     // this.button = res.data.ContentCategory;
     // console.log(res.data.ContentCategory)
     this.addedCategory(res.data.ContentCategory[0].split(","));
-
     //
 
     // console.log(res.data)

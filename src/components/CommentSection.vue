@@ -11,31 +11,17 @@
     <section class="row d-flex justify-center">
 
       <div class="allComment d-flex flex-column">
-        <div class="row d-flex justify-center align-center">
+        <div v-for="comment in getComment" :key="comment.ContentId" class="row d-flex justify-center align-center">
           <div class="col-1">
             <img src="../assets/icon/user.png" class="rounded-circle img-fluid" width="56" height="56">
           </div>
           <div class="col-9">
             <div>
-              <p> " ทดสอบคอมเมนต์คุณภาพจากทางบ้าน "</p>
+              <p> {{comment.Comment}}</p>
             </div>
             <div style="font-family: 'Kanit';" class="d-flex justify-space-between">
-              <h4 style=" font-weight:600;"> ความคิดเห็นจาก {{ userID }} </h4>
-              <p> เมื่อเวลา </p>
-            </div>
-            <v-divider></v-divider>
-          </div>
-        </div>
-
-        <div class="row d-flex justify-center  align-center">
-          <div class="col-1">
-            <img src="../assets/icon/user.png" class="rounded-circle img-fluid" width="56" height="56">
-          </div>
-          <div class="col-9">
-            <p> " ทดสอบคอมเมนต์คุณภาพจากทางบ้าน "</p>
-            <div style="font-family: 'Kanit';" class="d-flex justify-space-between">
-              <h4 style=" font-weight:600;"> ความคิดเห็นจาก {{ userID }} </h4>
-              <p> เมื่อเวลา </p>
+              <h4 style=" font-weight:600;"> ความคิดเห็นจาก User ID: {{ comment.UserId }} </h4>
+              <p> เมื่อ {{ comment.UpdateDate}}</p>
             </div>
             <v-divider></v-divider>
           </div>
@@ -81,89 +67,66 @@ export default {
       (v) => !!v || "กรุณาใส่ตัวอักษรเพื่อแสดงความคิดเห็น",
       (v) => v.length <= 240 || "ตัวอักษรต้องไม่เกิน 240 ตัว",
     ],
-    userID: 'U_2',
+    userID: "U_2",
     params: undefined,
+    contentID: "",
+
+    getComment: [],
+
   }),
 
   methods: {
-    activeButton(index) {
-      let rawArray = [this.b1, this.b2, this.b3, this.b4, this.b5];
-      if (rawArray[index] == true) {
-        switch (index) {
-          case 0:
-            this.b1 = false;
-            break;
-          case 1:
-            this.b2 = false;
-            break;
-          case 2:
-            this.b3 = false;
-            break;
-          case 3:
-            this.b4 = false;
-            break;
-          case 4:
-            this.b5 = false;
-            break;
-          default:
-            break;
-        }
-      } else {
-        if (this.checkCounter()) {
-          this.categoryValidate = false;
-          switch (index) {
-            case 0:
-              this.b1 = true;
-              break;
-            case 1:
-              this.b2 = true;
-              break;
-            case 2:
-              this.b3 = true;
-              break;
-            case 3:
-              this.b4 = true;
-              break;
-            case 4:
-              this.b5 = true;
-              break;
-            default:
-              break;
-          }
-        }
-      }
-      // let text = this.button[index];
-      // text == "non-active"
-      //   ? (this.button[index] = "button-active")
-      //   : (this.button[index] = "non-active");
-      // console.log(this.button[index]);
-    },
-    
-    submit() {
-      if (this.$refs.form.validate() && this.categoryValidate == false) {
-        const formData = new FormData();
-        formData.append("UserId", this.userID);
-        formData.append("ContentId", this.image);
-        formData.append("Comment", this.commentText);
 
-        if (this.params == undefined) {
-          axios
-            .post(
-              process.env.VUE_APP_BACKEND_API + "/content/comment/addcomment",
-              formData
-            )
-        } else {
-          axios
-            .put(
-              process.env.VUE_APP_BACKEND_API +
-              "/content/comment/updatecomment?id=" +
-              this.params,
-              formData
-            )
-        }
+    submit() {
+      const objComment = {
+        UserId: this.userID,
+        ContentId: this.contentID,
+        Comment: this.commentText
       }
+      const formData = new FormData();
+      formData.append("UserId", this.userID);
+      formData.append("ContentId", this.contentID);
+      formData.append("Comment", this.commentText);
+
+
+      // if (this.params == undefined) {
+      // axios
+      //   .post(
+      //     process.env.VUE_APP_BACKEND_API + "/content/comment/addcomment",
+      //     formData
+      //   )
+      axios.post(
+        process.env.VUE_APP_BACKEND_API + "/content/comment/addcomment",
+        // formData
+        objComment
+      )
+      this.commentText='';
+      // } else {
+      //   axios
+      //     .put(
+      //       process.env.VUE_APP_BACKEND_API +
+      //       "/content/comment/updatecomment?id=" +
+      //       this.params,
+      //       formData
+      //     )
+      // }
     },
   },
+  async mounted() {
+    let head = this.$route.params;
+    if (head != undefined) {
+      this.params = head.id;
+      console.log(this.params)
+      const res = await axios.get(
+        process.env.VUE_APP_BACKEND_API + "/content/getContentByID?id=" +
+        head.id
+      );
+      this.contentID = res.data._id
+      this.getComment = res.data.Comment
+      console.log(this.getComment)
+      // console.log(this.contentID)
+    }
+  }
 }
 </script>
 
