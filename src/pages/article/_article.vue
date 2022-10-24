@@ -124,7 +124,6 @@ export default {
   },
   methods: {
     navTo() {
-      console.log(this.id);
       this.$router.push({
         path: "/CreateContent/" + this.id,
       });
@@ -183,10 +182,7 @@ export default {
     let head = this.$route.params;
     this.id = head.id;
     this.shareURL = 'https://eduvalor-official-dev.firebaseapp.com/' + 'article/' + this.id
-    console.log(this.shareURL)
 
-    // slug = slug.split('/article/')
-    // console.log(slug[1])
     const res = await axios.get(
       process.env.VUE_APP_BACKEND_API + "/content/getContentByID?id=" + head.id
     );
@@ -196,10 +192,6 @@ export default {
 
     //
     this.bodyContent = res.data.TextData;
-    // console.log(res.data.ContentCategory)
-
-    // this.button = res.data.ContentCategory;
-    // console.log(res.data.ContentCategory)
     this.addedCategory(res.data.ContentCategory[0].split(","));
     //
 
@@ -213,8 +205,6 @@ export default {
     resImg.then((result) => {
       this.getImg = result.data;
       const srcUrl = this.getImg.split("imageUrl : ");
-      //console.log(srcUrl[1]);
-
       this.imgSrc = srcUrl[1];
       //console.log(this.contents.imgSrc);
     });

@@ -88,11 +88,23 @@ export default {
   methods: {
     setLogin() {
       localStorage.setItem("login", true);
-      location.reload();
+      // location.reload();
+      this.goToLogin()
     },
     setLogout() {
       localStorage.removeItem("login");
+      this.backHome();
       location.reload();
+    },
+    backHome() {
+      this.$router.push({
+        path: "/",
+      });
+    },
+    goToLogin(){
+      this.$router.push({
+        path: "/Login",
+      });
     },
   },
   

@@ -3,7 +3,7 @@
     <div class="d-flex align-center" style="padding-bottom:3%;">
       <img src="../assets/icon/fa-regular_comment-dots.png" class="comment-pic" style="padding-right:1%">
       <p class="p-comment "
-        style="font-family:'Kanit'; font-weight: 600; font-size: 24px; line-height: 54px; color: #333333;margin-bottom: 0px;">
+        style="font-family:`Kanit`; font-weight: 600; font-size: 24px; line-height: 54px; color: #333333;margin-bottom: 0px;">
         ความคิดเห็นทั้งหมด
       </p>
     </div>
@@ -16,12 +16,32 @@
             <img src="../assets/icon/user.png" class="rounded-circle img-fluid" width="56" height="56">
           </div>
           <div class="col-9">
-            <div>
-              <p> {{comment.Comment}}</p>
+            <div class="d-flex justify-space-between">
+              <p id="cmText"> {{ comment.Comment }}</p>
+              <div class="d-flex justify-end">
+                <div class="d-flex justify-center">
+                  <button elevation="0" class="btn-container" color="#AD9F86" @click="edit(comment)" >
+                    <img class="img-middle unhovered"
+                      src="../assets/icon//commentManage/fluent_document-edit-20-filled.png" width="28px" />
+                    <img class="hovered img-middle"
+                      src="../assets/icon//commentManage/fluent_document-edit-20-filled-bl.png" width="28px">
+                  </button>
+                </div>
+                <div class="d-flex justify-center">
+                  <button elevation="0" class="btn-container" @click="deleteCm" >
+                    <img class=" img-middle cmDelete unhovered"
+                      src="../assets/icon/commentManage/fluent_delete-dismiss-20-filled.png" width="28px" />
+                    <img class="hovered img-middle"
+                      src="../assets/icon/commentManage/fluent_delete-dismiss-20-filled-bl.png" width="28px">
+                  </button>
+                </div>
+
+              </div>
+
             </div>
             <div style="font-family: 'Kanit';" class="d-flex justify-space-between">
               <h4 style=" font-weight:600;"> ความคิดเห็นจาก User ID: {{ comment.UserId }} </h4>
-              <p> เมื่อ {{ comment.UpdateDate}}</p>
+              <p> เมื่อ {{ comment.UpdateDate }}</p>
             </div>
             <v-divider></v-divider>
           </div>
@@ -36,9 +56,9 @@
           </div>
           <div class="col-9">
             <h4>{{ userID }}</h4>
-            <v-form v-model="valid" @submit.prevent="submit" ref="form">
+            <v-form v-model="valid" @submit.prevent="submit" ref="Commentform">
               <v-textarea v-model="commentText" :rules="commentTextRules" solo auto-grow clearable counter
-                :maxlength="240" rows="4" id="inputStatus" placeholder="แสดงความคิดเห็นของคุณต่อคอนเทนต์นี้ที่นี่!">
+                :maxlength="240" rows="4" id="inputStatus" ref="commentRef" placeholder="แสดงความคิดเห็นของคุณต่อคอนเทนต์นี้ที่นี่!">
               </v-textarea>
               <div class="d-flex ">
                 <v-checkbox v-model="checkbox" :label="`บ.ก. EduValor ขอแนะนำคอนเทนต์นี้!: ${checkbox.toString()}`"
@@ -72,7 +92,7 @@ export default {
     contentID: "",
 
     getComment: [],
-
+    commentID: '',
   }),
 
   methods: {
@@ -88,43 +108,58 @@ export default {
       formData.append("ContentId", this.contentID);
       formData.append("Comment", this.commentText);
 
-
-      // if (this.params == undefined) {
-      // axios
-      //   .post(
-      //     process.env.VUE_APP_BACKEND_API + "/content/comment/addcomment",
-      //     formData
-      //   )
       axios.post(
         process.env.VUE_APP_BACKEND_API + "/content/comment/addcomment",
         // formData
         objComment
       )
-      this.commentText='';
-      // } else {
-      //   axios
-      //     .put(
-      //       process.env.VUE_APP_BACKEND_API +
-      //       "/content/comment/updatecomment?id=" +
-      //       this.params,
-      //       formData
-      //     )
-      // }
+      this.commentText = '';
+    },
+
+    edit: function(e) {
+      const originalValue = e
+      this.userID = originalValue.UserId;
+      this.contentID = originalValue.ContentId;
+      this.commentText = originalValue.Comment;
+      this.commentID = originalValue._id;
+
+      console.log(originalValue)
+      console.log(this.contentID)
+
+      const objCommentEdit = {
+        UserId: this.userID,
+        ContentId: this.contentID,
+        Comment: this.commentText,
+        _id: this.commentID,
+      }
+      axios
+        .put(
+          process.env.VUE_APP_BACKEND_API +
+          "/content/comment/updatecomment",
+          objCommentEdit
+        )
+    },
+
+    deleteCm() {
+      axios
+        .delete(
+          process.env.VUE_APP_BACKEND_API + "/content/comment/deletecomment"
+        )
     },
   },
   async mounted() {
     let head = this.$route.params;
     if (head != undefined) {
       this.params = head.id;
-      console.log(this.params)
       const res = await axios.get(
         process.env.VUE_APP_BACKEND_API + "/content/getContentByID?id=" +
         head.id
       );
       this.contentID = res.data._id
       this.getComment = res.data.Comment
+      // this.commentID = res.data.Comment._id
+
       console.log(this.getComment)
-      // console.log(this.contentID)
     }
   }
 }
@@ -225,29 +260,40 @@ body {
       transition: all 1s;
     }
   }
+}
 
-  v-divider {
-    padding-bottom: 1%;
-  }
+v-divider {
+  padding-bottom: 1%;
+}
 
-  // อันนี้ไม่ติด งองมาก
-  .p-comment {
-    font-family: "Kanit" !important;
-    font-style: bold;
-    font-weight: 700;
-    font-size: 36px;
-    line-height: 54px;
-    color: #333333;
-    margin-bottom: 0px;
+.p-comment {
+  font-family: "Kanit";
+  font-style: bold;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 54px;
+  color: #333333;
+  margin-bottom: 0px;
 
-  }
+}
 
-  .comment-pic {
-    padding-right: 10%;
-  }
+.btn-container {
+  display: inline-block;
+}
 
-  #comment-heading {
-    padding-bottom: 3%;
-  }
+.btn-container .hovered {
+  display: none;
+}
+
+.btn-container:hover .unhovered {
+  display: none;
+}
+
+.btn-container:hover .hovered {
+  display: inline-block;
+}
+
+#cmText {
+  width: 75%;
 }
 </style>

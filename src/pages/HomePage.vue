@@ -348,7 +348,7 @@ export default {
     mounted() {
         // let buffer;
         const res = axios.get(process.env.VUE_APP_BACKEND_API + "/content/");
-        console.log(res);
+        // console.log(res);
         res.then((result) => {
             let reviewBuffer = [];
             // buffer = result.data;
