@@ -400,7 +400,7 @@ export default {
             this.scienceNews = this.scienceNews.slice(0, 4);
             this.musicNews = this.musicNews.slice(0, 4);
             this.politicsNews = this.politicsNews.slice(0, 4);
-            console.log(this.contents);
+            // console.log(this.contents);
         });
     },
     components: { NearbySuggest }

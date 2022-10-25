@@ -57,7 +57,7 @@
                 /></router-link>
               </v-list-item>
               <v-list-item v-if="login" class="d-flex justify-center">
-                <router-link to="/CreateContent" class="mx-2 my-auto"
+                <router-link to="/Profile" class="mx-2 my-auto"
                   ><img
                     class="mx-2 my-auto"
                     src="@/assets/icon/user.png"
@@ -88,8 +88,9 @@ export default {
   methods: {
     setLogin() {
       localStorage.setItem("login", true);
-      // location.reload();
-      this.goToLogin()
+      this.goToLogin()      
+      // setTimeout(location.reload(), 6000);
+
     },
     setLogout() {
       localStorage.removeItem("login");

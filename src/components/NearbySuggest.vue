@@ -1,7 +1,7 @@
 <template>
   <div>      
     <!-- <GmapAutocomplete :type="shopping_mall"/> -->
-    <gmap-map :center="center" :zoom="15" map-type-id="terrain" :types="museum"  style="width: 1100px; height: 300px;">
+    <gmap-map :center="center" :zoom="15" map-type-id="terrain" style="width: 1100px; height: 300px;">
       <gmap-marker :key="index" v-for="(m, index) in markers" :position="m.position" :clickable="true"
             :draggable="false" @click="center=m.position" />
     </gmap-map>

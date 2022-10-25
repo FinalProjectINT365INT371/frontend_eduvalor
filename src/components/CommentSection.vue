@@ -20,7 +20,7 @@
               <p id="cmText"> {{ comment.Comment }}</p>
               <div class="d-flex justify-end">
                 <div class="d-flex justify-center">
-                  <button elevation="0" class="btn-container" color="#AD9F86" @click="edit(comment)" >
+                  <button elevation="0" class="btn-container" color="#AD9F86" @click="editCall(comment)">
                     <img class="img-middle unhovered"
                       src="../assets/icon//commentManage/fluent_document-edit-20-filled.png" width="28px" />
                     <img class="hovered img-middle"
@@ -28,7 +28,7 @@
                   </button>
                 </div>
                 <div class="d-flex justify-center">
-                  <button elevation="0" class="btn-container" @click="deleteCm" >
+                  <button elevation="0" class="btn-container" @click="deleteCm(comment)">
                     <img class=" img-middle cmDelete unhovered"
                       src="../assets/icon/commentManage/fluent_delete-dismiss-20-filled.png" width="28px" />
                     <img class="hovered img-middle"
@@ -58,7 +58,8 @@
             <h4>{{ userID }}</h4>
             <v-form v-model="valid" @submit.prevent="submit" ref="Commentform">
               <v-textarea v-model="commentText" :rules="commentTextRules" solo auto-grow clearable counter
-                :maxlength="240" rows="4" id="inputStatus" ref="commentRef" placeholder="แสดงความคิดเห็นของคุณต่อคอนเทนต์นี้ที่นี่!">
+                :maxlength="240" rows="4" id="inputStatus" ref="commentRef"
+                placeholder="แสดงความคิดเห็นของคุณต่อคอนเทนต์นี้ที่นี่!">
               </v-textarea>
               <div class="d-flex ">
                 <v-checkbox v-model="checkbox" :label="`บ.ก. EduValor ขอแนะนำคอนเทนต์นี้!: ${checkbox.toString()}`"
@@ -92,58 +93,62 @@ export default {
     contentID: "",
 
     getComment: [],
-    commentID: '',
+    commentID: undefined,
   }),
 
   methods: {
-
     submit() {
       const objComment = {
         UserId: this.userID,
         ContentId: this.contentID,
-        Comment: this.commentText
+        Comment: this.commentText,
+        CommentId: this.commentID,
       }
-      const formData = new FormData();
-      formData.append("UserId", this.userID);
-      formData.append("ContentId", this.contentID);
-      formData.append("Comment", this.commentText);
-
-      axios.post(
-        process.env.VUE_APP_BACKEND_API + "/content/comment/addcomment",
-        // formData
-        objComment
-      )
+      if (this.commentID == undefined) {
+        axios.post(
+          process.env.VUE_APP_BACKEND_API + "/content/comment/addcomment",
+          objComment
+        )
+      } else {
+        axios
+          .put(
+            process.env.VUE_APP_BACKEND_API +
+            "/content/comment/updatecomment",
+            objComment
+          )
+          .then(
+            location.reload()
+          )
+      }
       this.commentText = '';
     },
 
-    edit: function(e) {
+    editCall: function (e) {
       const originalValue = e
       this.userID = originalValue.UserId;
-      this.contentID = originalValue.ContentId;
-      this.commentText = originalValue.Comment;
+      this.contentID = this.params;
       this.commentID = originalValue._id;
-
-      console.log(originalValue)
-      console.log(this.contentID)
-
-      const objCommentEdit = {
-        UserId: this.userID,
-        ContentId: this.contentID,
-        Comment: this.commentText,
-        _id: this.commentID,
-      }
-      axios
-        .put(
-          process.env.VUE_APP_BACKEND_API +
-          "/content/comment/updatecomment",
-          objCommentEdit
-        )
+      this.commentText = originalValue.Comment;
     },
 
-    deleteCm() {
+    deleteCm: function (d) {
+      const deleteItem = d
+      this.userID = deleteItem.UserId;
+      this.contentID = this.params;
+      this.commentID = deleteItem._id;
+
       axios
         .delete(
-          process.env.VUE_APP_BACKEND_API + "/content/comment/deletecomment"
+          process.env.VUE_APP_BACKEND_API + "/content/comment/deletecomment", {
+          data: {
+            UserId: this.userID,
+            ContentId: this.contentID,
+            CommentId: this.commentID,
+          }
+        }
+        )
+        .then(
+          setTimeout(location.reload(), 6000)
         )
     },
   },
@@ -157,9 +162,6 @@ export default {
       );
       this.contentID = res.data._id
       this.getComment = res.data.Comment
-      // this.commentID = res.data.Comment._id
-
-      console.log(this.getComment)
     }
   }
 }
