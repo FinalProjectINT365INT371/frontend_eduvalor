@@ -2,29 +2,37 @@
     <div>
         <div class="container" id="container">
             <div class="form-container sign-up-container">
-                <form action="#">
+                <v-form action="#" v-model="valid" @submit.prevent="submit" ref="form">
                     <h1>สมัครสมาชิก</h1>
-                    <span>กรุณากรอกข้อมูลให้ครบทุกช่อง</span>
-                    <input type="text" placeholder="Username" />
-                    <input type="password" placeholder="Password" />
-                    <input type="email" placeholder="Email" />
-                    <input type="text" placeholder="Display Name" />
-                    <div class="d-flex justify-space-between" id="profileUpload">
-                        <div class="d-flex align-center justify-space-between">
-                            <p class="pic-cover">
-                                รูปโปรไฟล์<span style="color: red">*</span>
-                            </p>
-                            <v-file-input v-model="image" @change="Preview_image" hide-input :rules="imageRules"
-                                truncate-length="15"></v-file-input>
-                        </div>
-                        <v-avatar size="100"><img :src="url" /></v-avatar>
-                    </div>
+                    <span class="body-1 pb-5">กรุณากรอกข้อมูลให้ครบทุกช่อง</span>
+                    <div>
+                        <v-text-field background-color="#EDE6DA" type="text" solo v-model="username"
+                            :rules="usernameRule" placeholder="Username" />
 
+                        <v-text-field background-color="#EDE6DA" solo v-model="password" :rules="passwordRule"
+                            type="password" placeholder="Password" />
+
+                        <v-text-field background-color="#EDE6DA" v-model="email" :rules="email" solo type="email" placeholder="Email" />
+
+                        <v-text-field background-color="#EDE6DA" solo v-model="displayName" :rules="displayNameRule"
+                            type="text" placeholder="Display Name" />
+
+                        <div class="d-flex justify-space-between" id="profileUpload">
+                            <div class="d-flex align-center justify-space-between">
+                                <p class="pic-cover">
+                                    รูปโปรไฟล์<span style="color: red">*</span>
+                                </p>
+                                <v-file-input v-model="image" @change="Preview_image" hide-input :rules="imageRules"
+                                    truncate-length="15"></v-file-input>
+                            </div>
+                            <v-avatar size="100"><img :src="url" /></v-avatar>
+                        </div>
+                    </div>
                     <button>Sign Up</button>
-                </form>
+                </v-form>
             </div>
             <div class="form-container sign-in-container">
-                <form action="#">
+                <v-form action="#">
                     <h1>เข้าสู่ระบบ</h1>
                     <input type="email" placeholder="Username" />
                     <input type="password" placeholder="Password" />
@@ -35,7 +43,7 @@
                         <a href="#" class="social"><img src="../assets/icon/login/facebook_f_logo_icon_145290.png"></a>
                     </div>
 
-                </form>
+                </v-form>
             </div>
             <div class="overlay-container">
                 <div class="overlay">
@@ -59,6 +67,29 @@
 <script>
 export default {
     data: () => ({
+        username: '',
+        usernameRule: [
+            (v) => !!v || "กรุณาใส่ Username",
+            (v) => v.length <= 20 || "Username ต้องมีไม่เกิน 20 ตัวอักษร",
+        ],
+
+        password: '',
+        passwordRule: [
+            (v) => !!v || "กรุณาใส่ Password",
+            (v) => v.length >= 8 || "Password ต้องมีขั้นต่ำ 8 ตัวอักษร",
+        ],
+
+        email: '',
+        emailRule: [
+            (v) => !!v || "กรุณาใส่ Email",
+        ],
+
+        displayName: '',
+        displayNameRule: [
+            (v) => !!v || "กรุณาใส่ชื่อที่ต้องการแสดงผลบนเว็บ",
+            (v) => v.length <= 30 || "Username ต้องมีไม่เกิน 30 ตัวอักษร",
+        ],
+
         image: null,
         imageRules: [(v) => !!v || "กรุณาเพิ่มไฟล์"],
 
@@ -82,8 +113,15 @@ export default {
         Preview_image() {
             this.url = URL.createObjectURL(this.image);
         },
-    }
+        emailErrors() {
+            const errors = []
+            if (!this.$v.email.$dirty) return errors
+            !this.$v.email.email && errors.push('Must be valid e-mail')
+            !this.$v.email.required && errors.push('E-mail is required')
+            return errors
+        }
 
+    },
 }
 </script>
 
@@ -152,21 +190,22 @@ button.ghost {
     border-color: #FFFFFF;
 }
 
-form {
+.v-form {
     background-color: #FFFFFF;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 0 50px;
+    padding: 15%;
     height: 100%;
     text-align: center;
 }
 
-input {
+input,
+.v-text-field {
     /* background-color: #eee; */
     font-family: "Bai Jamjuree";
-    background-color:  #EDE6DA;
+    /* background-color: #EDE6DA; */
     border: none;
     padding: 12px 15px;
     margin: 8px 0;
@@ -182,7 +221,8 @@ input {
     overflow: hidden;
     width: 768px;
     max-width: 100%;
-    min-height: 560px;
+    min-height: 600px;
+    margin-top: 2%;
 }
 
 .form-container {
@@ -322,12 +362,13 @@ input {
     border-top-style: solid;
     border-color: #EDE6DA;
 }
+
 .v-text-field {
     padding-top: 0px;
     margin-top: 0px;
 }
 
-#profileUpload{
+#profileUpload {
     width: 85%;
 }
 </style>

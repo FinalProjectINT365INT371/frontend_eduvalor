@@ -40,8 +40,13 @@
 
             </div>
             <div style="font-family: 'Kanit';" class="d-flex justify-space-between">
-              <h4 style=" font-weight:600;"> ความคิดเห็นจาก User ID: {{ comment.UserId }} </h4>
-              <p> เมื่อ {{ comment.UpdateDate }}</p>
+              <h4 style=" font-weight:600; " v-if="comment.Displayname"> ความคิดเห็นจาก {{ comment.Displayname}} </h4>
+              <h4 style=" font-weight:600;" v-if="!comment.Displayname"> ความคิดเห็นจาก User ID: {{ comment.UserId}} </h4>
+
+              <!-- <p> เมื่อ {{ comment.UpdateDate }}</p> -->
+              <p v-if="comment.UpdateDate"> เมื่อ {{ comment.UpdateDate }}</p>
+              <p v-if="!comment.UpdateDate"> เมื่อสักครู่</p>
+
             </div>
             <v-divider></v-divider>
           </div>
@@ -108,7 +113,9 @@ export default {
         axios.post(
           process.env.VUE_APP_BACKEND_API + "/content/comment/addcomment",
           objComment
+
         )
+        this.getComment.push(objComment)
       } else {
         axios
           .put(
@@ -129,6 +136,8 @@ export default {
       this.contentID = this.params;
       this.commentID = originalValue._id;
       this.commentText = originalValue.Comment;
+
+      console.log(originalValue)
     },
 
     deleteCm: function (d) {
@@ -149,6 +158,8 @@ export default {
         )
         .then(
           setTimeout(location.reload(), 6000)
+          // this.$router.go(),
+          // console.log("Have been delete fine and refreshed")
         )
     },
   },
