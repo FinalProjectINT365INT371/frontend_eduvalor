@@ -29,31 +29,28 @@
                 </div>
                 <div class="d-flex justify-center">
                   <button elevation="0" class="btn-container" @click="deleteCm(comment)">
+
                     <img class=" img-middle cmDelete unhovered"
                       src="../assets/icon/commentManage/fluent_delete-dismiss-20-filled.png" width="28px" />
                     <img class="hovered img-middle"
                       src="../assets/icon/commentManage/fluent_delete-dismiss-20-filled-bl.png" width="28px">
                   </button>
                 </div>
-
               </div>
 
             </div>
             <div style="font-family: 'Kanit';" class="d-flex justify-space-between">
-              <h4 style=" font-weight:600; " v-if="comment.Displayname"> ความคิดเห็นจาก {{ comment.Displayname}} </h4>
-              <h4 style=" font-weight:600;" v-if="!comment.Displayname"> ความคิดเห็นจาก User ID: {{ comment.UserId}} </h4>
+              <h4 style=" font-weight:600; " v-if="comment.Displayname"> ความคิดเห็นจาก {{ comment.Displayname }} </h4>
+              <h4 style=" font-weight:600;" v-if="!comment.Displayname"> ความคิดเห็นจาก User ID: {{ comment.UserId }}
+              </h4>
 
-              <!-- <p> เมื่อ {{ comment.UpdateDate }}</p> -->
               <p v-if="comment.UpdateDate"> เมื่อ {{ comment.UpdateDate }}</p>
-              <p v-if="!comment.UpdateDate"> เมื่อสักครู่</p>
 
             </div>
             <v-divider></v-divider>
           </div>
         </div>
       </div>
-
-
       <aside class="card">
         <div class="row d-flex justify-center">
           <div class="col-1">
@@ -102,7 +99,22 @@ export default {
   }),
 
   methods: {
-    submit() {
+
+    async fetchData() {
+      let head = this.$route.params;
+      if (head != undefined) {
+        this.params = head.id;
+        const res = await axios.get(
+          process.env.VUE_APP_BACKEND_API + "/content/getContentByID?id=" +
+          head.id
+        );
+        this.contentID = res.data._id
+        this.getComment = res.data.Comment
+        console.log(this.getComment);
+      }
+    },
+
+    async submit() {
       const objComment = {
         UserId: this.userID,
         ContentId: this.contentID,
@@ -110,22 +122,28 @@ export default {
         CommentId: this.commentID,
       }
       if (this.commentID == undefined) {
-        axios.post(
+        const res = await axios.post(
           process.env.VUE_APP_BACKEND_API + "/content/comment/addcomment",
           objComment
 
         )
-        this.getComment.push(objComment)
+        if (res) { this.getComment.push(objComment); }
+        this.fetchData()
+
       } else {
-        axios
+        const res = await axios
           .put(
             process.env.VUE_APP_BACKEND_API +
             "/content/comment/updatecomment",
             objComment
           )
-          .then(
-            location.reload()
-          )
+        if (res) {
+          const objIndex = this.getComment.findIndex((item) => item._id == objComment.CommentId)
+          console.log(objIndex);
+          this.getComment[objIndex].Comment = this.commentText
+        }
+        this.fetchData()
+
       }
       this.commentText = '';
     },
@@ -140,40 +158,32 @@ export default {
       console.log(originalValue)
     },
 
-    deleteCm: function (d) {
+    deleteCm: async function (d) {
       const deleteItem = d
       this.userID = deleteItem.UserId;
       this.contentID = this.params;
       this.commentID = deleteItem._id;
+      console.log(this.commentID)
 
-      axios
-        .delete(
-          process.env.VUE_APP_BACKEND_API + "/content/comment/deletecomment", {
-          data: {
-            UserId: this.userID,
-            ContentId: this.contentID,
-            CommentId: this.commentID,
-          }
+      const res = await axios.delete(
+        process.env.VUE_APP_BACKEND_API + "/content/comment/deletecomment", {
+        data: {
+          UserId: this.userID,
+          ContentId: this.contentID,
+          CommentId: this.commentID,
         }
-        )
-        .then(
-          setTimeout(location.reload(), 6000)
-          // this.$router.go(),
-          // console.log("Have been delete fine and refreshed")
-        )
-    },
-  },
-  async mounted() {
-    let head = this.$route.params;
-    if (head != undefined) {
-      this.params = head.id;
-      const res = await axios.get(
-        process.env.VUE_APP_BACKEND_API + "/content/getContentByID?id=" +
-        head.id
-      );
-      this.contentID = res.data._id
-      this.getComment = res.data.Comment
+      }
+      )
+      if (res) {
+        this.fetchData()
+        this.getComment = this.getComment.filter((item) => item.CommentId !== deleteItem._id)
+      }
+      this.commentID = undefined
     }
+  },
+  mounted() {
+    this.fetchData()
+    console.log(this.getComment);
   }
 }
 </script>
