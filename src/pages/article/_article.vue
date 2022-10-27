@@ -89,6 +89,7 @@
       <v-divider inset></v-divider>
 
       <div class="commentZone">
+        <approve-comment />
         <comment-section />
       </div>
     </div>
@@ -97,9 +98,12 @@
 
 <script>
 import axios from "axios";
-import CommentSection from '../../components/CommentSection.vue';
+// import CommentSection from '../../components/CommentSection.vue';
+import ApproveComment from '../../components/ApproveComment.vue';
 export default {
-  components: { CommentSection },
+  components: { 
+    // CommentSection, 
+    ApproveComment },
   data() {
     return {
       author: "",
@@ -200,7 +204,7 @@ export default {
 
     // this.latLng = res.data.Coordinate[0];
     // this.changeStringToObj();
-    
+
     //
     this.bodyContent = res.data.TextData;
     this.addedCategory(res.data.ContentCategory[0].split(","));
