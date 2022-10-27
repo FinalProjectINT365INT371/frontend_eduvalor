@@ -1,9 +1,34 @@
 version: 2.1
 
-jobs:
-  development:
+executors:
+  node14:
     docker:
-      - image: 'cimg/node:17.9.0'
+      - image: cimg/node:14.18.0
+    working_directory: ~/project
+
+commands:
+  env-prod:
+    description: "test .env variable"
+    steps:
+      - checkout
+      - run:
+          name: "What a number in this .env"
+          command: touch .env ; echo "VUE_APP_BACKEND_API_PROD=$VUE_APP_BACKEND_API_PROD" >> .env
+      - run:
+          name: "Check file .env"
+          command: ls -la ; cat .env
+  env-dev:
+    description: "test .env variable"
+    steps:
+      - checkout
+      - run:
+          name: "What a number in this .env"
+          command: touch .env ; echo "VUE_APP_BACKEND_API=$VUE_APP_BACKEND_API" >> .env ;
+      - run:
+          name: "Check file .env"
+          command: cat .env
+  build:
+    description: 'Builds the project'
     steps:
       - checkout
       - restore_cache:
@@ -20,18 +45,23 @@ jobs:
           paths:
             - ./node_modules
       - run:
-          name: check directory
-          command: ls -la ; 
+          name: Firebase install
+          command: yarn add firebase-tools
       - run:
-          name: check software update
-          command: sudo apt-get update -y ;
-          #- run:
-              #name: Build for current environment.
-          #command: yarn build
-          #build: 
-      - add_ssh_keys:
-          fingerprints:
-            - ${SSH_FINGERPRINT}
+          name: Build for current environment.
+          command: yarn build
+          build:
+      - run:
+          name: check that firebase.json
+          command: cat firebase.json
+  deploy:
+    description: 'Deploy project to the designated environment'
+    parameters:
+      env:
+        type: string
+        default: 'dev'
+    steps:
+      - checkout
       - run:
           name: Firebase Deploy
           command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN" --non-interactive --only hosting:<< parameters.env >>
@@ -40,23 +70,23 @@ jobs:
   build-deploy-dev:
     executor: node14
     steps:
-      - env-dev
+      # - env-dev
       - build
       - deploy:
           env: 'dev'
   build-deploy-production:
     executor: node14
     steps:
-      # - env-prod
+      - env-prod
       - build
       - deploy:
           env: 'prod'
 
 workflows:
   version: 2
-  build-test-deploy:
+  dev:
     jobs:
-      - development:
+      - build-deploy-dev:
           filters:
             branches:
               only: dev
