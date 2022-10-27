@@ -2,15 +2,15 @@
   <div>
     <v-sheet class="mx-auto" max-width="100%">
       <v-slide-group v-model="model" class="pa-4" show-arrows>
-        <v-slide-item v-for="n in 5" :key="n" v-slot="{ active, toggle }">
+        <v-slide-item v-for="(topLoop,index) in eduvalor" :key="index" v-slot="{ active, toggle }">
           <v-card
             :color="active ? undefined : 'grey lighten-1'"
             class="ma-4"
-            height="350"
+            height="300"
             width="660"
-            @click="toggle"
+            @click="toggle, navTo(topLoop._id)"
           >
-            <img src="../assets/demo/img1.png" alt="" />
+            <v-img :src="topLoop.imgSrc" alt="" width="100%" />
             <v-row class="fill-height" align="center" justify="center"> </v-row>
           </v-card>
         </v-slide-item>
@@ -24,7 +24,8 @@
             src="../assets/icon/gps.png"
           />ส่องแหล่งเรียนรู้ใกล้ตัวคุณ!
         </p>
-        <img src="../assets/gpsmap.png" alt="" width="100%" />
+        <!-- <img src="../assets/gpsmap.png" alt="" width="100%" /> -->
+        <NearbySuggest/>
 
         <div>
           <p class="pic-cover">
@@ -247,171 +248,162 @@
 </template>
 <script>
 import axios from "axios";
+import NearbySuggest from "../components/NearbySuggest.vue";
 export default {
-  data: () => ({
-    contents: [],
-    b1: false,
-    b2: false,
-    b3: false,
-    b4: false,
-    b5: false,
-    model: "",
-    getImg: [],
-    reviewNews: [],
-    eduvalor: [],
-    envNews: [],
-    scienceNews: [],
-    musicNews: [],
-    politicsNews: [],
-    knowledge: [],
-    news: [
-      {
-        title:
-          "ปักหมุด เที่ยวกรุงเทพมิวเซียมสยาม เล่าเรื่องเมืองไทย ในพิพิธภัณฑ์มีชีวิต",
-        author: "บก. EduValor",
-        date: "5/8/2565 17:03:07",
-        img: "../assets/demo/img1.png",
-      },
-      {
-        title:
-          "8 อควาเรียม เที่ยวกรุงเทพ และ ใกล้กรุงเทพ เที่ยวสนุก ทั้งครอบครัว วันหยุดสั้นๆ",
-        author: "บก. EduValor",
-        date: "5/8/2565 17:03:07",
-        img: "../assets/demo/img2.png",
-      },
-      {
-        title:
-          "พิพิธภัณฑ์วิทยาศาสตร์แห่ง ชาติ ปทุมธานี เที่ยวสนุก เรียน รู้มันส์ ไปกับเทคโนโลยีล้ำ ๆ",
-        author: "บก. EduValor",
-        date: "5/8/2565 17:03:07",
-        img: "../assets/demo/img3.png",
-      },
-    ],
-  }),
-
-  methods: {
-    navTo(articleId) {
-      this.$router.push({
-        path: "/article/" + articleId,
-      });
+    data: () => ({
+        contents: [],
+        b1: true,
+        b2: false,
+        b3: false,
+        b4: false,
+        b5: false,
+        model: "",
+        getImg: [],
+        reviewNews: [],
+        eduvalor: [],
+        envNews: [],
+        scienceNews: [],
+        musicNews: [],
+        politicsNews: [],
+        knowledge: [],
+        news: [
+            {
+                title: "ปักหมุด เที่ยวกรุงเทพมิวเซียมสยาม เล่าเรื่องเมืองไทย ในพิพิธภัณฑ์มีชีวิต",
+                author: "บก. EduValor",
+                date: "5/8/2565 17:03:07",
+                img: "../assets/demo/img1.png",
+            },
+            {
+                title: "8 อควาเรียม เที่ยวกรุงเทพ และ ใกล้กรุงเทพ เที่ยวสนุก ทั้งครอบครัว วันหยุดสั้นๆ",
+                author: "บก. EduValor",
+                date: "5/8/2565 17:03:07",
+                img: "../assets/demo/img2.png",
+            },
+            {
+                title: "พิพิธภัณฑ์วิทยาศาสตร์แห่ง ชาติ ปทุมธานี เที่ยวสนุก เรียน รู้มันส์ ไปกับเทคโนโลยีล้ำ ๆ",
+                author: "บก. EduValor",
+                date: "5/8/2565 17:03:07",
+                img: "../assets/demo/img3.png",
+            },
+        ],
+    }),
+    methods: {
+        navTo(articleId) {
+            this.$router.push({
+                path: "/article/" + articleId,
+            });
+        },
+        selectOne(index) {
+            switch (index) {
+                case 1:
+                    this.b1 = true;
+                    this.b2 = false;
+                    this.b3 = false;
+                    this.b4 = false;
+                    this.b5 = false;
+                    this.knowledge = this.news;
+                    break;
+                case 2:
+                    this.b1 = false;
+                    this.b2 = true;
+                    this.b3 = false;
+                    this.b4 = false;
+                    this.b5 = false;
+                    this.knowledge = this.musicNews;
+                    break;
+                case 3:
+                    this.b1 = false;
+                    this.b2 = false;
+                    this.b3 = true;
+                    this.b4 = false;
+                    this.b5 = false;
+                    this.knowledge = this.scienceNews;
+                    break;
+                case 4:
+                    this.b1 = false;
+                    this.b2 = false;
+                    this.b3 = false;
+                    this.b4 = true;
+                    this.b5 = false;
+                    this.knowledge = this.politicsNews;
+                    break;
+                case 5:
+                    this.b1 = false;
+                    this.b2 = false;
+                    this.b3 = false;
+                    this.b4 = false;
+                    this.b5 = true;
+                    this.knowledge = this.envNews;
+                    break;
+                default:
+                    break;
+            }
+        },
+        filterContent() {
+            this.$router.push({
+                path: "/SeeMore",
+            });
+        },
     },
-    selectOne(index) {
-      switch (index) {
-        case 1:
-          this.b1 = true;
-          this.b2 = false;
-          this.b3 = false;
-          this.b4 = false;
-          this.b5 = false;
-          this.knowledge = this.news;
-          break;
-        case 2:
-          this.b1 = false;
-          this.b2 = true;
-          this.b3 = false;
-          this.b4 = false;
-          this.b5 = false;
-          this.knowledge = this.musicNews;
-          break;
-        case 3:
-          this.b1 = false;
-          this.b2 = false;
-          this.b3 = true;
-          this.b4 = false;
-          this.b5 = false;
-          this.knowledge = this.scienceNews;
-          break;
-        case 4:
-          this.b1 = false;
-          this.b2 = false;
-          this.b3 = false;
-          this.b4 = true;
-          this.b5 = false;
-          this.knowledge = this.politicsNews;
-          break;
-        case 5:
-          this.b1 = false;
-          this.b2 = false;
-          this.b3 = false;
-          this.b4 = false;
-          this.b5 = true;
-          this.knowledge = this.envNews;
-          break;
-        default:
-          break;
-      }
-    },
-    filterContent() {
-      this.$router.push({
-        path: "/SeeMore",
-      });
-    },
-  },
-  mounted() {
-    // let buffer;
-    const res = axios.get(process.env.VUE_APP_BACKEND_API_PROD +"/content/");
-    console.log(res);
-    res.then((result) => {
-      let reviewBuffer = [];
-      // buffer = result.data;
-      this.contents = result.data;
-      //console.log(result.data);
-      this.contents = this.contents.map(function (el) {
-        const o = Object.assign({}, el);
-        o.imgSrc = "";
-        return o;
-      });
-
-      for (let index = 0; index < this.contents.length; index++) {
-        let Url =
-          this.contents[index].ImageUrl[
-            this.contents[index].ImageUrl.length - 1
-          ];
-        let textCategory = this.contents[index].ContentCategory[0];
-        if (textCategory.includes("รีวิว")) {
-          reviewBuffer.push(this.contents[index]);
-        }
-        if (textCategory.includes("สิ่งแวดล้อม")) {
-          this.envNews.push(this.contents[index]);
-        }
-        if (textCategory.includes("วิทยาศาสตร์")) {
-          this.scienceNews.push(this.contents[index]);
-        }
-        if (textCategory.includes("ศิลป์และดนตรี")) {
-          this.musicNews.push(this.contents[index]);
-        }
-        if (textCategory.includes("สังคมและการเมือง")) {
-          this.politicsNews.push(this.contents[index]);
-        }
-        if (this.contents[index].CreateBy == "EduValor") {
-          this.eduvalor.push(this.contents[index]);
-        }
-        //console.log(Url);
-        const resImg = axios.get(
-          process.env.VUE_APP_BACKEND_API_PROD +
-            "/content/getImageContentByName?imageName=" +
-            Url
-        );
-        //console.log(resImg);
-        resImg.then((result) => {
-          this.getImg = result.data;
-          const srcUrl = this.getImg.split("imageUrl : ");
-          //console.log(srcUrl[1]);
-
-          this.contents[index].imgSrc = srcUrl[1];
-          //console.log(this.contents.imgSrc);
+    mounted() {
+        // let buffer;
+        const res = axios.get(process.env.VUE_APP_BACKEND_API + "/content/");
+        // console.log(res);
+        res.then((result) => {
+            let reviewBuffer = [];
+            // buffer = result.data;
+            this.contents = result.data;
+            //console.log(result.data);
+            this.contents = this.contents.map(function (el) {
+                const o = Object.assign({}, el);
+                o.imgSrc = "";
+                return o;
+            });
+            for (let index = 0; index < this.contents.length; index++) {
+                let Url = this.contents[index].ImageUrl[this.contents[index].ImageUrl.length - 1];
+                let textCategory = this.contents[index].ContentCategory[0];
+                if (textCategory.includes("รีวิว")) {
+                    reviewBuffer.push(this.contents[index]);
+                }
+                if (textCategory.includes("สิ่งแวดล้อม")) {
+                    this.envNews.push(this.contents[index]);
+                }
+                if (textCategory.includes("วิทยาศาสตร์")) {
+                    this.scienceNews.push(this.contents[index]);
+                }
+                if (textCategory.includes("ศิลป์และดนตรี")) {
+                    this.musicNews.push(this.contents[index]);
+                }
+                if (textCategory.includes("สังคมและการเมือง")) {
+                    this.politicsNews.push(this.contents[index]);
+                }
+                if (this.contents[index].CreateBy == "EduValor") {
+                    this.eduvalor.push(this.contents[index]);
+                }
+                //console.log(Url);
+                const resImg = axios.get(process.env.VUE_APP_BACKEND_API +
+                    "/content/getImageContentByName?imageName=" +
+                    Url);
+                //console.log(resImg);
+                resImg.then((result) => {
+                    this.getImg = result.data;
+                    const srcUrl = this.getImg.split("imageUrl : ");
+                    //console.log(srcUrl[1]);
+                    this.contents[index].imgSrc = srcUrl[1];
+                    //console.log(this.contents.imgSrc);
+                });
+            }
+            this.news = this.contents.slice(0, 4);
+            this.knowledge = this.contents.slice(0, 4);
+            this.reviewNews = reviewBuffer.slice(0, 4);
+            this.envNews = this.envNews.slice(0, 4);
+            this.scienceNews = this.scienceNews.slice(0, 4);
+            this.musicNews = this.musicNews.slice(0, 4);
+            this.politicsNews = this.politicsNews.slice(0, 4);
+            // console.log(this.contents);
         });
-      }
-      this.news = this.contents.slice(0, 4);
-      this.knowledge = this.contents.slice(0, 4);
-      this.reviewNews = reviewBuffer.slice(0, 4);
-      this.envNews = this.envNews.slice(0, 4);
-      this.scienceNews = this.scienceNews.slice(0, 4);
-      this.musicNews = this.musicNews.slice(0, 4);
-      this.politicsNews = this.politicsNews.slice(0, 4);
-      console.log(this.contents);
-    });
-  },
+    },
+    components: { NearbySuggest }
 };
 </script>
 
@@ -552,5 +544,8 @@ export default {
 }
 .cursor {
   cursor: pointer;
+}
+.v-btn > .v-btn__content .v-icon {
+    color: #A89B84;
 }
 </style>>
