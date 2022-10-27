@@ -148,7 +148,7 @@
               (จะเป็นสถานที่แรกที่พูดถึงในบทความ, สถานที่ที่อยากแนะนำเป็นพิเศษ
               ฯลฯ ก็ได้)
             </p>
-            <g-g-map-pinning/>
+            <g-g-map-pinning @addMarkers="addCoordinates($event)"/>
           </div>
             <p class="pic-cover">แหล่งเรียนรู้ที่เกี่ยวข้องอื่น ๆ</p>
             <p class="sub-detail">
@@ -169,12 +169,6 @@
               >
             </div>
 
-            <!-- <p class="div-submit">
-            <router-link to="/">
-              <button type="submit" :disabled="invalid">
-                <img src="../assets/paper-plane.png" /></button
-            ></router-link>
-          </p> -->
           </div>
         </div>
       </div>
@@ -182,7 +176,6 @@
   </div>
 </template>
 <script>
-// import { from } from 'webpack-sources/lib/CompatSource';
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 
@@ -220,7 +213,7 @@ export default {
     ],
 
     editorOption: {
-      debug: "info",
+      // debug: "info",
       modules: {
         toolbar: [
           [{ header: [1, 2, false] }],
@@ -248,6 +241,8 @@ export default {
       b4: "non-active",
       b5: "non-active",
     },
+
+    coordinates:[],
   }),
   methods: {
     Preview_image() {
@@ -361,6 +356,11 @@ export default {
       });
     },
 
+    addCoordinates(markers){
+      this.coordinates = markers
+      console.log(markers);
+    },
+
     submit() {
       this.checkTag();
       function DataURIToBlob(dataURI) {
@@ -432,6 +432,7 @@ export default {
         formData.append("TextData[]", this.delta);
         formData.append("ContentCategory[]", bufferArray);
         formData.append("CreateBy", this.author_name);
+        formData.append("Coordinate[]", this.coordinates);
         formData.append("ImageCover", this.image);
         srcArray.forEach((data) => {
           formData.append("ImageFiles", data);
@@ -468,7 +469,7 @@ export default {
         process.env.VUE_APP_BACKEND_API +"/content/getContentByID?id=" +
           head.id
       );
-      console.log(res.data);
+      // console.log(res.data);
       this.categoryValidate = false
       this.article_name = res.data.Header;
       this.author_name = res.data.CreateBy;

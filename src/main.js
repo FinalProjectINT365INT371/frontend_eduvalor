@@ -7,8 +7,13 @@ import vuetify from "@/plugins/vuetify"
 import router from './router'
 // import axios from "axios";
 
+// import mapboxgl from "mapbox-gl";
+// import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+
 
 import * as VueGoogleMaps from 'vue2-google-maps'
+
 import VueGeoLocation from 'vue-browser-geolocation'
  
 import VueSocialSharing from 'vue-social-sharing'
@@ -46,6 +51,12 @@ Vue.use(VueGoogleMaps, {
   // installComponents: true,
 })
 Vue.use(VueGeoLocation)
+
+// import VuetifyGoogleAutocomplete from 'vuetify-google-autocomplete';
+// Vue.use(VuetifyGoogleAutocomplete, {
+//     // apiKey: process.env.VUE_APP_MAP_ACCESS_TOKEN,
+//   vueGoogleMapsCompatibility: true,
+// })
 
 new Vue({
   vuetify,

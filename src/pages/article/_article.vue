@@ -39,7 +39,7 @@
     </v-row>
 
     <h1 class="header-content">{{ title }}</h1>
-    <v-img :src="imgSrc"></v-img>
+    <v-img :src="imgSrc" id="coverPic"></v-img>
     <div class="body-content width: 100%;"></div>
 
     <v-divider inset style="padding-bottom: 2%;"></v-divider>
@@ -293,5 +293,8 @@ export default {
   font-size: 24px;
   color: #333333;
   margin-bottom: 0px;
+}
+.body-content img, #coverPic{
+  width: 50%;
 }
 </style>
