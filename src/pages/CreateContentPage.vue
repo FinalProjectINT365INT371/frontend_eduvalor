@@ -147,7 +147,7 @@ export default {
         toolbar: [
           [{ header: [1, 2, false] }],
           ["bold", "italic", "underline"],
-          ["image"], [{ 'color': [] }], [{ 'align': [] }],
+          ['link',"image"], [{ 'color': [] }], [{ 'align': [] }],
         ],
       },
       placeholder: "Compose an epic...",
