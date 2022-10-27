@@ -9,7 +9,7 @@
       <br />
       <br />
 
-      <gmap-map :center="center" :zoom="14" map-type-id="terrain" style="width: 800px; height: 300px; ">
+      <gmap-map :center="center" :zoom="14" map-type-id="terrain" class="gmap-map">
         <!-- <gmap-map :center="{lat:10, lng:10}" :zoom="7" map-type-id="terrain" style="width: 500px; height: 300px"> -->
 
         <gmap-marker :key="index" v-for="(m, index) in markers" :position="m.position" :clickable="true"
@@ -55,7 +55,10 @@ export default {
         this.currentPlace = null;
         // console.log(this.currentPlace);
         // console.log(marker);
-        this.$emit('addMarkers', this.markers[0].position)
+        // console.log(this.markers[0]);
+        // this.$emit('addMarkers', this.markers[0].position)
+        this.$emit('addMarkers', marker)
+
       }
     },
     geolocate: function () {
@@ -107,5 +110,15 @@ export default {
 
 .gmap:focus {
   border-color: #EDE6DA;
+}
+
+.gmap-map{
+  width: 800px; height: 300px;
+}
+
+@media screen and (max-width: 768px) {
+  .gmap-map {
+    width: 95%;
+  }
 }
 </style>

@@ -156,7 +156,6 @@ export default {
       this.news = raw;
     },
     changePage(event){
-      console.log(event)
       let startIndex = 10*(event-1)
       let endIndex = 10*event
       switch (this.indexTopic) {

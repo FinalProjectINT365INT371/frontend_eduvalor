@@ -120,6 +120,9 @@ export default {
       b3: false,
       b4: false,
       b5: false,
+
+      latLng: "",
+      latLngString: {},
     };
   },
   methods: {
@@ -170,6 +173,11 @@ export default {
       this.snackbar = true;
       this.$clipboard(this.shareURL); // this.$clipboard copy any String/Array/Object you want
     },
+
+    changeStringToObj(){
+      this.latLngString = JSON.parse(this.latLng);
+    console.log(this.latLng);
+    }
     // clickHandler2() { },
     // clipboardSuccessHandler() {
     //   console.log("clipboardSuccessHandler");
@@ -190,6 +198,9 @@ export default {
     this.date = res.data.CreateDate;
     this.author = res.data.CreateBy;
 
+    // this.latLng = res.data.Coordinate[0];
+    // this.changeStringToObj();
+    
     //
     this.bodyContent = res.data.TextData;
     this.addedCategory(res.data.ContentCategory[0].split(","));

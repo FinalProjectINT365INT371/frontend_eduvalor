@@ -7,10 +7,13 @@ import vuetify from "@/plugins/vuetify"
 import router from './router'
 // import axios from "axios";
 
-// import mapboxgl from "mapbox-gl";
-// import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
-import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
-
+// import Geocoder from "@pderas/vue2-geocoder";
+// Vue.use(Geocoder, {
+//   defaultCountryCode: 'TH', // e.g. 'CA'
+//   defaultLanguage:    'th', // e.g. 'en'
+//   defaultMode:        'lat-lng', //'address', 
+//   googleMapsApiKey:   process.env.VUE_APP_MAP_ACCESS_TOKEN,
+// });
 
 import * as VueGoogleMaps from 'vue2-google-maps'
 
