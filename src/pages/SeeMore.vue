@@ -302,7 +302,7 @@ export default {
           this.eduvalor.push(this.contents[index]);
         }
         const resImg = axios.get(
-          process.env.VUE_APP_BACKEND_API +
+          process.env.VUE_APP_BACKEND_API_PROD +
             "/content/getImageContentByName?imageName=" +
             Url
         );
