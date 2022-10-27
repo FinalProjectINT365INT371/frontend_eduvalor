@@ -1,34 +1,9 @@
 version: 2.1
 
-executors:
-  node14:
+jobs:
+  development:
     docker:
-      - image: cimg/node:14.18.0
-    working_directory: ~/project
-
-commands:
-  # env-prod:
-  #   description: "test .env variable"
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: "What a number in this .env"
-  #         command: touch .env ; echo "API_URL=$API_URL_PROD" >> .env
-  #     - run:
-  #         name: "Check file .env"
-  #         command: ls -la ; cat .env
-  env-dev:
-    description: "test .env variable"
-    steps:
-      - checkout
-      - run:
-          name: "What a number in this .env"
-          command: touch .env ; echo "VUE_APP_BACKEND_API=$VUE_APP_BACKEND_API" >> .env ;
-      - run:
-          name: "Check file .env"
-          command: cat .env
-  build:
-    description: 'Builds the project'
+      - image: 'cimg/node:17.9.0'
     steps:
       - checkout
       - restore_cache:
@@ -45,23 +20,18 @@ commands:
           paths:
             - ./node_modules
       - run:
-          name: Firebase install
-          command: yarn add firebase-tools
+          name: check directory
+          command: ls -la ; 
       - run:
-          name: Build for current environment.
-          command: yarn build
-          build:
-      - run:
-          name: check that firebase.json
-          command: cat firebase.json
-  deploy:
-    description: 'Deploy project to the designated environment'
-    parameters:
-      env:
-        type: string
-        default: 'dev'
-    steps:
-      - checkout
+          name: check software update
+          command: sudo apt-get update -y ;
+          #- run:
+              #name: Build for current environment.
+          #command: yarn build
+          #build: 
+      - add_ssh_keys:
+          fingerprints:
+            - ${SSH_FINGERPRINT}
       - run:
           name: Firebase Deploy
           command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN" --non-interactive --only hosting:<< parameters.env >>
@@ -84,9 +54,9 @@ jobs:
 
 workflows:
   version: 2
-  dev:
+  build-test-deploy:
     jobs:
-      - build-deploy-dev:
+      - development:
           filters:
             branches:
               only: dev
