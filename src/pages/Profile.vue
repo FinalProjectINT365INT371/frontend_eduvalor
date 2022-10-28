@@ -179,7 +179,6 @@ export default {
         });
       }
       this.article = this.contents.slice(0, 10);
-      console.log(this.article);
       this.pageTotal = Math.floor(this.contents.length / 10) + 1;
     });
   },

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@mapbox/mapbox-gl-geocoder": "^5.0.1",
+    "@pderas/vue2-geocoder": "^1.1.0",
     "axios": "^0.27.2",
     "caniuse-lite": "^1.0.30001423",
     "core-js": "^3.6.5",

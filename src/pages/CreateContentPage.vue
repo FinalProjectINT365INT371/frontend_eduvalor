@@ -4,20 +4,12 @@
       <div class="d-flex justify-center">
         <div class="d-inline test">
           <p class="sub-detail backHome" @click="backHome">
-            <img
-              class="pr-3 img-middle"
-              src="../assets/icon/left-arrow.png"
-            />กลับหน้าแรก
+            <img class="pr-3 img-middle" src="../assets/icon/left-arrow.png" />กลับหน้าแรก
           </p>
           <p class="head-topic">แบ่งปันเรื่องราวความรู้</p>
           <div class="inside-width ma-auto">
-            <v-text-field
-              class="input-style blog_title"
-              v-model="article_name"
-              :rules="titleRules"
-              :counter="50"
-              required
-            >
+            <v-text-field class="input-style blog_title" v-model="article_name" :rules="titleRules" :counter="50"
+              required>
               <template #label>
                 <div class="label-input">
                   ชื่อบทความ<span class="red--text"><strong> *</strong></span>
@@ -25,13 +17,7 @@
               </template>
             </v-text-field>
 
-            <v-text-field
-              class="input-style"
-              v-model="author_name"
-              :rules="nameRules"
-              :counter="90"
-              required
-            >
+            <v-text-field class="input-style" v-model="author_name" :rules="nameRules" :counter="90" required>
               <template #label>
                 <div class="label-input">
                   ชื่อผู้เขียน<span class="red--text"><strong> *</strong></span>
@@ -47,13 +33,8 @@
                 <p class="sub-detail">ขนาดขั้นต่ำควรเป็น 400 x 188px</p>
               </v-col>
               <v-col cols="1" sm="1" md="1" lg="1">
-                <v-file-input
-                  v-model="image"
-                  @change="Preview_image"
-                  hide-input
-                  :rules="imageRules"
-                  truncate-length="15"
-                ></v-file-input>
+                <v-file-input v-model="image" @change="Preview_image" hide-input :rules="imageRules"
+                  truncate-length="15"></v-file-input>
               </v-col>
               <v-col cols="12" sm="12" md="7" lg="7">
                 <v-img :src="url" />
@@ -64,109 +45,57 @@
               <p class="pic-cover pb-5">
                 เนื้อหาบทความ<span style="color: red">*</span>
               </p>
-              <quill-editor
-                class="quill pb-10"
-                ref="myQuillEditor"
-                v-model="textEditorContent"
-                :options="editorOption"
-                required
-              />
-                            <p v-if="params != undefined" class="text-red">
+              <quill-editor class="quill pb-10" ref="myQuillEditor" v-model="textEditorContent" :options="editorOption"
+                required />
+              <p v-if="params != undefined" class="text-red">
                 กรุณาใส่รูปใหม่ทุกครั้งที่มีการแก้ไข
               </p>
             </div>
 
             <div id="tag-relate" class="pb-10">
               <p class="pic-cover">
-                <img
-                  class="pr-3 img-relate"
-                  src="../assets/icon/tag.png"
-                />แท็กที่เกี่ยวข้อง<span style="color: red">*</span>
+                <img class="pr-3 img-relate" src="../assets/icon/tag.png" />แท็กที่เกี่ยวข้อง<span
+                  style="color: red">*</span>
               </p>
               <p class="sub-detail">
                 ติดขั้นต่ำ 1 แท็ก แต่มากสุดได้ไม่เกิน 3 แท็ก
               </p>
               <div>
-                <v-btn
-                  elevation="2"
-                  @click="activeButton(0)"
-                  rounded
-                  outlined
-                  :class="{ 'button-active': b1 }"
-                  >รีวิว</v-btn
-                >
-                <v-btn
-                  elevation="2"
-                  @click="activeButton(1)"
-                  rounded
-                  outlined
-                  :class="{ 'button-active': b2 }"
-                  class="mx-2"
-                  >ศิลป์และดนตรี</v-btn
-                >
-                <v-btn
-                  elevation="2"
-                  @click="activeButton(2)"
-                  rounded
-                  outlined
-                  class="mx-2"
-                  :class="{ 'button-active': b3 }"
-                  >วิทยาศาสตร์</v-btn
-                >
-                <v-btn
-                  elevation="2"
-                  @click="activeButton(3)"
-                  rounded
-                  outlined
-                  class="mx-2"
-                  :class="{ 'button-active': b4 }"
-                  >สังคมและการเมือง</v-btn
-                >
-                <v-btn
-                  elevation="2"
-                  @click="activeButton(4)"
-                  rounded
-                  outlined
-                  class="mx-2"
-                  :class="{ 'button-active': b5 }"
-                  >สิ่งแวดล้อม</v-btn
-                >
+                <v-btn elevation="2" @click="activeButton(0)" rounded outlined :class="{ 'button-active': b1 }">รีวิว
+                </v-btn>
+                <v-btn elevation="2" @click="activeButton(1)" rounded outlined :class="{ 'button-active': b2 }"
+                  class="mx-2">ศิลป์และดนตรี</v-btn>
+                <v-btn elevation="2" @click="activeButton(2)" rounded outlined class="mx-2"
+                  :class="{ 'button-active': b3 }">วิทยาศาสตร์</v-btn>
+                <v-btn elevation="2" @click="activeButton(3)" rounded outlined class="mx-2"
+                  :class="{ 'button-active': b4 }">สังคมและการเมือง</v-btn>
+                <v-btn elevation="2" @click="activeButton(4)" rounded outlined class="mx-2"
+                  :class="{ 'button-active': b5 }">สิ่งแวดล้อม</v-btn>
               </div>
               <p v-if="categoryValidate" class="text-red">
                 กรุณาเลือกแท็กที่เกี่ยวข้อง
               </p>
             </div>
             <p class="pic-cover">
-              <img
-                class="pr-3 img-middle"
-                src="../assets/icon/gps.png"
-              />แหล่งเรียนรู้ที่เกี่ยวข้อง<span style="color: red">*</span>
+              <img class="pr-3 img-middle" src="../assets/icon/gps.png" />แหล่งเรียนรู้ที่เกี่ยวข้อง<span
+                style="color: red">*</span>
             </p>
             <div class="ggMapPin">
-            <p class="sub-detail">
-              กรอกตำแหน่ง 1 สถานที่ และส่วนนี้จะแสดงผลเป็น Street View
-              (จะเป็นสถานที่แรกที่พูดถึงในบทความ, สถานที่ที่อยากแนะนำเป็นพิเศษ
-              ฯลฯ ก็ได้)
-            </p>
-            <g-g-map-pinning @addMarkers="addCoordinates($event)"/>
-          </div>
+              <p class="sub-detail">
+                กรอกตำแหน่ง 1 สถานที่ และส่วนนี้จะแสดงผลเป็น Street View
+                (จะเป็นสถานที่แรกที่พูดถึงในบทความ, สถานที่ที่อยากแนะนำเป็นพิเศษ
+                ฯลฯ ก็ได้)
+              </p>
+              <g-g-map-pinning @addMarkers="addCoordinates($event)" />
+            </div>
             <p class="pic-cover">แหล่งเรียนรู้ที่เกี่ยวข้องอื่น ๆ</p>
             <p class="sub-detail">
               กรอกตำแหน่งสถานที่อื่น ๆ เพิ่มเติม
               แต่ส่วนนี้จะแสดงผลเป็นลิงก์ไปยัง Map แทน (ไม่บังคับ)
             </p>
             <div class="d-flex justify-center">
-              <v-btn
-                elevation="1"
-                x-large
-                color="#AD9F86"
-                class="text-white"
-                @click="submit"
-                ><img
-                  class="py-3 pr-3 img-middle"
-                  src="../assets/icon/save.png"
-                />บันทึกและเผยแพร่</v-btn
-              >
+              <v-btn elevation="1" x-large color="#AD9F86" class="text-white" @click="submit"><img
+                  class="py-3 pr-3 img-middle" src="../assets/icon/save.png" />บันทึกและเผยแพร่</v-btn>
             </div>
 
           </div>
@@ -187,7 +116,7 @@ export default {
   components: {
     quillEditor,
     GGMapPinning
-},
+  },
 
   data: () => ({
     valid: false,
@@ -218,7 +147,7 @@ export default {
         toolbar: [
           [{ header: [1, 2, false] }],
           ["bold", "italic", "underline"],
-          ["image"],[{'color':[]}], [{ 'align': [] }],
+          ['link',"image"], [{ 'color': [] }], [{ 'align': [] }],
         ],
       },
       placeholder: "Compose an epic...",
@@ -241,8 +170,12 @@ export default {
       b4: "non-active",
       b5: "non-active",
     },
+    coordinates: [],
+    getCoordinates: undefined,
+    sendCoordinates: undefined,
+    // lat: false,
+    // lng: false,
 
-    coordinates:[],
   }),
   methods: {
     Preview_image() {
@@ -255,7 +188,6 @@ export default {
       let rawArray = [this.b1, this.b2, this.b3, this.b4, this.b5];
       let counter = 0;
       rawArray.forEach((e) => {
-        console.log(e);
         if (e == true) {
           counter = counter + 1;
         }
@@ -356,9 +288,11 @@ export default {
       });
     },
 
-    addCoordinates(markers){
-      this.coordinates = markers
-      console.log(markers);
+    addCoordinates(markers) {
+      let coordinate_obj = {lat : markers.lat , lng : markers.lng}
+      let coordinate_string = JSON.stringify(coordinate_obj)
+      this.coordinates[0] = coordinate_string;
+      // console.log(this.coordinates);
     },
 
     submit() {
@@ -425,12 +359,18 @@ export default {
                 break;
             }
           }
-        }
+        } 
+        // let coordinatesArray = [];
+        // coordinatesArray.push(this.coordinates)
+        // console.log(coordinatesArray);
+
         this.delta = document.getElementsByClassName("ql-editor")[0].innerHTML;
         const formData = new FormData();
         formData.append("Header", this.article_name);
         formData.append("TextData[]", this.delta);
         formData.append("ContentCategory[]", bufferArray);
+
+        console.log(bufferArray);
         formData.append("CreateBy", this.author_name);
         formData.append("Coordinate[]", this.coordinates);
         formData.append("ImageCover", this.image);
@@ -448,8 +388,8 @@ export default {
           axios
             .put(
               process.env.VUE_APP_BACKEND_API +
-                "/content/editcontent?id=" +
-                this.params,
+              "/content/editcontent?id=" +
+              this.params,
               formData
             )
             .then(this.backHome());
@@ -466,8 +406,8 @@ export default {
     if (head != undefined) {
       this.params = head.id;
       const res = await axios.get(
-        process.env.VUE_APP_BACKEND_API +"/content/getContentByID?id=" +
-          head.id
+        process.env.VUE_APP_BACKEND_API + "/content/getContentByID?id=" +
+        head.id
       );
       // console.log(res.data);
       this.categoryValidate = false
@@ -516,6 +456,7 @@ export default {
     width: 90%;
   }
 }
+
 @media screen and (max-width: 2000px) {
   .inside-width {
     width: 80%;
@@ -544,10 +485,12 @@ button {
   display: flex;
   justify-content: end;
 }
+
 .v-input .v-label::after {
   content: " *";
   color: red;
 }
+
 .head-topic {
   font-family: "Kanit";
   font-style: normal;
@@ -556,6 +499,7 @@ button {
   line-height: 54px;
   color: #333333;
 }
+
 .label-input {
   font-family: "Bai Jamjuree" !important;
   font-style: normal !important;
@@ -564,6 +508,7 @@ button {
   font-size: 28px;
   color: #4c4c4c !important;
 }
+
 .v-counter {
   font-family: "Bai Jamjuree" !important;
   font-style: normal !important;
@@ -571,6 +516,7 @@ button {
   font-weight: 500 !important;
   color: #ad9f86 !important;
 }
+
 .pic-cover {
   font-family: "Bai Jamjuree";
   font-style: normal;
@@ -579,6 +525,7 @@ button {
   margin-bottom: 0;
   color: #4c4c4c;
 }
+
 .sub-detail {
   font-family: "Bai Jamjuree";
   font-style: normal;
@@ -586,9 +533,11 @@ button {
   color: #ad9f86;
   font-size: 18px;
 }
+
 .img-middle {
   vertical-align: middle;
 }
+
 .v-btn {
   font-family: "Bai Jamjuree";
   font-style: normal;
@@ -596,15 +545,18 @@ button {
   font-size: 18px;
   line-height: 22px;
 }
+
 .v-btn--outlined .non-active {
   border: thin solid #ede6da;
 }
+
 .button-active {
   background: #ad9f86;
   border-radius: 20px;
   color: #ffffff;
   border-color: #ad9f86;
 }
+
 .v-text-field .v-label {
   max-width: 90%;
   overflow: visible !important;
@@ -613,12 +565,15 @@ button {
   white-space: nowrap;
   pointer-events: none;
 }
+
 .text-white {
   color: white;
 }
+
 .backHome {
   cursor: pointer;
 }
+
 .text-red {
   color: red;
 }

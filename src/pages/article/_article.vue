@@ -89,6 +89,7 @@
       <v-divider inset></v-divider>
 
       <div class="commentZone">
+        <approve-comment />
         <comment-section />
       </div>
     </div>
@@ -97,9 +98,12 @@
 
 <script>
 import axios from "axios";
-import CommentSection from '../../components/CommentSection.vue';
+// import CommentSection from '../../components/CommentSection.vue';
+import ApproveComment from '../../components/ApproveComment.vue';
 export default {
-  components: { CommentSection },
+  components: { 
+    // CommentSection, 
+    ApproveComment },
   data() {
     return {
       author: "",
@@ -120,6 +124,9 @@ export default {
       b3: false,
       b4: false,
       b5: false,
+
+      latLng: "",
+      latLngString: {},
     };
   },
   methods: {
@@ -170,6 +177,11 @@ export default {
       this.snackbar = true;
       this.$clipboard(this.shareURL); // this.$clipboard copy any String/Array/Object you want
     },
+
+    changeStringToObj(){
+      this.latLngString = JSON.parse(this.latLng);
+    console.log(this.latLng);
+    }
     // clickHandler2() { },
     // clipboardSuccessHandler() {
     //   console.log("clipboardSuccessHandler");
@@ -189,6 +201,9 @@ export default {
     this.title = res.data.Header;
     this.date = res.data.CreateDate;
     this.author = res.data.CreateBy;
+
+    // this.latLng = res.data.Coordinate[0];
+    // this.changeStringToObj();
 
     //
     this.bodyContent = res.data.TextData;

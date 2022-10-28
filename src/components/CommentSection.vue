@@ -110,7 +110,6 @@ export default {
         );
         this.contentID = res.data._id
         this.getComment = res.data.Comment
-        console.log(this.getComment);
       }
     },
 
@@ -183,7 +182,6 @@ export default {
   },
   mounted() {
     this.fetchData()
-    console.log(this.getComment);
   }
 }
 </script>
