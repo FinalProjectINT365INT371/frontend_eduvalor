@@ -6,25 +6,54 @@
           <h1>สมัครสมาชิก</h1>
           <span class="body-1 pb-5">กรุณากรอกข้อมูลให้ครบทุกช่อง</span>
           <div>
-            <v-text-field background-color="#EDE6DA" type="text" solo v-model="username" :rules="usernameRule"
-              placeholder="Username" />
+            <v-text-field
+              background-color="#EDE6DA"
+              type="text"
+              solo
+              v-model="username"
+              :rules="usernameRule"
+              placeholder="Username"
+            />
 
-            <v-text-field background-color="#EDE6DA" solo v-model="password" :rules="passwordRule" type="password"
-              placeholder="Password" />
+            <v-text-field
+              background-color="#EDE6DA"
+              solo
+              v-model="password"
+              :rules="passwordRule"
+              type="password"
+              placeholder="Password"
+            />
 
-            <v-text-field background-color="#EDE6DA" v-model="email" :rules="email" solo type="email"
-              placeholder="Email" />
+            <v-text-field
+              background-color="#EDE6DA"
+              v-model="email"
+              :rules="email"
+              solo
+              type="email"
+              placeholder="Email"
+            />
 
-            <v-text-field background-color="#EDE6DA" solo v-model="displayName" :rules="displayNameRule" type="text"
-              placeholder="Display Name" />
+            <v-text-field
+              background-color="#EDE6DA"
+              solo
+              v-model="displayName"
+              :rules="displayNameRule"
+              type="text"
+              placeholder="Display Name"
+            />
 
             <div class="d-flex justify-space-between" id="profileUpload">
               <div class="d-flex align-center justify-space-between">
                 <p class="pic-cover">
                   รูปโปรไฟล์<span style="color: red">*</span>
                 </p>
-                <v-file-input v-model="image" @change="Preview_image" hide-input :rules="imageRules"
-                  truncate-length="15"></v-file-input>
+                <v-file-input
+                  v-model="image"
+                  @change="Preview_image"
+                  hide-input
+                  :rules="imageRules"
+                  truncate-length="15"
+                ></v-file-input>
               </div>
               <v-avatar size="100"><img :src="url" /></v-avatar>
             </div>
@@ -32,28 +61,32 @@
           <button @click="registAlert">Sign Up</button>
         </v-form>
 
-        <v-snackbar v-model="snackbar" >
-            {{ snackbarRegistText }}
+        <v-snackbar v-model="snackbar">
+          {{ snackbarRegistText }}
 
-            <template v-slot:action="{ attrs }">
-              <v-btn  text v-bind="attrs" @click="snackbar = false">
-                Close
-              </v-btn>
-            </template>
-          </v-snackbar>
-
+          <template v-slot:action="{ attrs }">
+            <v-btn text v-bind="attrs" @click="snackbar = false"> Close </v-btn>
+          </template>
+        </v-snackbar>
       </div>
       <div class="form-container sign-in-container">
-        <v-form action="#">
+        <v-form action="#" @submit.prevent="login" ref="form">
           <h1>เข้าสู่ระบบ</h1>
-          <input type="email" placeholder="Username" />
-          <input type="password" placeholder="Password" />
+          <input type="email" placeholder="Username" v-model="usernameLogin" />
+          <input
+            type="password"
+            placeholder="Password"
+            v-model="passwordLogin"
+          />
           <button>Sign In</button>
           <!-- <a href="#">Forgot your password?</a> -->
-          <span class="pt-12 text-md-body-1">หรือล็อกอินด้วย Social Media
+          <span class="pt-12 text-md-body-1"
+            >หรือล็อกอินด้วย Social Media
           </span>
           <div class="social-container">
-            <a href="#" class="social"><img src="../assets/icon/login/facebook_f_logo_icon_145290.png" /></a>
+            <a href="#" class="social"
+              ><img src="../assets/icon/login/facebook_f_logo_icon_145290.png"
+            /></a>
           </div>
         </v-form>
       </div>
@@ -85,8 +118,11 @@
 
 <script>
 import axios from "axios";
+var jwt = require("jsonwebtoken");
 export default {
   data: () => ({
+    usernameLogin: "",
+    passwordLogin: "",
     username: "",
     usernameRule: [
       (v) => !!v || "กรุณาใส่ Username",
@@ -113,8 +149,8 @@ export default {
 
     url: null,
     imageUri: "",
-    snackbar:false,
-    snackbarRegistText:"เพิ่มบัญชีสมาชิกใหม่เข้าระบบเรียบร้อยแล้ว",
+    snackbar: false,
+    snackbarRegistText: "เพิ่มบัญชีสมาชิกใหม่เข้าระบบเรียบร้อยแล้ว",
   }),
 
   methods: {
@@ -140,7 +176,6 @@ export default {
         console.log(this.image);
         console.log(this.imageUri);
       };
-
     },
     emailErrors() {
       const errors = [];
@@ -182,6 +217,35 @@ export default {
         process.env.VUE_APP_BACKEND_API + "/user/adduser",
         formData
       );
+    },
+
+    async login() {
+      let user = JSON.stringify({
+        username: this.usernameLogin,
+        password: this.passwordLogin,
+      });
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      console.log(user);
+      const res = await axios.post(
+        //process.env.VUE_APP_BACKEND_API + "/authentication/login",
+        "https://www.eduvalor.ml/backendDev/authentication/login",
+        user,
+        config
+      );
+
+      if (res) {
+        let token = await res.data.access_token;
+        let user = await jwt.verify(token, "EDUVALOR");
+        this.$store.commit('setUser',user)
+        this.$store.commit('setToken',token)
+        console.log(this.$store.state);
+        this.$router.push("/Welcome");
+      }
     },
   },
 };
@@ -317,7 +381,6 @@ input,
 }
 
 @keyframes show {
-
   0%,
   49.99% {
     opacity: 0;
