@@ -19,6 +19,7 @@
     "vee-validate": "^4.6.4",
     "vue": "^2.6.11",
     "vue-browser-geolocation": "^1.8.0",
+    "vue-cookies": "^1.8.2",
     "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.6.5",
     "vue-social-sharing": "^3.0.9",

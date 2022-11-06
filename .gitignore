@@ -26,3 +26,4 @@ pnpm-debug.log*
 
 # firebase
 .firebase/
+src/components/HelloWorld.vue
