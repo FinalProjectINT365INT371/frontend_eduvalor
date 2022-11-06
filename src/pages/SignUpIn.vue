@@ -232,8 +232,8 @@ export default {
       };
       console.log(user);
       const res = await axios.post(
-        //process.env.VUE_APP_BACKEND_API + "/authentication/login",
-        "https://www.eduvalor.ml/backendDev/authentication/login",
+        process.env.VUE_APP_BACKEND_API + "/authentication/login",
+        //"https://www.eduvalor.ml/backendDev/authentication/login",
         user,
         config
       );
@@ -241,9 +241,13 @@ export default {
       if (res) {
         let token = await res.data.access_token;
         let user = await jwt.verify(token, "EDUVALOR");
-        this.$store.commit('setUser',user)
-        this.$store.commit('setToken',token)
+        let expire = new Date((await user.exp) * 1000);
+        this.$store.commit("setUser", user);
+        this.$store.commit("setToken", token);
         console.log(this.$store.state);
+        console.log(expire);
+        this.$cookies.set("JWT_TOKEN", token, expire);
+        console.log(this.$cookies.get("JWT_TOKEN"));
         this.$router.push("/Welcome");
       }
     },

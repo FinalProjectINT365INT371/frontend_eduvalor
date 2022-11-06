@@ -60,6 +60,8 @@ import store from './store'
 //     // apiKey: process.env.VUE_APP_MAP_ACCESS_TOKEN,
 //   vueGoogleMapsCompatibility: true,
 // })
+import VueCookies from 'vue-cookies';
+Vue.use(VueCookies);
 
 new Vue({
   store,
