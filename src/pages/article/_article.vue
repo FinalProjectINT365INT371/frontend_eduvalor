@@ -3,21 +3,36 @@
     <v-row class="my-2 pt-5">
       <v-col cols="8">
         <p class="sub-detail backHome" @click="backHome">
-          <img class="pr-3 img-middle" src="../../assets/icon/left-arrow.png" />กลับหน้าแรก
+          <img
+            class="pr-3 img-middle"
+            src="../../assets/icon/left-arrow.png"
+          />กลับหน้าแรก
         </p>
       </v-col>
       <v-col cols="12" sm="12" md="4" lg="4">
         <v-row>
           <v-col v-if="login">
             <div class="d-flex justify-center">
-              <v-btn elevation="0" color="#AD9F86" class="text-white" @click="navTo()"><img class="py-3 pr-3 img-middle"
-                  src="../../assets/icon/edit_white.png" />แก้ไขเนื้อหา</v-btn>
+              <v-btn
+                elevation="0"
+                color="#AD9F86"
+                class="text-white"
+                @click="navTo()"
+                ><img
+                  class="py-3 pr-3 img-middle"
+                  src="../../assets/icon/edit_white.png"
+                />แก้ไขเนื้อหา</v-btn
+              >
             </div>
           </v-col>
           <v-col v-if="login">
             <div class="d-flex justify-center">
-              <v-btn elevation="0" class="text-brown" @click="deleteArticle"><img class="py-3 pr-3 img-middle"
-                  src="../../assets/icon/trash.png" />ลบบทความ</v-btn>
+              <v-btn elevation="0" class="text-brown" @click="deleteArticle"
+                ><img
+                  class="py-3 pr-3 img-middle"
+                  src="../../assets/icon/trash.png"
+                />ลบบทความ</v-btn
+              >
             </div>
           </v-col>
         </v-row>
@@ -28,12 +43,15 @@
       <v-col cols="9">
         <p class="user-name">
           <img class="pr-3 img-middle" src="../../assets/icon/user.png" />{{
-              author
+            author
           }}
         </p>
       </v-col>
       <v-col cols="12" sm="12" md="3" lg="3">
-        <img class="pr-3 img-middle" src="../../assets/icon/brown_clock.png" />{{ date }}
+        <img
+          class="pr-3 img-middle"
+          src="../../assets/icon/brown_clock.png"
+        />{{ date }}
       </v-col>
       <v-divider inset></v-divider>
     </v-row>
@@ -42,48 +60,132 @@
     <v-img :src="imgSrc" id="coverPic"></v-img>
     <div class="body-content width: 100%;"></div>
 
-    <v-divider inset style="padding-bottom: 2%;"></v-divider>
+    <v-divider inset style="padding-bottom: 2%"></v-divider>
+    <div style="padding-bottom: 2%">
+      <p class="pic-cover-arti d-flex align-center">
+        <img
+          class="pr-3 img-relate"
+          src="../../assets/icon/bx_street-view.png"
+        />เห็นตัวอย่างสถานที่จริงด้วย Street View!
+      </p>
+      <gmap-street-view-panorama
+        ref="pano"
+        :position="mainLatLng"
+        :pov="pov"
+        :zoom="1"
+        :language="th"
+        style="width: 1100px; height: 300px;"
+      >
+      </gmap-street-view-panorama>
+    </div>
+    <v-divider inset style="padding-bottom: 2%"></v-divider>
     <div>
       <div class="d-flex row align-center justify-space-between">
         <div id="tag-relate" class="pb-10">
           <p class="pic-cover-arti d-flex align-center">
-            <img class="pr-3 img-relate" src="../../assets/icon/tag.png" />แท็กที่เกี่ยวข้อง
+            <img
+              class="pr-3 img-relate"
+              src="../../assets/icon/tag.png"
+            />แท็กที่เกี่ยวข้อง
           </p>
           <div>
-            <v-btn v-if="b1" elevation="2" rounded outlined class="button-active">รีวิว</v-btn>
-            <v-btn v-if="b2" elevation="2" rounded outlined class="mx-2 button-active">
-              ศิลป์และดนตรี</v-btn>
-            <v-btn v-if="b3" elevation="2" rounded outlined class="mx-2 button-active">
-              วิทยาศาสตร์</v-btn>
-            <v-btn v-if="b4" elevation="2" rounded outlined class="mx-2 button-active">
-              สังคมและการเมือง</v-btn>
-            <v-btn v-if="b5" elevation="2" rounded outlined class="mx-2 button-active">
-              สิ่งแวดล้อม</v-btn>
+            <v-btn
+              v-if="b1"
+              elevation="2"
+              rounded
+              outlined
+              class="button-active"
+              >รีวิว</v-btn
+            >
+            <v-btn
+              v-if="b2"
+              elevation="2"
+              rounded
+              outlined
+              class="mx-2 button-active"
+            >
+              ศิลป์และดนตรี</v-btn
+            >
+            <v-btn
+              v-if="b3"
+              elevation="2"
+              rounded
+              outlined
+              class="mx-2 button-active"
+            >
+              วิทยาศาสตร์</v-btn
+            >
+            <v-btn
+              v-if="b4"
+              elevation="2"
+              rounded
+              outlined
+              class="mx-2 button-active"
+            >
+              สังคมและการเมือง</v-btn
+            >
+            <v-btn
+              v-if="b5"
+              elevation="2"
+              rounded
+              outlined
+              class="mx-2 button-active"
+            >
+              สิ่งแวดล้อม</v-btn
+            >
           </div>
         </div>
 
         <div class="d-flex justify-space-around">
-          <ShareNetwork network="facebook" :url=(shareURL) :title=(title) :quote=title hashtags="EduValor">
-            <img src="../../assets/icon/f_logo_RGB-Blue_58 1.png" height="48px">
+          <ShareNetwork
+            network="facebook"
+            :url="shareURL"
+            :title="title"
+            :quote="title"
+            hashtags="EduValor"
+          >
+            <img
+              src="../../assets/icon/f_logo_RGB-Blue_58 1.png"
+              height="48px"
+            />
           </ShareNetwork>
-          <ShareNetwork network="twitter" :url=(shareURL) :title=title hashtags="EduValor">
-            <img src="../../assets/icon/Twitter social icons - circle - blue 1.png" height="48px">
+          <ShareNetwork
+            network="twitter"
+            :url="shareURL"
+            :title="title"
+            hashtags="EduValor"
+          >
+            <img
+              src="../../assets/icon/Twitter social icons - circle - blue 1.png"
+              height="48px"
+            />
           </ShareNetwork>
-          <ShareNetwork network="line" :url=(shareURL) :title=title hashtags="EduValor">
-            <img src="../../assets/icon/LINE_Brand_icon 1.png" height="48px">
+          <ShareNetwork
+            network="line"
+            :url="shareURL"
+            :title="title"
+            hashtags="EduValor"
+          >
+            <img src="../../assets/icon/LINE_Brand_icon 1.png" height="48px" />
           </ShareNetwork>
-          <button @click="copyClipboard"><img src="../../assets/icon/el_paper-clip-alt.png" height="48px"></button>
+          <button @click="copyClipboard">
+            <img src="../../assets/icon/el_paper-clip-alt.png" height="48px" />
+          </button>
 
           <v-snackbar v-model="snackbar" color="#333333">
             {{ snackbarText }}
 
             <template v-slot:action="{ attrs }">
-              <v-btn color="#AD9F86" text v-bind="attrs" @click="snackbar = false">
+              <v-btn
+                color="#AD9F86"
+                text
+                v-bind="attrs"
+                @click="snackbar = false"
+              >
                 Close
               </v-btn>
             </template>
           </v-snackbar>
-
         </div>
       </div>
       <v-divider inset></v-divider>
@@ -99,11 +201,12 @@
 <script>
 import axios from "axios";
 // import CommentSection from '../../components/CommentSection.vue';
-import ApproveComment from '../../components/ApproveComment.vue';
+import ApproveComment from "../../components/ApproveComment.vue";
 export default {
-  components: { 
-    // CommentSection, 
-    ApproveComment },
+  components: {
+    // CommentSection,
+    ApproveComment,
+  },
   data() {
     return {
       author: "",
@@ -112,9 +215,9 @@ export default {
       bodyContent: "",
       id: "",
       login: false,
-      imgSrc: '',
+      imgSrc: "",
 
-      shareURL: '',
+      shareURL: "",
 
       snackbar: false,
       snackbarText: `คัดลอกลิงก์ไปยัง Clipboard สำเร็จแล้ว`,
@@ -125,8 +228,14 @@ export default {
       b4: false,
       b5: false,
 
-      latLng: "",
-      latLngString: {},
+      pov: {
+        heading: 0,
+        pitch: 0,
+      },
+      mainLatLngString: "",
+      mainLatLng: {},
+      main_address_detail: "",
+      main_placeID: "",
     };
   },
   methods: {
@@ -143,12 +252,11 @@ export default {
     deleteArticle() {
       axios
         .delete(
-          process.env.VUE_APP_BACKEND_API + "/content/deletecontent?id=" +
-          this.id
+          process.env.VUE_APP_BACKEND_API +
+            "/content/deletecontent?id=" +
+            this.id
         )
-        .then(
-          this.backHome(),
-          location.reload());
+        .then(this.backHome(), location.reload());
     },
     addedCategory(arrayCate) {
       arrayCate.forEach((e) => {
@@ -178,22 +286,26 @@ export default {
       this.$clipboard(this.shareURL); // this.$clipboard copy any String/Array/Object you want
     },
 
-    changeStringToObj(){
-      this.latLngString = JSON.parse(this.latLng);
-    console.log(this.latLng);
+    changeStringToObj() {
+      this.mainLatLng = JSON.parse(this.mainLatLngString);
+      console.log(this.mainLatLng);
+      
+    },
+    async reverseGeocoding(){
+      const res = await axios
+      .get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + this.mainLatLng.lat + "," + this.mainLatLng.lng + "&key=" + process.env.VUE_APP_MAP_ACCESS_TOKEN)
+
+      this.main_address_detail = res.data.results[0].formatted_address
+      this.main_placeID = res.data.results[0].place_id
+      // console.log(this.main_placeID);
+
     }
-    // clickHandler2() { },
-    // clipboardSuccessHandler() {
-    //   console.log("clipboardSuccessHandler");
-    // },
-    // clipboardErrorHandler() {
-    //   console.log("clipboardErrorHandler");
-    // }
   },
   async mounted() {
     let head = this.$route.params;
     this.id = head.id;
-    this.shareURL = 'https://eduvalor-official-dev.firebaseapp.com/' + 'article/' + this.id
+    this.shareURL =
+      "https://eduvalor-official-dev.firebaseapp.com/" + "article/" + this.id;
 
     const res = await axios.get(
       process.env.VUE_APP_BACKEND_API + "/content/getContentByID?id=" + head.id
@@ -202,30 +314,31 @@ export default {
     this.date = res.data.CreateDate;
     this.author = res.data.CreateBy;
 
-    // this.latLng = res.data.Coordinate[0];
-    // this.changeStringToObj();
+    this.mainLatLngString = res.data.Coordinate;
+    console.log(this.mainLatLngString);
+    this.changeStringToObj();
+    this.reverseGeocoding();
 
     //
     this.bodyContent = res.data.TextData;
     this.addedCategory(res.data.ContentCategory[0].split(","));
     //
 
-    // console.log(res.data)
-    let Url = res.data.ImageUrl[res.data.ImageUrl.length - 1]
+    let Url = res.data.ImageUrl[res.data.ImageUrl.length - 1];
     const resImg = axios.get(
       process.env.VUE_APP_BACKEND_API +
-      "/content/getImageContentByName?imageName=" +
-      Url
+        "/content/getImageContentByName?imageName=" +
+        Url
     );
     resImg.then((result) => {
       this.getImg = result.data;
       const srcUrl = this.getImg.split("imageUrl : ");
       this.imgSrc = srcUrl[1];
-      //console.log(this.contents.imgSrc);
     });
-    document.getElementsByClassName("body-content")[0].innerHTML = res.data.TextData;
-    if (localStorage.getItem('login') == 'true') {
-      this.login = true
+    document.getElementsByClassName("body-content")[0].innerHTML =
+      res.data.TextData;
+    if (localStorage.getItem("login") == "true") {
+      this.login = true;
     }
   },
 };
@@ -309,7 +422,8 @@ export default {
   color: #333333;
   margin-bottom: 0px;
 }
-.body-content img, #coverPic{
+.body-content img,
+#coverPic {
   width: 50%;
 }
 </style>
