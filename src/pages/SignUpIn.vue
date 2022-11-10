@@ -118,7 +118,8 @@
 
 <script>
 import axios from "axios";
-var jwt = require("jsonwebtoken");
+import { login_auth } from '../plugins/auth'
+//var jwt = require("jsonwebtoken");
 export default {
   data: () => ({
     usernameLogin: "",
@@ -232,21 +233,22 @@ export default {
       };
       console.log(user);
       const res = await axios.post(
-        process.env.VUE_APP_BACKEND_API + "/authentication/login",
-        //"https://www.eduvalor.ml/backendDev/authentication/login",
+        //process.env.VUE_APP_BACKEND_API + "/authentication/login",
+        "https://www.eduvalor.ml/backendDev/authentication/login",
         user,
         config
       );
 
       if (res) {
-        let token = await res.data.access_token;
-        let user = await jwt.verify(token, "EDUVALOR");
-        let expire = new Date((await user.exp) * 1000);
-        this.$store.commit("setUser", user);
-        this.$store.commit("setToken", token);
+        let auth_check = await login_auth(res);
+
+        //Vuex set data user
+        this.$store.commit("setUser", auth_check.user);
+        this.$store.commit("setToken", auth_check.token);
         console.log(this.$store.state);
-        console.log(expire);
-        this.$cookies.set("JWT_TOKEN", token, expire);
+
+        //Set cookies
+        this.$cookies.set("JWT_TOKEN", auth_check.token, auth_check.expire);
         console.log(this.$cookies.get("JWT_TOKEN"));
         this.$router.push("/Welcome");
       }
