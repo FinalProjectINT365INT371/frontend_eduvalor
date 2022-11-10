@@ -16,8 +16,8 @@ export async function login_auth(params) {
             }
         };
         let user = await axios.get(
-            //process.env.VUE_APP_BACKEND_API + "/authentication/me",
-            "https://www.eduvalor.ml/backendDev/authentication/me",
+            process.env.VUE_APP_BACKEND_API + "/authentication/me",
+            //"https://www.eduvalor.ml/backendDev/authentication/me",
             config
         );
 

@@ -233,8 +233,8 @@ export default {
       };
       console.log(user);
       const res = await axios.post(
-        //process.env.VUE_APP_BACKEND_API + "/authentication/login",
-        "https://www.eduvalor.ml/backendDev/authentication/login",
+        process.env.VUE_APP_BACKEND_API + "/authentication/login",
+        //"https://www.eduvalor.ml/backendDev/authentication/login",
         user,
         config
       );
