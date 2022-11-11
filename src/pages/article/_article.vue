@@ -73,10 +73,16 @@
         :position="mainLatLng"
         :pov="pov"
         :zoom="1"
-        :language="th"
-        style="width: 1100px; height: 300px;"
+        style="width: 1100px; height: 300px"
       >
       </gmap-street-view-panorama>
+      <p class="pic-cover-arti d-flex align-center">
+        <img
+          class="pr-3 img-relate"
+          src="../../assets/icon/bx_street-view.png"
+        />เห็นตัวอย่างสถานที่จริงด้วย Street View!
+      </p>
+      <div id="map"></div>
     </div>
     <v-divider inset style="padding-bottom: 2%"></v-divider>
     <div>
@@ -192,7 +198,7 @@
 
       <div class="commentZone">
         <approve-comment />
-        <comment-section />
+        <!-- <comment-section /> -->
       </div>
     </div>
   </div>
@@ -202,7 +208,9 @@
 import axios from "axios";
 // import CommentSection from '../../components/CommentSection.vue';
 import ApproveComment from "../../components/ApproveComment.vue";
+import { gmapApi } from 'vue2-google-maps';
 export default {
+  name: '_article',
   components: {
     // CommentSection,
     ApproveComment,
@@ -236,7 +244,12 @@ export default {
       mainLatLng: {},
       main_address_detail: "",
       main_placeID: "",
+      placeAPIobj: {},
     };
+    
+  },
+  computed:{
+    google: gmapApi,
   },
   methods: {
     navTo() {
@@ -289,16 +302,32 @@ export default {
     changeStringToObj() {
       this.mainLatLng = JSON.parse(this.mainLatLngString);
       console.log(this.mainLatLng);
-      
     },
-    async reverseGeocoding(){
-      const res = await axios
-      .get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + this.mainLatLng.lat + "," + this.mainLatLng.lng + "&key=" + process.env.VUE_APP_MAP_ACCESS_TOKEN)
+    async reverseGeocoding() {
+      const res = await axios.get(
+        "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
+          this.mainLatLng.lat +
+          "," +
+          this.mainLatLng.lng +
+          "&key=" +
+          process.env.VUE_APP_MAP_ACCESS_TOKEN
+      );
 
-      this.main_address_detail = res.data.results[0].formatted_address
-      this.main_placeID = res.data.results[0].place_id
-      // console.log(this.main_placeID);
+      this.main_address_detail = res.data.results[0].formatted_address;
+      this.main_placeID = res.data.results[0].place_id;
+      console.log(res.data.results[0]);
+      console.log(this.mainLatLng);
 
+      this.placeAPIHero();
+    },
+    async placeAPIHero() {
+      const res = await axios.get(
+          "https://cors-anywhere.herokuapp.com/"+"https://maps.googleapis.com/maps/api/place/details/json?place_id=" +
+            this.main_placeID +
+            "&key=" +
+            process.env.VUE_APP_MAP_ACCESS_TOKEN
+        );
+        console.log(res.data.result);
     }
   },
   async mounted() {
@@ -315,9 +344,9 @@ export default {
     this.author = res.data.CreateBy;
 
     this.mainLatLngString = res.data.Coordinate;
-    console.log(this.mainLatLngString);
     this.changeStringToObj();
     this.reverseGeocoding();
+    // this.placeIdApi();
 
     //
     this.bodyContent = res.data.TextData;
