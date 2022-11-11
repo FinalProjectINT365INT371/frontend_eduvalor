@@ -16,24 +16,13 @@
         :draggable="false"
         @click="center = m.position"
       />
-      <!-- <gmap-info-window
-        :options="infoOptions"
-        :position="infoWindowPos"
-        :opened="infoWinOpen"
-        @closeclick="infoWinOpen = false"
-      >
-      </gmap-info-window> -->
     </gmap-map>
     <div>
       <gmap-street-view-panorama
         ref="pano"
         :position="center"
-        :pov="pov"
         :zoom="1"
         class="map-container"
-        @position_changed="updateCenter"
-        @pano_changed="updatePano"
-        @pov_changed="updatePov"
         style="width: 1100px; height: 300px"
       >
       </gmap-street-view-panorama>
@@ -50,23 +39,13 @@ export default {
       center: { lat: 10, lng: 10 },
       currentPlace: null,
       markers: [],
-
-      reportedMapCenter: {
-        lat: 52.201272,
-        lng: 0.11872,
-      },
-      mapCenter: null,
-      pov: {
-        heading: 0,
-        pitch: 0,
-      },
-      pano: 0,
+      markersText: [],
     };
   },
 
   mounted() {
     this.geolocate();
-    this.filteredMap();
+    // this.filteredMap();
   },
   methods: {
     geolocate: function () {
@@ -77,6 +56,7 @@ export default {
         };
         this.markers.push({ position: this.center });
       });
+    this.filteredMap();
     },
     // updatePov(pov) {
     //   this.pov = pov;
@@ -91,14 +71,39 @@ export default {
     //   };
     // },
 
+    // @position_changed="updateCenter"
+    //     @pano_changed="updatePano"
+    //     @pov_changed="updatePov"
+
     async filteredMap() {
       //  const res = await axios.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + this.center.lat + '%' + this.center.lng + '&radius=1500&type=restaurant&keyword=cruise&key=' + process.env.VUE_APP_MAP_ACCESS_TOKEN)
       const res = await axios.get(
-        "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522%2C151.1957362&radius=1500&type=restaurant&keyword=cruise&key=" +
+        "https://cors-anywhere.herokuapp.com/" +
+          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=13.7120038%2C100.531953&radius=50000&type=art_gallery&key=" +
           process.env.VUE_APP_MAP_ACCESS_TOKEN
       );
+      if (res) {
+        console.log(res);
+        console.log("Hi " + res.data.results.length);
+        for (let i = 0; i < res.data.results.length; i++) {
+          // this.markers = res.data.results[i].geometry.location
+          this.markersText.push(
+            JSON.stringify(res.data.results[i].geometry.location)
+          );
+          console.log(res.data.results[i].geometry.location);
+        }
 
-      console.log(res.data.results);
+        for (let index = 0; index < this.markersText.length; index++) {
+          console.log(this.markersText[index]);
+          this.markers.push({position: JSON.parse(this.markersText[index])});
+          // this.markers.push(JSON.parse(this.markersText[index]));
+
+        }
+
+        console.log(this.markers);
+        // console.log(this.center);
+        // console.log(res.data.results);
+      }
     },
   },
 };

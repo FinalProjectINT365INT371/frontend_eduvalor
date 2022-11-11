@@ -76,13 +76,47 @@
         style="width: 1100px; height: 300px"
       >
       </gmap-street-view-panorama>
-      <p class="pic-cover-arti d-flex align-center">
-        <img
-          class="pr-3 img-relate"
-          src="../../assets/icon/bx_street-view.png"
-        />เห็นตัวอย่างสถานที่จริงด้วย Street View!
-      </p>
-      <div id="map"></div>
+      <div id="opt-places">
+        <p class="pic-cover-arti d-flex align-center">
+          <img
+            class="pr-3 img-relate"
+            src="../../assets/icon/gps.png"
+          />ตามรอยสถานที่อื่น ๆ ที่เกี่ยวข้อง
+        </p>
+        <v-card class="d-flex justify-space-around">
+          <gmap-map
+            :center="mainLatLng"
+            :zoom="15"
+            map-type-id="terrain"
+            style="width: 225px; height: 225px"
+            :options="{
+              zoomControl: false,
+              mapTypeControl: false,
+              scaleControl: false,
+              streetViewControl: false,
+              rotateControl: false,
+              fullscreenControl: false,
+              disableDefaultUi: false,
+              draggable: false,
+            }"
+          >
+            <gmap-marker
+              :position="mainLatLng"
+              :clickable="true"
+              :draggable="false"
+              @click="center = mainLatLng"
+            />
+          </gmap-map>
+
+          <div style="width:500px;">
+            <v-card-title> {{ placeAPIName }}</v-card-title>
+            <v-card-text> {{ placeAPIDetail }}</v-card-text>
+            <v-card-action>
+              <a :href="placeAPIUrl">See more MAP </a></v-card-action
+            >
+          </div>
+        </v-card>
+      </div>
     </div>
     <v-divider inset style="padding-bottom: 2%"></v-divider>
     <div>
@@ -208,9 +242,9 @@
 import axios from "axios";
 // import CommentSection from '../../components/CommentSection.vue';
 import ApproveComment from "../../components/ApproveComment.vue";
-import { gmapApi } from 'vue2-google-maps';
+import { gmapApi } from "vue2-google-maps";
 export default {
-  name: '_article',
+  name: "_article",
   components: {
     // CommentSection,
     ApproveComment,
@@ -244,11 +278,14 @@ export default {
       mainLatLng: {},
       main_address_detail: "",
       main_placeID: "",
+
       placeAPIobj: {},
+      placeAPIName: "",
+      placeAPIDetail: "",
+      placeAPIUrl: "",
     };
-    
   },
-  computed:{
+  computed: {
     google: gmapApi,
   },
   methods: {
@@ -301,7 +338,7 @@ export default {
 
     changeStringToObj() {
       this.mainLatLng = JSON.parse(this.mainLatLngString);
-      console.log(this.mainLatLng);
+      // console.log(this.mainLatLng);
     },
     async reverseGeocoding() {
       const res = await axios.get(
@@ -315,20 +352,27 @@ export default {
 
       this.main_address_detail = res.data.results[0].formatted_address;
       this.main_placeID = res.data.results[0].place_id;
-      console.log(res.data.results[0]);
-      console.log(this.mainLatLng);
+      // console.log(res.data.results[0]);
+      // console.log(this.mainLatLng);
 
       this.placeAPIHero();
     },
     async placeAPIHero() {
       const res = await axios.get(
-          "https://cors-anywhere.herokuapp.com/"+"https://maps.googleapis.com/maps/api/place/details/json?place_id=" +
-            this.main_placeID +
-            "&key=" +
-            process.env.VUE_APP_MAP_ACCESS_TOKEN
-        );
-        console.log(res.data.result);
-    }
+        "https://cors-anywhere.herokuapp.com/" +
+          "https://maps.googleapis.com/maps/api/place/details/json?place_id=" +
+          this.main_placeID +
+          "&key=" +
+          process.env.VUE_APP_MAP_ACCESS_TOKEN
+      );
+      console.log(res.data.result);
+      if (res) {
+        this.placeAPIobj = res.data.result;
+        this.placeAPIName = res.data.result.name;
+        this.placeAPIDetail = res.data.result.formatted_address;
+        this.placeAPIUrl = res.data.result.url;
+      }
+    },
   },
   async mounted() {
     let head = this.$route.params;
