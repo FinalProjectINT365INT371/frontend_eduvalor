@@ -46,7 +46,7 @@
                 เนื้อหาบทความ<span style="color: red">*</span>
               </p>
               <quill-editor class="quill pb-10" ref="myQuillEditor" v-model="textEditorContent" :options="editorOption"
-                required />
+                required :rules="quillRules" />
               <p v-if="params != undefined" class="text-red">
                 กรุณาใส่รูปใหม่ทุกครั้งที่มีการแก้ไข
               </p>
@@ -171,11 +171,6 @@ export default {
       b5: "non-active",
     },
     coordinates: [],
-    getCoordinates: undefined,
-    sendCoordinates: undefined,
-    // lat: false,
-    // lng: false,
-
   }),
   methods: {
     Preview_image() {
@@ -402,6 +397,8 @@ export default {
     // },
   },
   async mounted() {
+    console.log(this.coordinates);
+
     let head = this.$route.params;
     if (head != undefined) {
       this.params = head.id;
@@ -416,6 +413,7 @@ export default {
       this.addCategory(res.data.ContentCategory[0].split(","));
       document.getElementsByClassName("ql-editor")[0].innerHTML =
         res.data.TextData[0];
+        
     }
   },
 };

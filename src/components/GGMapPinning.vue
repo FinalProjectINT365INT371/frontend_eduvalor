@@ -1,20 +1,53 @@
 <template>
   <div>
-    <div style="justify-content: center;">
+    <div style="justify-content: center">
       <br />
       <!-- <v-btn @click='clearMap'> Clear Map</v-btn> -->
-      <GmapAutocomplete class="gmap" @place_changed='setPlace' />
+      <GmapAutocomplete
+        :rules="mainGPSRules"
+        class="gmap"
+        @place_changed="setPlace"
+      />
 
-      <v-btn @click='addMarkers'> Add Markers</v-btn>
+      <v-btn @click="addMarkers"> Add Markers</v-btn>
       <br />
       <br />
 
-      <gmap-map :center="center" :zoom="14" map-type-id="terrain" class="gmap-map">
-        <!-- <gmap-map :center="{lat:10, lng:10}" :zoom="7" map-type-id="terrain" style="width: 500px; height: 300px"> -->
-
-        <gmap-marker :key="index" v-for="(m, index) in markers" :position="m.position" :clickable="true"
-          :draggable="true" @click="center = m.position" />
+      <gmap-map
+        :center="center"
+        :zoom="16"
+        map-type-id="terrain"
+        class="gmap-map"
+        :options="{
+          mapTypeControl: false,
+          streetViewControl: false,
+          fullscreenControl: false,
+          disableDefaultUi: false,
+        }"
+      >
+        <gmap-marker
+          :key="index"
+          v-for="(m, index) in markers"
+          :position="m.position"
+          :clickable="true"
+          :draggable="true"
+          @click="center = m.position"
+        />
       </gmap-map>
+    </div>
+
+    <v-btn @click="addMoreOpts" class="primary">add</v-btn>
+    <div
+      v-for="(moreGmapAuto, i) in GmapAutocompletes"
+      :key="i"
+      class="text-fields-row"
+    >
+      <GmapAutocomplete
+        :rules="mainGPSRules"
+        class="gmap"
+        @place_changed="setPlace"
+        v-model="moreGmapAuto.value"      />
+        <v-btn @click="removeOpts(i)" class="error">delete</v-btn>
     </div>
   </div>
 </template>
@@ -28,6 +61,9 @@ export default {
       currentPlace: null,
       markers: [],
       places: [],
+
+      mainGPSRules: [(v) => !!v || "กรุณาใส่พิกัดของสถานที่ที่ต้องการแนะนำ"],
+      GmapAutocompletes: [],
     };
   },
   mounted() {
@@ -38,13 +74,16 @@ export default {
       if (this.currentPlace) {
         const marker = {
           lat: this.currentPlace.geometry.location.lat(),
-          lng: this.currentPlace.geometry.location.lng()
+          lng: this.currentPlace.geometry.location.lng(),
         };
         // this.markers.push({position: marker});
         this.markers[0] = { position: marker };
 
         console.log("this is from markers (lt, lng)", this.markers);
-        console.log("this is from addmarkers( ได้ออกมาเป็นชุดข้อมูล)", this.places);
+        console.log(
+          "this is from addmarkers( ได้ออกมาเป็นชุดข้อมูล)",
+          this.places
+        );
 
         // this.places.push(this.currentPlace);
         this.places[0] = this.currentPlace;
@@ -57,12 +96,11 @@ export default {
         // console.log(marker);
         // console.log(this.markers[0]);
         // this.$emit('addMarkers', this.markers[0].position)
-        this.$emit('addMarkers', marker)
-
+        this.$emit("addMarkers", marker);
       }
     },
     geolocate: function () {
-      navigator.geolocation.getCurrentPosition(position => {
+      navigator.geolocation.getCurrentPosition((position) => {
         this.center = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
@@ -75,45 +113,53 @@ export default {
       });
     },
     setPlace(place) {
-      this.currentPlace = place
+      this.currentPlace = place;
       console.log("this is from setPlace()", this.currentPlace);
     },
 
     // geocoder(latlng) {
     //   const geocoder = new google.maps.Geocoder();
-    //   geocoder.Geocoder() 
+    //   geocoder.Geocoder()
     // },
     clearMap() {
       this.markers = [];
     },
+    addMoreOpts() {
+      this.GmapAutocompletes.push({
+        value: "",
+      });
+    },
+    removeOpts (index) {
+         this.GmapAutocompletes.splice(index, 1)
+     }
   },
-}
+};
 </script>
 <style scoped>
 .pac-target-input {
   padding: 2%;
   height: 48px;
   width: 100%;
-  background-color: #EDE6DA;
+  background-color: #ede6da;
   border-radius: 24px;
-  border-color: #EDE6DA;
-
+  border-color: #ede6da;
 }
 
 .pac-target-input {
   padding: 2%;
   height: 48px;
   width: 100%;
-  background-color: #EDE6DA;
-  border-color: #EDE6DA;
+  background-color: #ede6da;
+  border-color: #ede6da;
 }
 
 .gmap:focus {
-  border-color: #EDE6DA;
+  border-color: #ede6da;
 }
 
-.gmap-map{
-  width: 800px; height: 300px;
+.gmap-map {
+  width: 800px;
+  height: 300px;
 }
 
 @media screen and (max-width: 768px) {

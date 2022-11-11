@@ -275,7 +275,7 @@ export default {
         pitch: 0,
       },
       mainLatLngString: "",
-      mainLatLng: {},
+      mainLatLng: [],
       main_address_detail: "",
       main_placeID: "",
 
@@ -353,7 +353,7 @@ export default {
       this.main_address_detail = res.data.results[0].formatted_address;
       this.main_placeID = res.data.results[0].place_id;
       // console.log(res.data.results[0]);
-      // console.log(this.mainLatLng);
+      console.log(this.mainLatLng);
 
       this.placeAPIHero();
     },
