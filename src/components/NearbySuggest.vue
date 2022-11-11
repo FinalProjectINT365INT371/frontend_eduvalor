@@ -1,13 +1,12 @@
 <template>
   <div>
-    <!-- <GmapAutocomplete :type="shopping_mall"/> -->
     <gmap-map
       ref="mapRef"
       :center="center"
-      :zoom="15"
+      :zoom="16"
       map-type-id="terrain"
       style="width: 1100px; height: 300px"
-    >
+    >    
       <gmap-marker
         :key="index"
         v-for="(m, index) in markers"
@@ -17,7 +16,7 @@
         @click="center = m.position"
       />
     </gmap-map>
-    <div>
+    <!-- <div>
       <gmap-street-view-panorama
         ref="pano"
         :position="center"
@@ -26,6 +25,10 @@
         style="width: 1100px; height: 300px"
       >
       </gmap-street-view-panorama>
+    </div> -->
+
+    <div id="test-show-results">
+      <p > พบ Aquarium {{aquariums}} แห่ง | Art Gallery {{art_gallerries}} แห่ง | พบ Museum {{museums}} แห่ง</p>
     </div>
   </div>
 </template>
@@ -40,6 +43,10 @@ export default {
       currentPlace: null,
       markers: [],
       markersText: [],
+
+      art_gallerries: "",
+      aquariums: "",
+      museums: "",
     };
   },
 
@@ -48,7 +55,7 @@ export default {
     // this.filteredMap();
   },
   methods: {
-    geolocate: function () {
+    geolocate:function () {
       navigator.geolocation.getCurrentPosition((position) => {
         this.center = {
           lat: position.coords.latitude,
@@ -58,51 +65,54 @@ export default {
       });
     this.filteredMap();
     },
-    // updatePov(pov) {
-    //   this.pov = pov;
-    // },
-    // updatePano(pano) {
-    //   this.pano = pano;
-    // },
-    // updateCenter(latLng) {
-    //   this.reportedMapCenter = {
-    //     lat: latLng.lat(),
-    //     lng: latLng.lng(),
-    //   };
-    // },
-
-    // @position_changed="updateCenter"
-    //     @pano_changed="updatePano"
-    //     @pov_changed="updatePov"
 
     async filteredMap() {
-      //  const res = await axios.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + this.center.lat + '%' + this.center.lng + '&radius=1500&type=restaurant&keyword=cruise&key=' + process.env.VUE_APP_MAP_ACCESS_TOKEN)
+      //  const res = await axios.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + this.center.lat + '%2C' + this.center.lng + '&radius=1500&type=restaurant&keyword=cruise&key=' + process.env.VUE_APP_MAP_ACCESS_TOKEN)
       const res = await axios.get(
         "https://cors-anywhere.herokuapp.com/" +
-          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=13.7120038%2C100.531953&radius=50000&type=art_gallery&key=" +
+          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=13.7120038%2C100.531953&radius=1500&type=art_gallery&key=" +
           process.env.VUE_APP_MAP_ACCESS_TOKEN
       );
+
+      const res2 = await axios.get(
+        "https://cors-anywhere.herokuapp.com/" +
+          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=13.7120038%2C100.531953&radius=1500&type=aquarium&key=" +
+          process.env.VUE_APP_MAP_ACCESS_TOKEN
+      );
+
+      const res3 = await axios.get(
+        "https://cors-anywhere.herokuapp.com/" +
+          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=13.7120038%2C100.531953&radius=1500&type=museum&key=" +
+          process.env.VUE_APP_MAP_ACCESS_TOKEN
+      );
+
       if (res) {
-        console.log(res);
-        console.log("Hi " + res.data.results.length);
         for (let i = 0; i < res.data.results.length; i++) {
-          // this.markers = res.data.results[i].geometry.location
           this.markersText.push(
             JSON.stringify(res.data.results[i].geometry.location)
           );
-          console.log(res.data.results[i].geometry.location);
+          this.art_gallerries = res.data.results.length;
+        }
+
+        for (let i = 0; i < res2.data.results.length; i++) {
+          this.markersText.push(
+            JSON.stringify(res2.data.results[i].geometry.location)
+          );
+          this.aquariums = res2.data.results.length;
+        }
+
+        for (let i = 0; i < res3.data.results.length; i++) {
+          this.markersText.push(
+            JSON.stringify(res3.data.results[i].geometry.location)
+          );
+          this.museums = res3.data.results.length;
         }
 
         for (let index = 0; index < this.markersText.length; index++) {
-          console.log(this.markersText[index]);
           this.markers.push({position: JSON.parse(this.markersText[index])});
-          // this.markers.push(JSON.parse(this.markersText[index]));
-
         }
 
         console.log(this.markers);
-        // console.log(this.center);
-        // console.log(res.data.results);
       }
     },
   },
