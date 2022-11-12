@@ -118,7 +118,7 @@
 
 <script>
 import axios from "axios";
-import { login_auth } from '../plugins/auth'
+import { login_auth } from "../plugins/auth";
 //var jwt = require("jsonwebtoken");
 export default {
   data: () => ({
@@ -221,9 +221,14 @@ export default {
     },
 
     async login() {
+      const encryptpwd = require("encrypt-with-password");
+      //const password = "EDUVALOR";
+      const password = process.env.DCRYPT_SECRET;
+      const encrypted = encryptpwd.encrypt(this.passwordLogin, password);
+      console.log(encrypted);
       let user = JSON.stringify({
         username: this.usernameLogin,
-        password: this.passwordLogin,
+        password: encrypted,
       });
 
       const config = {
@@ -233,8 +238,8 @@ export default {
       };
       console.log(user);
       const res = await axios.post(
-        process.env.VUE_APP_BACKEND_API + "/authentication/login",
-        //"https://www.eduvalor.ml/backendDev/authentication/login",
+        //process.env.VUE_APP_BACKEND_API + "/authentication/login",
+        "https://www.eduvalor.ml/backendDev/authentication/login",
         user,
         config
       );
