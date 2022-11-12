@@ -94,6 +94,10 @@ export default {
     },
     setLogout() {
       localStorage.removeItem("login");
+      this.$store.commit("setUser", null);
+      this.$store.commit("setToken", null);
+      console.log(this.$store.state);
+      this.$cookies.remove("JWT_TOKEN")
       this.backHome();
       location.reload();
     },
