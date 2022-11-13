@@ -8,7 +8,7 @@ export async function login_auth(params) {
             expire: ""
         }
         let token = await params.data.access_token;
-        let user_from_token = jwt.verify(token, "EDUVALOR");
+        let user_from_token = jwt.verify(token, process.env.VUE_APP_DCRYPT_SECRET);
         let expire = new Date((await user_from_token.exp) * 1000);
         const config = {
             headers: {
