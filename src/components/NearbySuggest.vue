@@ -6,7 +6,7 @@
       :zoom="16"
       map-type-id="terrain"
       style="width: 1100px; height: 300px"
-    >    
+    >
       <gmap-marker
         :key="index"
         v-for="(m, index) in markers"
@@ -16,19 +16,12 @@
         @click="center = m.position"
       />
     </gmap-map>
-    <!-- <div>
-      <gmap-street-view-panorama
-        ref="pano"
-        :position="center"
-        :zoom="1"
-        class="map-container"
-        style="width: 1100px; height: 300px"
-      >
-      </gmap-street-view-panorama>
-    </div> -->
 
     <div id="test-show-results">
-      <p > พบ Aquarium {{aquariums}} แห่ง | Art Gallery {{art_gallerries}} แห่ง | พบ Museum {{museums}} แห่ง</p>
+      <p>
+        พบ Aquarium {{ aquariums }} แห่ง | Art Gallery {{ art_gallerries }} แห่ง
+        | พบ Museum {{ museums }} แห่ง
+      </p>
     </div>
   </div>
 </template>
@@ -52,37 +45,35 @@ export default {
 
   mounted() {
     this.geolocate();
-    // this.filteredMap();
   },
   methods: {
-    geolocate:function () {
-      navigator.geolocation.getCurrentPosition((position) => {
+    geolocate: function () {
+      navigator.geolocation.getCurrentPosition(async (position) => {
         this.center = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         };
         this.markers.push({ position: this.center });
+        this.filteredMap();
       });
-    this.filteredMap();
     },
 
     async filteredMap() {
-      //  const res = await axios.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + this.center.lat + '%2C' + this.center.lng + '&radius=1500&type=restaurant&keyword=cruise&key=' + process.env.VUE_APP_MAP_ACCESS_TOKEN)
-      const res = await axios.get(
+        const res = await axios.get(
         "https://cors-anywhere.herokuapp.com/" +
-          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=13.7120038%2C100.531953&radius=1500&type=art_gallery&key=" +
+          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ this.center.lat + '%2C' + this.center.lng + "&radius=1500&type=art_gallery&key=" +
           process.env.VUE_APP_MAP_ACCESS_TOKEN
       );
 
       const res2 = await axios.get(
         "https://cors-anywhere.herokuapp.com/" +
-          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=13.7120038%2C100.531953&radius=1500&type=aquarium&key=" +
+          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ this.center.lat + '%2C' + this.center.lng + "&radius=1500&type=aquarium&key=" +
           process.env.VUE_APP_MAP_ACCESS_TOKEN
       );
 
       const res3 = await axios.get(
         "https://cors-anywhere.herokuapp.com/" +
-          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=13.7120038%2C100.531953&radius=1500&type=museum&key=" +
+          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ this.center.lat + '%2C' + this.center.lng + "&radius=1500&type=museum&key=" +
           process.env.VUE_APP_MAP_ACCESS_TOKEN
       );
 
@@ -109,7 +100,7 @@ export default {
         }
 
         for (let index = 0; index < this.markersText.length; index++) {
-          this.markers.push({position: JSON.parse(this.markersText[index])});
+          this.markers.push({ position: JSON.parse(this.markersText[index]) });
         }
 
         console.log(this.markers);

@@ -360,7 +360,6 @@ export default {
       let coordinate_obj = markers;
       let coordinate_string = JSON.stringify(coordinate_obj);
       this.coordinates[0] = coordinate_string;
-      console.log(this.coordinates);
     },
 
     quillValidation() {
@@ -371,20 +370,20 @@ export default {
       }
     },
 
-    mainGPSVailidation() {
-      if (this.coordinates !== null) {
-        this.mainCoordinate = false;
-        console.log(this.coordinates);
-      } else {
-        console.log(this.coordinates);
-        this.mainCoordinate = true;
-      }
-    },
+    // mainGPSVailidation() {
+    //   if (this.coordinates[0] !== null) {
+    //     this.mainCoordinate = false;
+    //     console.log(this.coordinates);
+    //   } else {
+    //     console.log(this.coordinates);
+    //     this.mainCoordinate = true;
+    //   }
+    // },
 
     submit() {
       this.checkTag();
       this.quillValidation();
-      this.mainGPSVailidation();
+      // this.mainGPSVailidation();
       function DataURIToBlob(dataURI) {
         const splitDataURI = dataURI.split(",");
         const byteString =

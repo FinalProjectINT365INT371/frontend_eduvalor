@@ -117,10 +117,6 @@ export default {
       console.log("this is from setPlace()", this.currentPlace);
     },
 
-    // geocoder(latlng) {
-    //   const geocoder = new google.maps.Geocoder();
-    //   geocoder.Geocoder()
-    // },
     clearMap() {
       this.markers = [];
     },
