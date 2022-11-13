@@ -16,7 +16,7 @@ export default new Vuex.Store({
   },
   actions: {},
   getters: {
-    isLoggedIn(state) {
+    getUserData(state) {
       return state;
     },
   },

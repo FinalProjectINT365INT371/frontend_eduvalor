@@ -240,8 +240,8 @@ export default {
       };
       console.log(user);
       const res = await axios.post(
-        //process.env.VUE_APP_BACKEND_API + "/authentication/login",
-        "https://www.eduvalor.ml/backendDev/authentication/login",
+        process.env.VUE_APP_BACKEND_API + "/authentication/login",
+        //"https://www.eduvalor.ml/backendDev/authentication/login",
         user,
         config
       );
@@ -257,7 +257,7 @@ export default {
         //Set cookies
         this.$cookies.set("JWT_TOKEN", auth_check.token, auth_check.expire);
         console.log(this.$cookies.get("JWT_TOKEN"));
-        this.$router.push("/Welcome");
+        this.$router.push("/Profile");
       }
     },
   },

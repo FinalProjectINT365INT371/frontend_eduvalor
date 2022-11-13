@@ -1,8 +1,8 @@
 <template>
   <div>
     <h1>Welcome</h1>
-    <h2>{{isLoggedIn}}</h2>
-    <router-link v-if="!isLoggedIn" to="/login"
+    <h2>{{getUserData}}</h2>
+    <router-link v-if="!getUserData" to="/login"
       ><button>Login</button></router-link
     >
   </div>
@@ -16,7 +16,7 @@ export default {
     Token: "",
   }),
   computed: {
-    ...mapGetters(["isLoggedIn"]),
+    ...mapGetters(["getUserData"]),
   },
 };
 </script>

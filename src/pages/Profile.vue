@@ -27,8 +27,15 @@
                 <p class="my-auto header-p">Username</p>
               </v-col>
               <v-spacer class="d-none d-sm-flex d-md-flex d-lg-flex" />
-              <v-col cols="12" sm="12" md="8" lg="8" align-self="end" v-if="!edit">
-                <span class="p-name">Pattranit Kongsaenkam</span
+              <v-col
+                cols="12"
+                sm="12"
+                md="8"
+                lg="8"
+                align-self="end"
+                v-if="!edit"
+              >
+                <span class="p-name">{{ getUserData.user.Displayname }}</span
                 ><img
                   src="../assets/icon/pen.png"
                   class="ml-2"
@@ -37,18 +44,30 @@
                   @click="edit = true"
                 />
               </v-col>
-              <v-col cols="12" sm="12" md="8" lg="8" align-self="end" v-if="edit">
+              <v-col
+                cols="12"
+                sm="12"
+                md="8"
+                lg="8"
+                align-self="end"
+                v-if="edit"
+              >
                 <v-row align="end">
-                <v-col cols="12" sm="12" md="8" lg="8" class="pb-0">
-                <v-text-field label="Username" color="#4C4C4C" counter
-            maxlength="30" class="pt-0"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="12" md="4" lg="4">
-                <v-btn color="#AD9F86">
-                  <img src="../assets/icon/white-pen.png" class="mr-2">
-                  บันทึกการแก้ไข
-                </v-btn>
-                </v-col>
+                  <v-col cols="12" sm="12" md="8" lg="8" class="pb-0">
+                    <v-text-field
+                      label="Username"
+                      color="#4C4C4C"
+                      counter
+                      maxlength="30"
+                      class="pt-0"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="12" md="4" lg="4">
+                    <v-btn color="#AD9F86">
+                      <img src="../assets/icon/white-pen.png" class="mr-2" />
+                      บันทึกการแก้ไข
+                    </v-btn>
+                  </v-col>
                 </v-row>
               </v-col>
             </v-row>
@@ -56,16 +75,16 @@
               <v-col cols="12" sm="12" md="3" lg="3" align-self="end">
                 <p class="my-auto header-p">User ID</p>
               </v-col>
-              <v-spacer class="d-none d-sm-flex d-md-flex d-lg-flex"  />
+              <v-spacer class="d-none d-sm-flex d-md-flex d-lg-flex" />
               <v-col cols="12" sm="12" md="8" lg="8" align-self="end">
-                <p class="my-auto p-id">Pattranit Kongsaenkam</p>
+                <p class="my-auto p-id">{{ getUserData.user.id }}</p>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="12" sm="12" md="3" lg="3" align-self="end">
                 <p class="my-auto header-p">Password</p>
               </v-col>
-              <v-spacer class="d-none d-sm-flex d-md-flex d-lg-flex"  />
+              <v-spacer class="d-none d-sm-flex d-md-flex d-lg-flex" />
               <v-col cols="12" sm="12" md="8" lg="8" align-self="end">
                 <a class="a-password" href="">Reset Password</a>
               </v-col>
@@ -117,6 +136,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import axios from "axios";
 export default {
   data() {
@@ -131,7 +151,11 @@ export default {
       pageTotal: 1,
       eduvalor: [],
       edit: false,
+      userImage: null,
     };
+  },
+  computed: {
+    ...mapGetters(["getUserData"]),
   },
   methods: {
     Preview_image() {
@@ -147,6 +171,13 @@ export default {
       let endIndex = 10 * event;
       this.article = this.contents.slice(startIndex, endIndex);
       this.pageTotal = Math.floor(this.contents.length / 10) + 1;
+    },
+
+    setUserImage() {
+      let Url = this.$store.state.user.ImageUrl;
+      const srcUrl = Url.split("imageUrl : ");
+      this.url = srcUrl[1];
+      console.log(this.url);
     },
   },
   mounted() {
@@ -181,10 +212,10 @@ export default {
       this.article = this.contents.slice(0, 10);
       this.pageTotal = Math.floor(this.contents.length / 10) + 1;
     });
+    this.setUserImage();
   },
 };
 </script>
-
 
 <style scoped>
 @media screen and (max-width: 2000px) {
@@ -208,18 +239,18 @@ export default {
     margin-top: 1% !important;
   }
   .header {
-  font-size: 20px !important;
-} 
+    font-size: 20px !important;
+  }
   .a-password {
     font-size: 16px !important;
   }
   .p-id {
     font-size: 16px !important;
   }
-    .p-name {
+  .p-name {
     font-size: 16px !important;
   }
-    .p-username {
+  .p-username {
     font-size: 16px !important;
   }
   .header-p {
@@ -227,12 +258,11 @@ export default {
   }
   .v-btn {
     font-size: 14px !important;
-}
-  .center-my .col-sm-12 {
-    padding-top:  4px;
-    padding-bottom:  4px;
   }
-
+  .center-my .col-sm-12 {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
 }
 .circle-image {
   border-radius: 50%;
@@ -320,20 +350,18 @@ export default {
   color: #2d9cdb;
 }
 .v-input {
-        font-family: 'Bai Jamjuree' !important;
-font-style: normal !important;
-font-weight: 700 !important;
+  font-family: "Bai Jamjuree" !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
 }
 .v-btn {
-  font-family: 'Kanit';
-font-style: normal;
-font-weight: 400;
-font-size: 20px;
-line-height: 30px;
-text-align: center;
+  font-family: "Kanit";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  text-align: center;
 
-color: #FFFFFF;
+  color: #ffffff;
 }
-
-
 </style>

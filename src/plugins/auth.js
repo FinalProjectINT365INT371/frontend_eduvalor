@@ -2,13 +2,14 @@ var jwt = require("jsonwebtoken");
 import axios from "axios";
 export async function login_auth(params) {
     try {
-        let res = res = {
+        let res = {
             token: "",
             user: null,
             expire: ""
         }
         let token = await params.data.access_token;
         let user_from_token = jwt.verify(token, process.env.VUE_APP_DCRYPT_SECRET);
+        //let user_from_token = jwt.verify(token, 'EDUVALOR');
         let expire = new Date((await user_from_token.exp) * 1000);
         const config = {
             headers: {
@@ -30,5 +31,4 @@ export async function login_auth(params) {
         console.log(`cannot login : ${error}`);
     }
 
-//export async function login_auth(params) {logout}}
 }

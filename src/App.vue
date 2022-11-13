@@ -115,7 +115,7 @@ export default {
   
   created() {
     if (localStorage.getItem("login") == "true") {
-      this.login = true;
+      //this.login = true;
     }
   },
 };
