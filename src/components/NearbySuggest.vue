@@ -20,7 +20,7 @@
     <div id="test-show-results">
       <p>
         พบ Aquarium {{ aquariums }} แห่ง | Art Gallery {{ art_gallerries }} แห่ง
-        | พบ Museum {{ museums }} แห่ง
+        | พบ Museum {{ museums }} แห่ง | พบพิพิธภัณฑ์ {{ pipittapan }} แห่ง
       </p>
     </div>
   </div>
@@ -40,6 +40,7 @@ export default {
       art_gallerries: "",
       aquariums: "",
       museums: "",
+      pipittapan:"",
     };
   },
 
@@ -59,6 +60,12 @@ export default {
     },
 
     async filteredMap() {
+      const res0 = await axios.get(
+        "https://cors-anywhere.herokuapp.com/" +
+          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ this.center.lat + '%2C' + this.center.lng + "&radius=4000&keyword=พิพิธภัณฑ์&key=" +
+          process.env.VUE_APP_MAP_ACCESS_TOKEN
+      );
+
         const res = await axios.get(
         "https://cors-anywhere.herokuapp.com/" +
           "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ this.center.lat + '%2C' + this.center.lng + "&radius=4000&type=art_gallery&key=" +
@@ -78,6 +85,13 @@ export default {
       );
 
       if (res) {
+        for (let i = 0; i < res0.data.results.length; i++) {
+          this.markersText.push(
+            JSON.stringify(res0.data.results[i].geometry.location)
+          );
+          this.pipittapan = res0.data.results.length;
+        }
+
         for (let i = 0; i < res.data.results.length; i++) {
           this.markersText.push(
             JSON.stringify(res.data.results[i].geometry.location)
