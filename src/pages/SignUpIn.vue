@@ -224,6 +224,8 @@ export default {
       const encryptpwd = require("encrypt-with-password");
       //const password = "EDUVALOR";
       const password = process.env.DCRYPT_SECRET;
+      console.log(process.env.DCRYPT_SECRET);
+      console.log(password);
       const encrypted = encryptpwd.encrypt(this.passwordLogin, password);
       console.log(encrypted);
       let user = JSON.stringify({
