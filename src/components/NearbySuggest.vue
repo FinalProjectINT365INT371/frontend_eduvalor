@@ -61,19 +61,19 @@ export default {
     async filteredMap() {
         const res = await axios.get(
         "https://cors-anywhere.herokuapp.com/" +
-          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ this.center.lat + '%2C' + this.center.lng + "&radius=1500&type=art_gallery&key=" +
+          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ this.center.lat + '%2C' + this.center.lng + "&radius=4000&type=art_gallery&key=" +
           process.env.VUE_APP_MAP_ACCESS_TOKEN
       );
 
       const res2 = await axios.get(
         "https://cors-anywhere.herokuapp.com/" +
-          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ this.center.lat + '%2C' + this.center.lng + "&radius=1500&type=aquarium&key=" +
+          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ this.center.lat + '%2C' + this.center.lng + "&radius=4000&type=aquarium&key=" +
           process.env.VUE_APP_MAP_ACCESS_TOKEN
       );
 
       const res3 = await axios.get(
         "https://cors-anywhere.herokuapp.com/" +
-          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ this.center.lat + '%2C' + this.center.lng + "&radius=1500&type=museum&key=" +
+          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ this.center.lat + '%2C' + this.center.lng + "&radius=4000&type=museum&key=" +
           process.env.VUE_APP_MAP_ACCESS_TOKEN
       );
 
