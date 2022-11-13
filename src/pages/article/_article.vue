@@ -70,7 +70,7 @@
       </p>
       <gmap-street-view-panorama
         ref="pano"
-        :position="mainLatLng"
+        :position="latLng"
         :pov="pov"
         :zoom="1"
         style="width: 1100px; height: 300px"
@@ -85,7 +85,7 @@
         </p>
         <v-card class="d-flex justify-space-around">
           <gmap-map
-            :center="mainLatLng"
+            :center="latLng"
             :zoom="15"
             map-type-id="terrain"
             style="width: 225px; height: 225px"
@@ -101,18 +101,18 @@
             }"
           >
             <gmap-marker
-              :position="mainLatLng"
+              :position="latLng"
               :clickable="true"
               :draggable="false"
-              @click="center = mainLatLng"
+              @click="center = latLng"
             />
           </gmap-map>
 
           <div style="width:500px;">
-            <v-card-title> {{ placeAPIName }}</v-card-title>
-            <v-card-text> {{ placeAPIDetail }}</v-card-text>
+            <v-card-title> {{ mainLatLng.name }}</v-card-title>
+            <v-card-text> {{  mainLatLng.formatted_address }}</v-card-text>
             <v-card-action>
-              <a :href="placeAPIUrl">See more MAP </a></v-card-action
+              <a :href="mainLatLng.url">See more MAP </a></v-card-action
             >
           </div>
         </v-card>
@@ -274,6 +274,7 @@ export default {
         heading: 0,
         pitch: 0,
       },
+      latLng:[],
       mainLatLngString: "",
       mainLatLng: [],
       main_address_detail: "",
@@ -338,8 +339,12 @@ export default {
 
     changeStringToObj() {
       this.mainLatLng = JSON.parse(this.mainLatLngString);
-      // console.log(this.mainLatLng);
+      console.log(this.mainLatLng);
+
+      this.latLng = this.mainLatLng.geometry.location
+      console.log(this.latLng);
     },
+
     async reverseGeocoding() {
       const res = await axios.get(
         "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
@@ -389,7 +394,7 @@ export default {
 
     this.mainLatLngString = res.data.Coordinate;
     this.changeStringToObj();
-    this.reverseGeocoding();
+    // this.reverseGeocoding();
     // this.placeIdApi();
 
     //
