@@ -4,7 +4,6 @@
       <br />
       <!-- <v-btn @click='clearMap'> Clear Map</v-btn> -->
       <GmapAutocomplete
-        :rules="mainGPSRules"
         class="gmap"
         @place_changed="setPlace"
       />
@@ -34,6 +33,7 @@
           @click="center = m.position"
         />
       </gmap-map>
+      <p v-if="mainGPSRules" class="text-red">กรุณาใส่พิกัดของสถานที่ที่ต้องการแนะนำ</p>
     </div>
 
     <v-btn @click="addMoreOpts" class="primary">add</v-btn>
@@ -46,8 +46,9 @@
         :rules="mainGPSRules"
         class="gmap"
         @place_changed="setPlace"
-        v-model="moreGmapAuto.value"      />
-        <v-btn @click="removeOpts(i)" class="error">delete</v-btn>
+        v-model="moreGmapAuto.value"
+      />
+      <v-btn @click="removeOpts(i)" class="error">delete</v-btn>
     </div>
   </div>
 </template>
@@ -62,7 +63,7 @@ export default {
       markers: [],
       places: [],
 
-      mainGPSRules: [(v) => !!v || "กรุณาใส่พิกัดของสถานที่ที่ต้องการแนะนำ"],
+      mainGPSRules: true,
       GmapAutocompletes: [],
     };
   },
@@ -91,12 +92,11 @@ export default {
 
         this.center = null;
         this.center = marker;
+        this.$emit("addMarkers", this.currentPlace);
         this.currentPlace = null;
-        // console.log(this.currentPlace);
-        // console.log(marker);
-        // console.log(this.markers[0]);
-        // this.$emit('addMarkers', this.markers[0].position)
-        this.$emit("addMarkers", marker);
+
+        this.mainGPSRules = false;
+        console.log(this.mainGPSRules);
       }
     },
     geolocate: function () {
@@ -129,9 +129,16 @@ export default {
         value: "",
       });
     },
-    removeOpts (index) {
-         this.GmapAutocompletes.splice(index, 1)
-     }
+    removeOpts(index) {
+      this.GmapAutocompletes.splice(index, 1);
+    },
+    pinningAlert() {
+      if (this.coordinates !== []) {
+        this.mainCoordinate = false;
+      } else {
+        this.mainCoordinate = true;
+      }
+    },
   },
 };
 </script>
