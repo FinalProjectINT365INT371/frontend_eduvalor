@@ -13,7 +13,7 @@ commands:
       - checkout
       - run:
           name: "What a number in this .env"
-          command: touch .env ; echo "VUE_APP_BACKEND_API_PROD=$VUE_APP_BACKEND_API_PROD" >> .env ; echo "DCRYPT_SECRET=$DCRYPT_SECRET" >> .env ; echo "VUE_APP_MAP_ACCESS_TOKEN=$VUE_APP_MAP_ACCESS_TOKEN" >> .env
+          command: touch .env ; echo "VUE_APP_BACKEND_API_PROD=$VUE_APP_BACKEND_API_PROD" >> .env ; echo "VUE_APP_DCRYPT_SECRET=$VUE_APP_DCRYPT_SECRET" >> .env ; echo "VUE_APP_MAP_ACCESS_TOKEN=$VUE_APP_MAP_ACCESS_TOKEN" >> .env
       - run:
           name: "Check file .env"
           command: ls -la ; cat .env
@@ -23,7 +23,7 @@ commands:
       - checkout
       - run:
           name: "What a number in this .env"
-          command: touch .env ; echo "VUE_APP_BACKEND_API=$VUE_APP_BACKEND_API" >> .env ; echo "DCRYPT_SECRET=$DCRYPT_SECRET" >> .env ; echo "VUE_APP_MAP_ACCESS_TOKEN=$VUE_APP_MAP_ACCESS_TOKEN" >> .env
+          command: touch .env ; echo "VUE_APP_BACKEND_API=$VUE_APP_BACKEND_API" >> .env ; echo "VUE_APP_DCRYPT_SECRET=$VUE_APP_DCRYPT_SECRET" >> .env ; echo "VUE_APP_MAP_ACCESS_TOKEN=$VUE_APP_MAP_ACCESS_TOKEN" >> .env
       - run:
           name: "Check file .env"
           command: cat .env
