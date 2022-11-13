@@ -370,16 +370,6 @@ export default {
       }
     },
 
-    // mainGPSVailidation() {
-    //   if (this.coordinates[0] !== null) {
-    //     this.mainCoordinate = false;
-    //     console.log(this.coordinates);
-    //   } else {
-    //     console.log(this.coordinates);
-    //     this.mainCoordinate = true;
-    //   }
-    // },
-
     submit() {
       this.checkTag();
       this.quillValidation();

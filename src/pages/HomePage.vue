@@ -226,24 +226,7 @@
         </div>
       </div>
     </div>
-
-    <!-- <router-link to="/ShowContent" >
-      <v-card hover shaped class="mx-auto content-thumbnail" @click="selectContent(_id._id)" max-width="400"
-        v-for="_id in contents" :key="_id._id">
-
-        <v-img src="https://www.traveldb.me/wp-content/uploads/2021/01/bangkok-sea-life-ocean-world.jpg"></v-img>
-        <v-img :src="`${_id.imgSrc}`" class="thumbnails"></v-img>
-        <v-card-title class="test-underline">{{ _id.Header }}</v-card-title>
-
-        <v-card-subtitle color="white">
-          โดย {{ _id.CreateBy }}
-        </v-card-subtitle>
-        <v-card-subtitle>
-          เมื่อ {{ _id.CreateDate }}
-        </v-card-subtitle>
-
-      </v-card>
-    </router-link> -->
+    
   </div>
 </template>
 <script>

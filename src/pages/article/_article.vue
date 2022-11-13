@@ -68,14 +68,15 @@
           src="../../assets/icon/bx_street-view.png"
         />เห็นตัวอย่างสถานที่จริงด้วย Street View!
       </p>
-      <gmap-street-view-panorama
-        ref="pano"
-        :position="latLng"
-        :pov="pov"
-        :zoom="1"
-        style="width: 1100px; height: 300px"
-      >
-      </gmap-street-view-panorama>
+      <div class="d-flex justify-center pb-12">
+        <gmap-street-view-panorama
+          ref="pano"
+          :position="mainLatLng"
+          :zoom="1"
+          style="width: 920px; height: 300px"
+        >
+        </gmap-street-view-panorama>
+      </div>
       <div id="opt-places">
         <p class="pic-cover-arti d-flex align-center">
           <img
@@ -83,39 +84,54 @@
             src="../../assets/icon/gps.png"
           />ตามรอยสถานที่อื่น ๆ ที่เกี่ยวข้อง
         </p>
-        <v-card class="d-flex justify-space-around">
-          <gmap-map
-            :center="latLng"
-            :zoom="15"
-            map-type-id="terrain"
-            style="width: 225px; height: 225px"
-            :options="{
-              zoomControl: false,
-              mapTypeControl: false,
-              scaleControl: false,
-              streetViewControl: false,
-              rotateControl: false,
-              fullscreenControl: false,
-              disableDefaultUi: false,
-              draggable: false,
-            }"
-          >
-            <gmap-marker
-              :position="latLng"
-              :clickable="true"
-              :draggable="false"
-              @click="center = latLng"
-            />
-          </gmap-map>
-
-          <div style="width:500px;">
-            <v-card-title> {{ mainLatLng.name }}</v-card-title>
-            <v-card-text> {{  mainLatLng.formatted_address }}</v-card-text>
-            <v-card-action>
-              <a :href="mainLatLng.url">See more MAP </a></v-card-action
+        <div class="d-flex justify-center">
+          <v-card class="d-flex justify-space-between" style="width: 920px">
+            <gmap-map
+              class="d-flex"
+              :center="mainLatLng"
+              :zoom="15"
+              map-type-id="terrain"
+              style="width: 300px; height: 200px"
+              :options="{
+                zoomControl: false,
+                mapTypeControl: false,
+                scaleControl: false,
+                streetViewControl: false,
+                rotateControl: false,
+                fullscreenControl: false,
+                disableDefaultUi: false,
+                draggable: false,
+              }"
             >
-          </div>
-        </v-card>
+              <gmap-marker
+                :position="mainLatLng"
+                :clickable="true"
+                :draggable="false"
+                @click="center = mainLatLng"
+              />
+            </gmap-map>
+
+            <div style="width: 500px">
+              <v-card-title> {{ mainGPSobj.name }}</v-card-title>
+              <v-card-text> {{ mainGPSobj.formatted_address }}</v-card-text>
+
+              <v-btn
+                style="font-size: 14px; padding: 1.5%"
+                :href="mainGPSobj.url"
+                elevation="1"
+                x-large
+                color="#AD9F86"
+                class="text-white"
+                @click="submit"
+                ><img
+                  class="py-3 pr-3 img-middle"
+                  src="../../assets/icon/eva_pin-fill.png"
+                />
+                ข้อมูลเพิ่มเติม
+              </v-btn>
+            </div>
+          </v-card>
+        </div>
       </div>
     </div>
     <v-divider inset style="padding-bottom: 2%"></v-divider>
@@ -242,7 +258,6 @@
 import axios from "axios";
 // import CommentSection from '../../components/CommentSection.vue';
 import ApproveComment from "../../components/ApproveComment.vue";
-import { gmapApi } from "vue2-google-maps";
 export default {
   name: "_article",
   components: {
@@ -270,24 +285,12 @@ export default {
       b4: false,
       b5: false,
 
-      pov: {
-        heading: 0,
-        pitch: 0,
-      },
-      latLng:[],
-      mainLatLngString: "",
       mainLatLng: [],
+      mainGPSString: "",
+      mainGPSobj: [],
       main_address_detail: "",
       main_placeID: "",
-
-      placeAPIobj: {},
-      placeAPIName: "",
-      placeAPIDetail: "",
-      placeAPIUrl: "",
     };
-  },
-  computed: {
-    google: gmapApi,
   },
   methods: {
     navTo() {
@@ -338,45 +341,11 @@ export default {
     },
 
     changeStringToObj() {
-      this.mainLatLng = JSON.parse(this.mainLatLngString);
+      this.mainGPSobj = JSON.parse(this.mainGPSString);
+      console.log(this.mainGPSobj);
+
+      this.mainLatLng = this.mainGPSobj.geometry.location;
       console.log(this.mainLatLng);
-
-      this.latLng = this.mainLatLng.geometry.location
-      console.log(this.latLng);
-    },
-
-    async reverseGeocoding() {
-      const res = await axios.get(
-        "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
-          this.mainLatLng.lat +
-          "," +
-          this.mainLatLng.lng +
-          "&key=" +
-          process.env.VUE_APP_MAP_ACCESS_TOKEN
-      );
-
-      this.main_address_detail = res.data.results[0].formatted_address;
-      this.main_placeID = res.data.results[0].place_id;
-      // console.log(res.data.results[0]);
-      console.log(this.mainLatLng);
-
-      this.placeAPIHero();
-    },
-    async placeAPIHero() {
-      const res = await axios.get(
-        "https://cors-anywhere.herokuapp.com/" +
-          "https://maps.googleapis.com/maps/api/place/details/json?place_id=" +
-          this.main_placeID +
-          "&key=" +
-          process.env.VUE_APP_MAP_ACCESS_TOKEN
-      );
-      console.log(res.data.result);
-      if (res) {
-        this.placeAPIobj = res.data.result;
-        this.placeAPIName = res.data.result.name;
-        this.placeAPIDetail = res.data.result.formatted_address;
-        this.placeAPIUrl = res.data.result.url;
-      }
     },
   },
   async mounted() {
@@ -392,12 +361,9 @@ export default {
     this.date = res.data.CreateDate;
     this.author = res.data.CreateBy;
 
-    this.mainLatLngString = res.data.Coordinate;
+    this.mainGPSString = res.data.Coordinate;
     this.changeStringToObj();
-    // this.reverseGeocoding();
-    // this.placeIdApi();
 
-    //
     this.bodyContent = res.data.TextData;
     this.addedCategory(res.data.ContentCategory[0].split(","));
     //
