@@ -4,12 +4,20 @@
       <div class="d-flex justify-center">
         <div class="d-inline test">
           <p class="sub-detail backHome" @click="backHome">
-            <img class="pr-3 img-middle" src="../assets/icon/left-arrow.png" />กลับหน้าแรก
+            <img
+              class="pr-3 img-middle"
+              src="../assets/icon/left-arrow.png"
+            />กลับหน้าแรก
           </p>
           <p class="head-topic">แบ่งปันเรื่องราวความรู้</p>
           <div class="inside-width ma-auto">
-            <v-text-field class="input-style blog_title" v-model="article_name" :rules="titleRules" :counter="50"
-              required>
+            <v-text-field
+              class="input-style blog_title"
+              v-model="article_name"
+              :rules="titleRules"
+              :counter="50"
+              required
+            >
               <template #label>
                 <div class="label-input">
                   ชื่อบทความ<span class="red--text"><strong> *</strong></span>
@@ -17,7 +25,13 @@
               </template>
             </v-text-field>
 
-            <v-text-field class="input-style" v-model="author_name" :rules="nameRules" :counter="90" required>
+            <v-text-field
+              class="input-style"
+              v-model="author_name"
+              :rules="nameRules"
+              :counter="90"
+              required
+            >
               <template #label>
                 <div class="label-input">
                   ชื่อผู้เขียน<span class="red--text"><strong> *</strong></span>
@@ -33,8 +47,13 @@
                 <p class="sub-detail">ขนาดขั้นต่ำควรเป็น 400 x 188px</p>
               </v-col>
               <v-col cols="1" sm="1" md="1" lg="1">
-                <v-file-input v-model="image" @change="Preview_image" hide-input :rules="imageRules"
-                  truncate-length="15"></v-file-input>
+                <v-file-input
+                  v-model="image"
+                  @change="Preview_image"
+                  hide-input
+                  :rules="imageRules"
+                  truncate-length="15"
+                ></v-file-input>
               </v-col>
               <v-col cols="12" sm="12" md="7" lg="7">
                 <v-img :src="url" />
@@ -45,8 +64,15 @@
               <p class="pic-cover pb-5">
                 เนื้อหาบทความ<span style="color: red">*</span>
               </p>
-              <quill-editor class="quill pb-10" ref="myQuillEditor" v-model="textEditorContent" :options="editorOption"
-                required :rules="quillRules" />
+              <quill-editor
+                class="quill pb-10"
+                ref="myQuillEditor"
+                v-model="textEditorContent"
+                :options="editorOption"
+                required
+                :rules="quillRules"
+              />
+              <p v-if="quillRules" class="text-red">กรุณาใส่เนื้อหา</p>
               <p v-if="params != undefined" class="text-red">
                 กรุณาใส่รูปใหม่ทุกครั้งที่มีการแก้ไข
               </p>
@@ -54,31 +80,69 @@
 
             <div id="tag-relate" class="pb-10">
               <p class="pic-cover">
-                <img class="pr-3 img-relate" src="../assets/icon/tag.png" />แท็กที่เกี่ยวข้อง<span
-                  style="color: red">*</span>
+                <img
+                  class="pr-3 img-relate"
+                  src="../assets/icon/tag.png"
+                />แท็กที่เกี่ยวข้อง<span style="color: red">*</span>
               </p>
               <p class="sub-detail">
                 ติดขั้นต่ำ 1 แท็ก แต่มากสุดได้ไม่เกิน 3 แท็ก
               </p>
               <div>
-                <v-btn elevation="2" @click="activeButton(0)" rounded outlined :class="{ 'button-active': b1 }">รีวิว
+                <v-btn
+                  elevation="2"
+                  @click="activeButton(0)"
+                  rounded
+                  outlined
+                  :class="{ 'button-active': b1 }"
+                  >รีวิว
                 </v-btn>
-                <v-btn elevation="2" @click="activeButton(1)" rounded outlined :class="{ 'button-active': b2 }"
-                  class="mx-2">ศิลป์และดนตรี</v-btn>
-                <v-btn elevation="2" @click="activeButton(2)" rounded outlined class="mx-2"
-                  :class="{ 'button-active': b3 }">วิทยาศาสตร์</v-btn>
-                <v-btn elevation="2" @click="activeButton(3)" rounded outlined class="mx-2"
-                  :class="{ 'button-active': b4 }">สังคมและการเมือง</v-btn>
-                <v-btn elevation="2" @click="activeButton(4)" rounded outlined class="mx-2"
-                  :class="{ 'button-active': b5 }">สิ่งแวดล้อม</v-btn>
+                <v-btn
+                  elevation="2"
+                  @click="activeButton(1)"
+                  rounded
+                  outlined
+                  :class="{ 'button-active': b2 }"
+                  class="mx-2"
+                  >ศิลป์และดนตรี</v-btn
+                >
+                <v-btn
+                  elevation="2"
+                  @click="activeButton(2)"
+                  rounded
+                  outlined
+                  class="mx-2"
+                  :class="{ 'button-active': b3 }"
+                  >วิทยาศาสตร์</v-btn
+                >
+                <v-btn
+                  elevation="2"
+                  @click="activeButton(3)"
+                  rounded
+                  outlined
+                  class="mx-2"
+                  :class="{ 'button-active': b4 }"
+                  >สังคมและการเมือง</v-btn
+                >
+                <v-btn
+                  elevation="2"
+                  @click="activeButton(4)"
+                  rounded
+                  outlined
+                  class="mx-2"
+                  :class="{ 'button-active': b5 }"
+                  >สิ่งแวดล้อม</v-btn
+                >
               </div>
               <p v-if="categoryValidate" class="text-red">
                 กรุณาเลือกแท็กที่เกี่ยวข้อง
               </p>
             </div>
             <p class="pic-cover">
-              <img class="pr-3 img-middle" src="../assets/icon/gps.png" />แหล่งเรียนรู้ที่เกี่ยวข้อง<span
-                style="color: red">*</span>
+              <img
+                class="pr-3 img-middle"
+                src="../assets/icon/gps.png"
+              />แหล่งเรียนรู้ที่เกี่ยวข้อง<span style="color: red">*</span>
             </p>
             <div class="ggMapPin">
               <p class="sub-detail">
@@ -87,6 +151,7 @@
                 ฯลฯ ก็ได้)
               </p>
               <g-g-map-pinning @addMarkers="addCoordinates($event)" />
+              <!-- <p v-if="mainCoordinate" class="text-red">กรุณาใส่พิกัดของสถานที่ที่ต้องการแนะนำ</p> -->
             </div>
             <p class="pic-cover">แหล่งเรียนรู้ที่เกี่ยวข้องอื่น ๆ</p>
             <p class="sub-detail">
@@ -94,10 +159,18 @@
               แต่ส่วนนี้จะแสดงผลเป็นลิงก์ไปยัง Map แทน (ไม่บังคับ)
             </p>
             <div class="d-flex justify-center">
-              <v-btn elevation="1" x-large color="#AD9F86" class="text-white" @click="submit"><img
-                  class="py-3 pr-3 img-middle" src="../assets/icon/save.png" />บันทึกและเผยแพร่</v-btn>
+              <v-btn
+                elevation="1"
+                x-large
+                color="#AD9F86"
+                class="text-white"
+                @click="submit"
+                ><img
+                  class="py-3 pr-3 img-middle"
+                  src="../assets/icon/save.png"
+                />บันทึกและเผยแพร่</v-btn
+              >
             </div>
-
           </div>
         </div>
       </div>
@@ -115,7 +188,7 @@ import GGMapPinning from "../components/GGMapPinning.vue";
 export default {
   components: {
     quillEditor,
-    GGMapPinning
+    GGMapPinning,
   },
 
   data: () => ({
@@ -147,7 +220,9 @@ export default {
         toolbar: [
           [{ header: [1, 2, false] }],
           ["bold", "italic", "underline"],
-          ['link',"image"], [{ 'color': [] }], [{ 'align': [] }],
+          ["link", "image"],
+          [{ color: [] }],
+          [{ align: [] }],
         ],
       },
       placeholder: "Compose an epic...",
@@ -163,6 +238,7 @@ export default {
     b4: false,
     b5: false,
     categoryValidate: true,
+    quillValidate: true,
     button: {
       b1: false,
       b2: "non-active",
@@ -171,6 +247,7 @@ export default {
       b5: "non-active",
     },
     coordinates: [],
+    mainCoordinate: true,
   }),
   methods: {
     Preview_image() {
@@ -239,11 +316,6 @@ export default {
           }
         }
       }
-      // let text = this.button[index];
-      // text == "non-active"
-      //   ? (this.button[index] = "button-active")
-      //   : (this.button[index] = "non-active");
-      // console.log(this.button[index]);
     },
     backHome() {
       this.$router.push({
@@ -284,14 +356,35 @@ export default {
     },
 
     addCoordinates(markers) {
-      let coordinate_obj = {lat : markers.lat , lng : markers.lng}
-      let coordinate_string = JSON.stringify(coordinate_obj)
+      // let coordinate_obj = { lat: markers.lat, lng: markers.lng };
+      let coordinate_obj = markers;
+      let coordinate_string = JSON.stringify(coordinate_obj);
       this.coordinates[0] = coordinate_string;
-      // console.log(this.coordinates);
+      console.log(this.coordinates);
+    },
+
+    quillValidation() {
+      if (this.textEditorContent !== "") {
+        this.quillRules = false;
+      } else {
+        this.quillRules = true;
+      }
+    },
+
+    mainGPSVailidation() {
+      if (this.coordinates !== null) {
+        this.mainCoordinate = false;
+        console.log(this.coordinates);
+      } else {
+        console.log(this.coordinates);
+        this.mainCoordinate = true;
+      }
     },
 
     submit() {
       this.checkTag();
+      this.quillValidation();
+      this.mainGPSVailidation();
       function DataURIToBlob(dataURI) {
         const splitDataURI = dataURI.split(",");
         const byteString =
@@ -306,7 +399,12 @@ export default {
 
         return new Blob([ia], { type: mimeString });
       }
-      if (this.$refs.form.validate() && this.categoryValidate == false) {
+      if (
+        this.$refs.form.validate() &&
+        this.categoryValidate == false &&
+        this.quillRules == false &&
+        this.mainCoordinate == false
+      ) {
         this.delta = this.$refs.myQuillEditor.quill.getContents();
         const childNodes =
           document.getElementsByClassName("ql-editor")[0].childNodes;
@@ -354,10 +452,7 @@ export default {
                 break;
             }
           }
-        } 
-        // let coordinatesArray = [];
-        // coordinatesArray.push(this.coordinates)
-        // console.log(coordinatesArray);
+        }
 
         this.delta = document.getElementsByClassName("ql-editor")[0].innerHTML;
         const formData = new FormData();
@@ -378,13 +473,17 @@ export default {
               process.env.VUE_APP_BACKEND_API + "/content/addcontent",
               formData
             )
-            .then(this.backHome());
+            // .then(this.backHome());
+            .then(
+              console.log("textContent: " + this.textEditorContent),
+              console.log("Delta: " + this.delta)
+            );
         } else {
           axios
             .put(
               process.env.VUE_APP_BACKEND_API +
-              "/content/editcontent?id=" +
-              this.params,
+                "/content/editcontent?id=" +
+                this.params,
               formData
             )
             .then(this.backHome());
@@ -403,17 +502,17 @@ export default {
     if (head != undefined) {
       this.params = head.id;
       const res = await axios.get(
-        process.env.VUE_APP_BACKEND_API + "/content/getContentByID?id=" +
-        head.id
+        process.env.VUE_APP_BACKEND_API +
+          "/content/getContentByID?id=" +
+          head.id
       );
       // console.log(res.data);
-      this.categoryValidate = false
+      this.categoryValidate = false;
       this.article_name = res.data.Header;
       this.author_name = res.data.CreateBy;
       this.addCategory(res.data.ContentCategory[0].split(","));
       document.getElementsByClassName("ql-editor")[0].innerHTML =
         res.data.TextData[0];
-        
     }
   },
 };
