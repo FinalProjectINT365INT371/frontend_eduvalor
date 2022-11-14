@@ -99,6 +99,7 @@ export default {
       this.$store.commit("setToken", null);
       console.log(this.$store.state);
       this.$cookies.remove("JWT_TOKEN")
+      this.$cookies.remove("USER_DATA")
       this.backHome();
       location.reload();
     },

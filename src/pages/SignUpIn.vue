@@ -257,7 +257,9 @@ export default {
 
         //Set cookies
         this.$cookies.set("JWT_TOKEN", auth_check.token, auth_check.expire);
+        this.$cookies.set("USER_DATA", auth_check.user, auth_check.expire);
         console.log(this.$cookies.get("JWT_TOKEN"));
+        console.log(this.$cookies.get("USER_DATA"));
         this.$router.push({
         path: "/",
       });
