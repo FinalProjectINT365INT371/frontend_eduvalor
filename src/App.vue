@@ -8,24 +8,24 @@
               ><img src="./assets/logo/EduValor_New.png"
             /></router-link>
             <div class="on-right mt-6">
-              <v-btn class="login-button" @click="setLogin" v-if="!login">
+              <v-btn class="login-button" @click="setLogin" v-if="!this.$store.state.loginStatus" >
                 Log In
               </v-btn>
               <router-link to="/CreateContent">
                 <img
                   class="mx-2"
-                  v-if="login"
+                  v-if="this.$store.state.loginStatus"
                   src="@/assets/icon/edit_brown.png"
               /></router-link>
               <router-link to="/Profile" class="mx-2 my-auto"
                 ><img
                   class="mx-2 my-auto"
-                  v-if="login"
+                  v-if="this.$store.state.loginStatus"
                   src="@/assets/icon/user.png"
                   width="48"
                   height="48"
               /></router-link>
-              <v-btn class="login-button" @click="setLogout" v-if="login">
+              <v-btn class="login-button" @click="setLogout" v-if="this.$store.state.loginStatus">
                 Log Out
               </v-btn>
             </div>
@@ -48,15 +48,15 @@
             </div>
             <v-list-item-group
             >
-              <v-list-item v-if="!login" class="d-flex justify-center">
+              <v-list-item v-if="!this.$store.state.loginStatus" class="d-flex justify-center">
                 <v-btn class="login-button" @click="setLogin"> Log In </v-btn>
               </v-list-item>
-              <v-list-item v-if="login" class="d-flex justify-center">
+              <v-list-item v-if="this.$store.state.loginStatus" class="d-flex justify-center">
                 <router-link to="/CreateContent">
                   <img class="mx-2" src="@/assets/icon/edit_brown.png"
                 /></router-link>
               </v-list-item>
-              <v-list-item v-if="login" class="d-flex justify-center">
+              <v-list-item v-if="this.$store.state.loginStatus" class="d-flex justify-center">
                 <router-link to="/Profile" class="mx-2 my-auto"
                   ><img
                     class="mx-2 my-auto"
@@ -65,7 +65,7 @@
                     height="48"
                 /></router-link>
               </v-list-item>
-              <v-list-item v-if="login" class="d-flex justify-center">
+              <v-list-item v-if="this.$store.state.loginStatus" class="d-flex justify-center">
                 <v-btn class="login-button" @click="setLogout"> Log Out </v-btn>
               </v-list-item>
             </v-list-item-group>
@@ -78,6 +78,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -114,9 +115,13 @@ export default {
   },
   
   created() {
+    console.log(this.$store.state);
     if (localStorage.getItem("login") == "true") {
       //this.login = true;
     }
+  },
+  computed: {
+    ...mapGetters(["getUserData"]),
   },
 };
 </script>

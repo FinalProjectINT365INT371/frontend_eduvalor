@@ -252,12 +252,15 @@ export default {
         //Vuex set data user
         this.$store.commit("setUser", auth_check.user);
         this.$store.commit("setToken", auth_check.token);
+        this.$store.commit("setLoginStatus", true);
         console.log(this.$store.state);
 
         //Set cookies
         this.$cookies.set("JWT_TOKEN", auth_check.token, auth_check.expire);
         console.log(this.$cookies.get("JWT_TOKEN"));
-        this.$router.push("/Profile");
+        this.$router.push({
+        path: "/",
+      });
       }
     },
   },

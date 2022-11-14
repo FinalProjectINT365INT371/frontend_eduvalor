@@ -5,6 +5,7 @@ export default new Vuex.Store({
   state: {
     user: null,
     token: null,
+    loginStatus:false
   },
   mutations: {
     setUser(state, user) {
@@ -12,6 +13,9 @@ export default new Vuex.Store({
     },
     setToken(state, token) {
       state.token = token;
+    },
+    setLoginStatus(state, loginStatus) {
+      state.loginStatus= loginStatus;
     },
   },
   actions: {},
