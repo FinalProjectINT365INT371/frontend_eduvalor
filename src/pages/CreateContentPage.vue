@@ -153,11 +153,14 @@
               <g-g-map-pinning @addMarkers="addCoordinates($event)" />
               <!-- <p v-if="mainCoordinate" class="text-red">กรุณาใส่พิกัดของสถานที่ที่ต้องการแนะนำ</p> -->
             </div>
-            <p class="pic-cover">แหล่งเรียนรู้ที่เกี่ยวข้องอื่น ๆ</p>
-            <p class="sub-detail">
-              กรอกตำแหน่งสถานที่อื่น ๆ เพิ่มเติม
-              แต่ส่วนนี้จะแสดงผลเป็นลิงก์ไปยัง Map แทน (ไม่บังคับ)
-            </p>
+            <div>
+              <p class="pic-cover">แหล่งเรียนรู้ที่เกี่ยวข้องอื่น ๆ</p>
+              <p class="sub-detail">
+                กรอกตำแหน่งสถานที่อื่น ๆ เพิ่มเติม
+                แต่ส่วนนี้จะแสดงผลเป็นลิงก์ไปยัง Map แทน (ไม่บังคับ)
+              </p>
+              <more-autocomplete/>
+            </div>
             <div class="d-flex justify-center">
               <v-btn
                 elevation="1"
@@ -184,11 +187,13 @@ import "quill/dist/quill.snow.css";
 import { quillEditor } from "vue-quill-editor";
 import axios from "axios";
 import GGMapPinning from "../components/GGMapPinning.vue";
+import MoreAutocomplete from '../components/MoreAutocomplete.vue';
 
 export default {
   components: {
     quillEditor,
     GGMapPinning,
+    MoreAutocomplete,
   },
 
   data: () => ({

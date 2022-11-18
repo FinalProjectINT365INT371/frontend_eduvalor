@@ -1,44 +1,55 @@
 <template>
   <div>
-    <div style="justify-content: center">
-      <br />
-      <!-- <v-btn @click='clearMap'> Clear Map</v-btn> -->
-      <GmapAutocomplete
-        class="gmap"
-        @place_changed="setPlace"
-      />
-
+    <div v-if="addBoxs">
+      <v-btn fab dark color="indigo" @click="addMoreGPS(0)"
+        ><v-icon dark> mdi-plus </v-icon></v-btn
+      >
+    </div>
+    <div v-if="box01">
+      <GmapAutocomplete class="gmap" @place_changed="setPlace" />
       <v-btn @click="addMarkers"> Add Markers</v-btn>
       <br />
       <br />
+      <div>
+        <v-btn fab dark color="indigo" @click="addMoreGPS(1)"
+          ><v-icon dark> mdi-plus </v-icon>
+        </v-btn>
 
-      <gmap-map
-        :center="center"
-        :zoom="16"
-        map-type-id="terrain"
-        class="gmap-map"
-        :options="{
-          mapTypeControl: false,
-          streetViewControl: false,
-          fullscreenControl: false,
-          disableDefaultUi: false,
-        }"
-      >
-        <gmap-marker
-          :key="index"
-          v-for="(m, index) in markers"
-          :position="m.position"
-          :clickable="true"
-          :draggable="true"
-          @click="center = m.position"
-        />
-      </gmap-map>
-      <p v-if="mainGPSRules" class="text-red">กรุณาใส่พิกัดของสถานที่ที่ต้องการแนะนำ</p>
+        <v-btn @click="removeMoreGPS(0)">
+          <v-icon> mdi-minus</v-icon>
+        </v-btn>
+      </div>
+    </div>
+
+    <div v-if="box02">
+      <GmapAutocomplete class="gmap" @place_changed="setPlace" />
+      <v-btn @click="addMarkers"> Add Markers</v-btn>
+      <br />
+      <br />
+      <div>
+        <v-btn fab dark color="indigo" @click="addMoreGPS(2)"
+          ><v-icon dark> mdi-plus </v-icon>
+        </v-btn>
+
+        <v-btn @click="removeMoreGPS(1)">
+          <v-icon> mdi-minus</v-icon>
+        </v-btn>
+      </div>
+    </div>
+
+    <div v-if="box03">
+      <GmapAutocomplete class="gmap" @place_changed="setPlace" />
+      <v-btn @click="addMarkers"> Add Markers</v-btn>
+      <br />
+      <br />
+      <v-btn @click="removeMoreGPS(2)">
+        <v-icon> mdi-minus</v-icon>
+      </v-btn>
     </div>
   </div>
 </template>
-  
-<script>
+    
+  <script>
 export default {
   name: "Map-test",
   data() {
@@ -48,12 +59,15 @@ export default {
       markers: [],
       places: [],
 
-      mainGPSRules: true,
-      GmapAutocompletes: [],
+      addBoxs: true,
+      box01: false,
+      box02: false,
+      box03: false,
     };
   },
   mounted() {
     this.geolocate();
+    this.optCheck();
   },
   methods: {
     addMarkers() {
@@ -101,18 +115,64 @@ export default {
       this.currentPlace = place;
       console.log("this is from setPlace()", this.currentPlace);
     },
-
-    // geocoder(latlng) {
-    //   const geocoder = new google.maps.Geocoder();
-    //   geocoder.Geocoder()
-    // },
     clearMap() {
       this.markers = [];
     },
+
+    addMoreGPS(box) {
+      let tempArray = [this.box01, this.box02, this.box03];
+      if (tempArray[box] == false) {
+        switch (box) {
+          case 0:
+            this.box01 = true;
+            this.addBoxs = false;
+            break;
+          case 1:
+            this.box02 = true;
+            break;
+          case 2:
+            this.box03 = true;
+            break;
+
+          default:
+            break;
+        }
+      }
+    },
+
+    removeMoreGPS(box) {
+      let tempArray = [this.box01, this.box02, this.box03];
+      if (tempArray[box] == true) {
+        switch (box) {
+          case 0:
+            this.box01 = false;
+            break;
+          case 1:
+            this.box02 = false;
+            break;
+          case 2:
+            this.box03 = false;
+            break;
+
+          default:
+            break;
+        }
+      }
+      this.optCheck();
+    },
+
+    optCheck(){
+      let tempArray = [this.box01, this.box02, this.box03];
+      let checker = tempArray.every(v => v === false);
+      if (checker) {
+        console.log(checker);
+        this.addBoxs = true;
+      }
+    }
   },
 };
 </script>
-<style scoped>
+  <style scoped>
 .pac-target-input {
   padding: 2%;
   height: 48px;
