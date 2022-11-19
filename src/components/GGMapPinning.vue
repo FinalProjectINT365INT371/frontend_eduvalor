@@ -29,26 +29,10 @@
           v-for="(m, index) in markers"
           :position="m.position"
           :clickable="true"
-          :draggable="true"
           @click="center = m.position"
         />
       </gmap-map>
       <p v-if="mainGPSRules" class="text-red">กรุณาใส่พิกัดของสถานที่ที่ต้องการแนะนำ</p>
-    </div>
-
-    <v-btn @click="addMoreOpts" class="primary">add</v-btn>
-    <div
-      v-for="(moreGmapAuto, i) in GmapAutocompletes"
-      :key="i"
-      class="text-fields-row"
-    >
-      <GmapAutocomplete
-        :rules="mainGPSRules"
-        class="gmap"
-        @place_changed="setPlace"
-        v-model="moreGmapAuto.value"
-      />
-      <v-btn @click="removeOpts(i)" class="error">delete</v-btn>
     </div>
   </div>
 </template>
@@ -117,23 +101,12 @@ export default {
       console.log("this is from setPlace()", this.currentPlace);
     },
 
+    // geocoder(latlng) {
+    //   const geocoder = new google.maps.Geocoder();
+    //   geocoder.Geocoder()
+    // },
     clearMap() {
       this.markers = [];
-    },
-    addMoreOpts() {
-      this.GmapAutocompletes.push({
-        value: "",
-      });
-    },
-    removeOpts(index) {
-      this.GmapAutocompletes.splice(index, 1);
-    },
-    pinningAlert() {
-      if (this.coordinates !== []) {
-        this.mainCoordinate = false;
-      } else {
-        this.mainCoordinate = true;
-      }
     },
   },
 };

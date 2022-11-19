@@ -84,11 +84,12 @@
             src="../../assets/icon/gps.png"
           />ตามรอยสถานที่อื่น ๆ ที่เกี่ยวข้อง
         </p>
-        <div class="d-flex justify-center">
+
+        <div class="d-flex justify-center" v-for="(optGPS, index) in optGPSobj" :key="index">
           <v-card class="d-flex justify-space-between" style="width: 920px">
             <gmap-map
               class="d-flex"
-              :center="mainLatLng"
+              :center="optGPS.geometry"
               :zoom="15"
               map-type-id="terrain"
               style="width: 300px; height: 200px"
@@ -104,25 +105,24 @@
               }"
             >
               <gmap-marker
-                :position="mainLatLng"
+                :position="optGPS.geometry"
                 :clickable="true"
                 :draggable="false"
-                @click="center = mainLatLng"
+                @click="center = optGPS.geometry"
               />
             </gmap-map>
 
             <div style="width: 500px">
-              <v-card-title> {{ mainGPSobj.name }}</v-card-title>
-              <v-card-text> {{ mainGPSobj.formatted_address }}</v-card-text>
+              <v-card-title> {{ optGPS.name }}</v-card-title>
+              <v-card-text> {{ optGPS.formatted_address }}</v-card-text>
 
               <v-btn
                 style="font-size: 14px; padding: 1.5%"
-                :href="mainGPSobj.url"
+                :href="optGPS.url"
                 elevation="1"
                 x-large
                 color="#AD9F86"
                 class="text-white"
-                @click="submit"
                 ><img
                   class="py-3 pr-3 img-middle"
                   src="../../assets/icon/eva_pin-fill.png"
@@ -132,6 +132,7 @@
             </div>
           </v-card>
         </div>
+        
       </div>
     </div>
     <v-divider inset style="padding-bottom: 2%"></v-divider>
@@ -285,11 +286,17 @@ export default {
       b4: false,
       b5: false,
 
-      mainLatLng: [],
+      mainLatLng: {},
       mainGPSString: "",
       mainGPSobj: [],
       main_address_detail: "",
       main_placeID: "",
+
+      optGPSobj: [],
+      optLatLng: {},
+      optGPSString: "",
+
+      allGPSStrings: "",
     };
   },
   methods: {
@@ -340,12 +347,16 @@ export default {
       this.$clipboard(this.shareURL); // this.$clipboard copy any String/Array/Object you want
     },
 
-    changeStringToObj() {
-      this.mainGPSobj = JSON.parse(this.mainGPSString);
-      console.log(this.mainGPSobj);
-
-      this.mainLatLng = this.mainGPSobj.geometry.location;
-      console.log(this.mainLatLng);
+    async changeStringToObj() {
+      for (let i = 0; i <= this.allGPSStrings.length; i++) {
+        if (i == 0) {
+          this.mainGPSobj = JSON.parse(this.allGPSStrings[i]);
+          this.mainLatLng = this.mainGPSobj.geometry;
+        } else {
+          let tempArrayString = this.allGPSStrings;
+          this.optGPSobj.push(JSON.parse(tempArrayString[i]));
+        }
+      }
     },
   },
   async mounted() {
@@ -361,7 +372,9 @@ export default {
     this.date = res.data.CreateDate;
     this.author = res.data.CreateBy;
 
-    this.mainGPSString = res.data.Coordinate;
+    this.allGPSStrings = res.data.Coordinate;
+    console.log(this.allGPSStrings);
+
     this.changeStringToObj();
 
     this.bodyContent = res.data.TextData;
