@@ -35,7 +35,7 @@
                 align-self="end"
                 v-if="!edit"
               >
-                <span class="p-name">{{ getUserData.user.Displayname }}</span
+                <span class="p-name">{{ userData.Displayname }}</span
                 ><img
                   src="../assets/icon/pen.png"
                   class="ml-2"
@@ -77,7 +77,7 @@
               </v-col>
               <v-spacer class="d-none d-sm-flex d-md-flex d-lg-flex" />
               <v-col cols="12" sm="12" md="8" lg="8" align-self="end">
-                <p class="my-auto p-id">{{ getUserData.user.id }}</p>
+                <p class="my-auto p-id">{{ userData.id }}</p>
               </v-col>
             </v-row>
             <v-row>
@@ -152,6 +152,7 @@ export default {
       eduvalor: [],
       edit: false,
       userImage: null,
+      userData:null
     };
   },
   computed: {
@@ -172,9 +173,11 @@ export default {
       this.article = this.contents.slice(startIndex, endIndex);
       this.pageTotal = Math.floor(this.contents.length / 10) + 1;
     },
-
+    setUserData(){
+      this.userData = this.$cookies.get("USER_DATA")
+    },
     setUserImage() {
-      let Url = this.$store.state.user.ImageUrl;
+      let Url = this.userData.ImageUrl;
       const srcUrl = Url.split("imageUrl : ");
       this.url = srcUrl[1];
       console.log(this.url);
@@ -212,6 +215,7 @@ export default {
       this.article = this.contents.slice(0, 10);
       this.pageTotal = Math.floor(this.contents.length / 10) + 1;
     });
+    this.setUserData();
     this.setUserImage();
   },
 };

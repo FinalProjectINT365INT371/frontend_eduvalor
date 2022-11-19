@@ -239,30 +239,41 @@ export default {
         },
       };
       console.log(user);
-      const res = await axios.post(
-        process.env.VUE_APP_BACKEND_API + "/authentication/login",
-        //"https://www.eduvalor.ml/backendDev/authentication/login",
-        user,
-        config
-      );
+      const res = await axios
+        .post(
+          process.env.VUE_APP_BACKEND_API + "/authentication/login",
+          //"https://www.eduvalor.ml/backendDev/authentication/login",
+          user,
+          config
+        )
+        .catch(function (error) {
+          if (error.response) {
+            // console.log(error.response.data);
+            // console.log(error.response.status);
+            // console.log(error.response.headers);
+            let res_Data = error.response.data;
+            console.log(res_Data);
+            window.alert(res_Data.message);
+          }
+        });
 
       if (res) {
+        console.log(res);
         let auth_check = await login_auth(res);
 
         //Vuex set data user
         this.$store.commit("setUser", auth_check.user);
         this.$store.commit("setToken", auth_check.token);
         this.$store.commit("setLoginStatus", true);
-        console.log(this.$store.state);
 
         //Set cookies
         this.$cookies.set("JWT_TOKEN", auth_check.token, auth_check.expire);
         this.$cookies.set("USER_DATA", auth_check.user, auth_check.expire);
-        console.log(this.$cookies.get("JWT_TOKEN"));
-        console.log(this.$cookies.get("USER_DATA"));
+        window.alert("Login successful");
         this.$router.push({
-        path: "/",
-      });
+          path: "/"
+        });
+        this.$router.go(0);
       }
     },
   },
