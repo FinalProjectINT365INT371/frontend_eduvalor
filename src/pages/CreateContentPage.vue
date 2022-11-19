@@ -150,8 +150,7 @@
                 (จะเป็นสถานที่แรกที่พูดถึงในบทความ, สถานที่ที่อยากแนะนำเป็นพิเศษ
                 ฯลฯ ก็ได้)
               </p>
-              <g-g-map-pinning @addMarkers="addCoordinates($event)" />
-              <!-- <p v-if="mainCoordinate" class="text-red">กรุณาใส่พิกัดของสถานที่ที่ต้องการแนะนำ</p> -->
+              <g-g-map-pinning @addMarkers="addCoordinate($event)" />
             </div>
             <div>
               <p class="pic-cover">แหล่งเรียนรู้ที่เกี่ยวข้องอื่น ๆ</p>
@@ -159,7 +158,7 @@
                 กรอกตำแหน่งสถานที่อื่น ๆ เพิ่มเติม
                 แต่ส่วนนี้จะแสดงผลเป็นลิงก์ไปยัง Map แทน (ไม่บังคับ)
               </p>
-              <more-autocomplete/>
+              <more-autocomplete @addMoreGPS="addMoreCoords($event)" />
             </div>
             <div class="d-flex justify-center">
               <v-btn
@@ -187,7 +186,7 @@ import "quill/dist/quill.snow.css";
 import { quillEditor } from "vue-quill-editor";
 import axios from "axios";
 import GGMapPinning from "../components/GGMapPinning.vue";
-import MoreAutocomplete from '../components/MoreAutocomplete.vue';
+import MoreAutocomplete from "../components/MoreAutocomplete.vue";
 
 export default {
   components: {
@@ -252,7 +251,7 @@ export default {
       b5: "non-active",
     },
     coordinates: [],
-    mainCoordinate: true,
+    moreCoordinates: [],
   }),
   methods: {
     Preview_image() {
@@ -360,11 +359,33 @@ export default {
       });
     },
 
-    addCoordinates(markers) {
-      // let coordinate_obj = { lat: markers.lat, lng: markers.lng };
-      let coordinate_obj = markers;
+    addCoordinate(marker) {
+      let coordinate_obj = {
+        name: marker.name,
+        formatted_address: marker.formatted_address,
+        url: marker.url,
+        geometry: marker.geometry.location,
+      };
       let coordinate_string = JSON.stringify(coordinate_obj);
       this.coordinates[0] = coordinate_string;
+    },
+
+    addMoreCoords(places) {
+      if (places) {
+        this.moreCoordinates = [];
+        for (let i = 0; i < places.length; i++) {
+          let morePlaces_obj = {
+            name: places[i].name,
+            formatted_address: places[i].formatted_address,
+            url: places[i].url,
+            geometry: places[i].geometry.location,
+          };
+          console.log(morePlaces_obj);
+          let morePlaces_string = morePlaces_obj;
+          this.moreCoordinates.push(JSON.stringify(morePlaces_string));
+          console.log(this.moreCoordinates);
+        }
+      }
     },
 
     quillValidation() {
@@ -396,8 +417,7 @@ export default {
       if (
         this.$refs.form.validate() &&
         this.categoryValidate == false &&
-        this.quillRules == false &&
-        this.mainCoordinate == false
+        this.quillRules == false
       ) {
         this.delta = this.$refs.myQuillEditor.quill.getContents();
         const childNodes =
@@ -456,7 +476,14 @@ export default {
 
         console.log(bufferArray);
         formData.append("CreateBy", this.author_name);
-        formData.append("Coordinate[]", this.coordinates);
+        formData.append("Coordinate[0]", this.coordinates);
+
+        for (let index = 0; index < this.moreCoordinates.length; index++) {
+          formData.append(
+            `Coordinate[${index + 1}]`,
+            this.moreCoordinates[index]
+          );
+        }
         formData.append("ImageCover", this.image);
         srcArray.forEach((data) => {
           formData.append("ImageFiles", data);

@@ -6,7 +6,7 @@
       >
     </div>
     <div v-if="box01">
-      <GmapAutocomplete class="gmap" @place_changed="setPlace" />
+      <GmapAutocomplete class="gmap" @place_changed="setPlace01" />
       <v-btn @click="addMarkers"> Add Markers</v-btn>
       <br />
       <br />
@@ -22,7 +22,7 @@
     </div>
 
     <div v-if="box02">
-      <GmapAutocomplete class="gmap" @place_changed="setPlace" />
+      <GmapAutocomplete class="gmap" @place_changed="setPlace02" />
       <v-btn @click="addMarkers"> Add Markers</v-btn>
       <br />
       <br />
@@ -38,7 +38,7 @@
     </div>
 
     <div v-if="box03">
-      <GmapAutocomplete class="gmap" @place_changed="setPlace" />
+      <GmapAutocomplete class="gmap" @place_changed="setPlace03" />
       <v-btn @click="addMarkers"> Add Markers</v-btn>
       <br />
       <br />
@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       center: { lat: 10, lng: 10 },
-      currentPlace: null,
+      currentPlace: [],
       markers: [],
       places: [],
 
@@ -63,60 +63,34 @@ export default {
       box01: false,
       box02: false,
       box03: false,
+
+      optPlace01: null,
+      optPlace02: null,
+      optPlace03: null,
+      allOptPlaces: [],
     };
   },
   mounted() {
-    this.geolocate();
     this.optCheck();
   },
   methods: {
     addMarkers() {
-      if (this.currentPlace) {
-        const marker = {
-          lat: this.currentPlace.geometry.location.lat(),
-          lng: this.currentPlace.geometry.location.lng(),
-        };
-        // this.markers.push({position: marker});
-        this.markers[0] = { position: marker };
-
-        console.log("this is from markers (lt, lng)", this.markers);
-        console.log(
-          "this is from addmarkers( ได้ออกมาเป็นชุดข้อมูล)",
-          this.places
-        );
-
-        // this.places.push(this.currentPlace);
-        this.places[0] = this.currentPlace;
-        console.log("this is the only one pinned place", this.places);
-
-        this.center = null;
-        this.center = marker;
-        this.$emit("addMarkers", this.currentPlace);
-        this.currentPlace = null;
-
-        this.mainGPSRules = false;
-        console.log(this.mainGPSRules);
-      }
+      // this.allOptPlaces = [this.optPlace01, this.optPlace02, this.optPlace03];
+      let arrayContainer = [this.optPlace01, this.optPlace02, this.optPlace03];
+      this.$emit("addMoreGPS", arrayContainer);
     },
-    geolocate: function () {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.center = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-        this.markers.push({ position: this.center });
-        // this.markers = { position: this.center }
-        // console.log('this is markers from Geolocate', this.markers);
-        console.log("this is center from Geolocate", this.center);
-        // this.currentPlace =
-      });
+
+    setPlace01(place) {
+      this.optPlace01 = place;
+      console.log("this is from setPlace(MoreGPS-1)", this.optPlace01);
     },
-    setPlace(place) {
-      this.currentPlace = place;
-      console.log("this is from setPlace()", this.currentPlace);
+    setPlace02(place) {
+      this.optPlace02 = place;
+      console.log("this is from setPlace(MoreGPS-2)", this.optPlace02);
     },
-    clearMap() {
-      this.markers = [];
+    setPlace03(place) {
+      this.optPlace03 = place;
+      console.log("this is from setPlace(MoreGPS-3)", this.optPlace03);
     },
 
     addMoreGPS(box) {
@@ -146,12 +120,15 @@ export default {
         switch (box) {
           case 0:
             this.box01 = false;
+            this.optPlace01 = null;
             break;
           case 1:
             this.box02 = false;
+            this.optPlace02 = null;
             break;
           case 2:
             this.box03 = false;
+            this.optPlace03 = null;
             break;
 
           default:
@@ -161,14 +138,14 @@ export default {
       this.optCheck();
     },
 
-    optCheck(){
+    optCheck() {
       let tempArray = [this.box01, this.box02, this.box03];
-      let checker = tempArray.every(v => v === false);
+      let checker = tempArray.every((v) => v === false);
       if (checker) {
         console.log(checker);
         this.addBoxs = true;
       }
-    }
+    },
   },
 };
 </script>
