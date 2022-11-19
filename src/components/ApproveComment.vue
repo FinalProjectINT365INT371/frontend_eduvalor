@@ -7,7 +7,11 @@
         :key="index"
         class="d-flex flex-column justfy-space-between col-9"
       >
-        <div class="d-flex justify-space-between align-center">
+        <div
+          v-if="index == approveData.length - 1"
+          class="d-flex justify-space-between align-center"
+        >
+        
           <div class="d-flex flex-column">
             <h3 style="font-weight: 700">EduValor ว่าคอนเทนต์นี้ดี!</h3>
             <div class="d-flex justify-space-between">
@@ -31,44 +35,44 @@
               {{ approve.UpdateDate }}
             </p>
           </div>
-        </div>
 
-        <div class="d-flex">
-          <button
-            elevation="0"
-            class="btn-container"
-            color="#AD9F86"
-            @click="editCall(approve)"
-          >
-            <img
-              class="img-middle unhovered"
-              src="../assets/icon//commentManage/fluent_document-edit-20-filled.png"
-              width="28px"
-            />
-            <img
-              class="hovered img-middle"
-              src="../assets/icon//commentManage/fluent_document-edit-20-filled-bl.png"
-              width="28px"
-            />
-          </button>
-          <button
-            elevation="0"
-            class="btn-container"
-            @click="deleteCm(approve)"
-          >
-            <img
-              class="img-middle cmDelete unhovered"
-              src="../assets/icon/commentManage/fluent_delete-dismiss-20-filled.png"
-              width="28px"
-            />
-            <img
-              class="hovered img-middle"
-              src="../assets/icon/commentManage/fluent_delete-dismiss-20-filled-bl.png"
-              width="28px"
-            />
-          </button>
+          <div class="d-flex">
+            <button
+              elevation="0"
+              class="btn-container"
+              color="#AD9F86"
+              @click="editCall(approve)"
+            >
+              <img
+                class="img-middle unhovered"
+                src="../assets/icon//commentManage/fluent_document-edit-20-filled.png"
+                width="28px"
+              />
+              <img
+                class="hovered img-middle"
+                src="../assets/icon//commentManage/fluent_document-edit-20-filled-bl.png"
+                width="28px"
+              />
+            </button>
+            <button
+              elevation="0"
+              class="btn-container"
+              @click="deleteCm(approve)"
+            >
+              <img
+                class="img-middle cmDelete unhovered"
+                src="../assets/icon/commentManage/fluent_delete-dismiss-20-filled.png"
+                width="28px"
+              />
+              <img
+                class="hovered img-middle"
+                src="../assets/icon/commentManage/fluent_delete-dismiss-20-filled-bl.png"
+                width="28px"
+              />
+            </button>
+          </div>
+          <v-divider></v-divider>
         </div>
-        <v-divider></v-divider>
       </div>
     </div>
 
@@ -251,7 +255,8 @@ export default {
       if (head != undefined) {
         this.params = head.id;
         const res = await axios.get(
-          process.env.VUE_APP_BACKEND_API + "/content/getContentByID?id=" +
+          process.env.VUE_APP_BACKEND_API +
+            "/content/getContentByID?id=" +
             head.id
         );
         this.contentID = res.data._id;
@@ -381,7 +386,7 @@ export default {
         }
       } else {
         const res = await axios.delete(
-         process.env.VUE_APP_BACKEND_API + "/content/approve/deleteapprove",
+          process.env.VUE_APP_BACKEND_API + "/content/approve/deleteapprove",
           {
             data: {
               UserId: this.userID,
@@ -397,8 +402,8 @@ export default {
           );
         }
       }
-       this.commentID = undefined;
-       this.approveID = undefined;
+      this.commentID = undefined;
+      this.approveID = undefined;
     },
   },
   mounted() {
