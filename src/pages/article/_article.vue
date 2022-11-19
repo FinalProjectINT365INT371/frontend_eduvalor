@@ -287,14 +287,10 @@ export default {
       b5: false,
 
       mainLatLng: {},
-      mainGPSString: "",
       mainGPSobj: [],
-      main_address_detail: "",
-      main_placeID: "",
 
       optGPSobj: [],
       optLatLng: {},
-      optGPSString: "",
 
       allGPSStrings: "",
     };

@@ -1,50 +1,75 @@
 <template>
   <div>
-    <div v-if="addBoxs">
-      <v-btn fab dark color="indigo" @click="addMoreGPS(0)"
-        ><v-icon dark> mdi-plus </v-icon></v-btn
+    <div v-if="addBoxs" class="d-flex justify-center pb-10">
+      <v-btn fab color="#EDE6DA" @click="addMoreGPS(0)"
+        ><v-icon color="gray"> mdi-plus </v-icon></v-btn
       >
     </div>
     <div v-if="box01">
-      <GmapAutocomplete class="gmap" @place_changed="setPlace01" />
-      <v-btn @click="addMarkers"> Add Markers</v-btn>
-      <br />
-      <br />
-      <div>
-        <v-btn fab dark color="indigo" @click="addMoreGPS(1)"
-          ><v-icon dark> mdi-plus </v-icon>
+      <div class="d-flex justify-space-around pt-5 pb-5 align-center">
+        <GmapAutocomplete class="gmap" @place_changed="setPlace01" />
+        <v-btn
+          @click="addMarkers"
+          id="addMarker"
+          rounded
+          elevation="2"
+          color="#AD9F86"
+        >
+          <img src="../assets/icon/eva_pin-fill.png" />
+          เพิ่มหมุดใหม่
         </v-btn>
-
-        <v-btn @click="removeMoreGPS(0)">
-          <v-icon> mdi-minus</v-icon>
+        <v-btn color="white" @click="removeMoreGPS(0)">
+          <v-icon color="grey"> mdi-minus</v-icon>
+        </v-btn>
+      </div>
+      <div class="d-flex justify-center">
+        <v-btn v-if="addBoxs1" fab color="#EDE6DA" @click="addMoreGPS(1)"
+          ><v-icon color="gray"> mdi-plus </v-icon>
         </v-btn>
       </div>
     </div>
 
     <div v-if="box02">
-      <GmapAutocomplete class="gmap" @place_changed="setPlace02" />
-      <v-btn @click="addMarkers"> Add Markers</v-btn>
-      <br />
-      <br />
-      <div>
-        <v-btn fab dark color="indigo" @click="addMoreGPS(2)"
-          ><v-icon dark> mdi-plus </v-icon>
+      <div class="d-flex justify-space-around pb-5 align-center">
+        <GmapAutocomplete class="gmap" @place_changed="setPlace02" />
+        <v-btn
+          @click="addMarkers"
+          id="addMarker"
+          rounded
+          elevation="2"
+          color="#AD9F86"
+        >
+          <img src="../assets/icon/eva_pin-fill.png" />
+          เพิ่มหมุดใหม่
         </v-btn>
-
-        <v-btn @click="removeMoreGPS(1)">
-          <v-icon> mdi-minus</v-icon>
+        <v-btn color="white" @click="removeMoreGPS(1)">
+          <v-icon color="grey"> mdi-minus</v-icon>
+        </v-btn>
+      </div>
+      <div class="d-flex justify-center">
+        <v-btn v-if="addBoxs2" fab color="#EDE6DA" @click="addMoreGPS(2)"
+          ><v-icon color="gray"> mdi-plus </v-icon>
         </v-btn>
       </div>
     </div>
 
     <div v-if="box03">
-      <GmapAutocomplete class="gmap" @place_changed="setPlace03" />
-      <v-btn @click="addMarkers"> Add Markers</v-btn>
-      <br />
-      <br />
-      <v-btn @click="removeMoreGPS(2)">
-        <v-icon> mdi-minus</v-icon>
-      </v-btn>
+      <div class="d-flex justify-space-around pb-5 align-center">
+        <GmapAutocomplete class="gmap" @place_changed="setPlace03" />
+        <v-btn
+          @click="addMarkers"
+          id="addMarker"
+          rounded
+          elevation="2"
+          color="#AD9F86"
+        >
+          <img src="../assets/icon/eva_pin-fill.png" />
+          เพิ่มหมุดใหม่
+        </v-btn>
+        <v-btn color="white" @click="removeMoreGPS(2)">
+          <v-icon color="grey"> mdi-minus</v-icon>
+        </v-btn>
+      </div>
     </div>
   </div>
 </template>
@@ -55,11 +80,11 @@ export default {
   data() {
     return {
       center: { lat: 10, lng: 10 },
-      currentPlace: [],
-      markers: [],
-      places: [],
-
+      
       addBoxs: true,
+      addBoxs1: true,
+      addBoxs2: true,
+
       box01: false,
       box02: false,
       box03: false,
@@ -67,7 +92,6 @@ export default {
       optPlace01: null,
       optPlace02: null,
       optPlace03: null,
-      allOptPlaces: [],
     };
   },
   mounted() {
@@ -75,22 +99,18 @@ export default {
   },
   methods: {
     addMarkers() {
-      // this.allOptPlaces = [this.optPlace01, this.optPlace02, this.optPlace03];
       let arrayContainer = [this.optPlace01, this.optPlace02, this.optPlace03];
       this.$emit("addMoreGPS", arrayContainer);
     },
 
     setPlace01(place) {
       this.optPlace01 = place;
-      console.log("this is from setPlace(MoreGPS-1)", this.optPlace01);
     },
     setPlace02(place) {
       this.optPlace02 = place;
-      console.log("this is from setPlace(MoreGPS-2)", this.optPlace02);
     },
     setPlace03(place) {
       this.optPlace03 = place;
-      console.log("this is from setPlace(MoreGPS-3)", this.optPlace03);
     },
 
     addMoreGPS(box) {
@@ -100,12 +120,18 @@ export default {
           case 0:
             this.box01 = true;
             this.addBoxs = false;
+            this.addBoxs1 = true;
+
             break;
           case 1:
             this.box02 = true;
+            this.addBoxs1 = false;
+            this.addBoxs2 = true;
+
             break;
           case 2:
             this.box03 = true;
+            this.addBoxs2 = false;
             break;
 
           default:
@@ -125,10 +151,12 @@ export default {
           case 1:
             this.box02 = false;
             this.optPlace02 = null;
+            this.optCheck01();
             break;
           case 2:
             this.box03 = false;
             this.optPlace03 = null;
+            this.optCheck02();
             break;
 
           default:
@@ -142,8 +170,21 @@ export default {
       let tempArray = [this.box01, this.box02, this.box03];
       let checker = tempArray.every((v) => v === false);
       if (checker) {
-        console.log(checker);
         this.addBoxs = true;
+      }
+    },
+    optCheck01() {
+      let tempArray = [this.box02, this.box03];
+      let checker = tempArray.every((v) => v === false);
+      if (checker) {
+        this.addBoxs1 = true;
+      }
+    },
+    optCheck02() {
+      let tempArray = [this.box03];
+      let checker = tempArray.every((v) => v === false);
+      if (checker) {
+        this.addBoxs2 = true;
       }
     },
   },
@@ -153,18 +194,23 @@ export default {
 .pac-target-input {
   padding: 2%;
   height: 48px;
-  width: 100%;
+  width: 70%;
   background-color: #ede6da;
   border-radius: 24px;
   border-color: #ede6da;
+
+  font-family: "Bai Jamjuree";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
 }
 
-.pac-target-input {
-  padding: 2%;
-  height: 48px;
-  width: 100%;
-  background-color: #ede6da;
-  border-color: #ede6da;
+#addMarker {
+  color: white;
+  font-family: "Bai Jamjuree";
+  font-style: bold;
+  font-size: 14px;
+  padding: 3% 1%;
 }
 
 .gmap:focus {

@@ -61,11 +61,11 @@
             </v-row>
 
             <div id="body-block">
-              <p class="pic-cover pb-5">
+              <p class="pic-cover">
                 เนื้อหาบทความ<span style="color: red">*</span>
               </p>
               <quill-editor
-                class="quill pb-10"
+                class="quill"
                 ref="myQuillEditor"
                 v-model="textEditorContent"
                 :options="editorOption"
@@ -78,7 +78,7 @@
               </p>
             </div>
 
-            <div id="tag-relate" class="pb-10">
+            <div id="tag-relate" class="pb-5">
               <p class="pic-cover">
                 <img
                   class="pr-3 img-relate"
@@ -146,13 +146,14 @@
             </p>
             <div class="ggMapPin">
               <p class="sub-detail">
-                กรอกตำแหน่ง 1 สถานที่ และส่วนนี้จะแสดงผลเป็น Street View
+                กรุณากรอกสถานที่ 1 ตำแหน่ง โดยส่วนนี้จะแสดงผลเป็น Street View
                 (จะเป็นสถานที่แรกที่พูดถึงในบทความ, สถานที่ที่อยากแนะนำเป็นพิเศษ
                 ฯลฯ ก็ได้)
               </p>
               <g-g-map-pinning @addMarkers="addCoordinate($event)" />
             </div>
-            <div>
+
+            <div class="pt-7">
               <p class="pic-cover">แหล่งเรียนรู้ที่เกี่ยวข้องอื่น ๆ</p>
               <p class="sub-detail">
                 กรอกตำแหน่งสถานที่อื่น ๆ เพิ่มเติม
@@ -160,9 +161,9 @@
               </p>
               <more-autocomplete @addMoreGPS="addMoreCoords($event)" />
             </div>
-            <div class="d-flex justify-center">
+            <div class="d-flex justify-center" style="padding-top: 3%">
               <v-btn
-                elevation="1"
+                elevation="3"
                 x-large
                 color="#AD9F86"
                 class="text-white"
@@ -399,7 +400,6 @@ export default {
     submit() {
       this.checkTag();
       this.quillValidation();
-      // this.mainGPSVailidation();
       function DataURIToBlob(dataURI) {
         const splitDataURI = dataURI.split(",");
         const byteString =
@@ -433,15 +433,10 @@ export default {
         const srcArray = [];
         unknow.forEach((data) => {
           let convertImage = DataURIToBlob(data.src);
-          // String(data.src).split("data:image/png;base64,");
-          // let stringbuffer = String(data.src).split("data:image/png;base64,")[1];
           data.src = "";
-          // console.log(stringbuffer);
-          // stringbuffer = stringbuffer.split('">')[0];
           srcArray.push(convertImage);
         });
 
-        // console.log(this.textEditorContent);
         let rawArray = [this.b1, this.b2, this.b3, this.b4, this.b5];
         let bufferArray = [];
         for (let index = 0; index < rawArray.length; index++) {
@@ -510,15 +505,9 @@ export default {
             .then(this.backHome());
         }
       }
-      // this.delta.forEach((array) => console.log(array));
     },
-    // editorTypeCheck() {
-    //     this.delta.forEach(array => console.log(array))
-    // },
   },
   async mounted() {
-    console.log(this.coordinates);
-
     let head = this.$route.params;
     if (head != undefined) {
       this.params = head.id;
@@ -527,7 +516,6 @@ export default {
           "/content/getContentByID?id=" +
           head.id
       );
-      // console.log(res.data);
       this.categoryValidate = false;
       this.article_name = res.data.Header;
       this.author_name = res.data.CreateBy;
@@ -686,6 +674,9 @@ button {
 
 .text-white {
   color: white;
+  font-family: "Kanit";
+  font-weight: 400;
+  font-size: 16px;
 }
 
 .backHome {
@@ -693,6 +684,10 @@ button {
 }
 
 .text-red {
+  padding-top: 2%;
   color: red;
+}
+#body-block{
+  padding-bottom: 2%;
 }
 </style>
