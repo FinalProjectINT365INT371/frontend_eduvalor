@@ -24,7 +24,7 @@
           <div class="center-my">
             <v-row>
               <v-col cols="12" sm="12" md="3" lg="3" align-self="end">
-                <p class="my-auto header-p">Username</p>
+                <p class="my-auto header-p">Displayname</p>
               </v-col>
               <v-spacer class="d-none d-sm-flex d-md-flex d-lg-flex" />
               <v-col
@@ -38,7 +38,7 @@
                 <span class="p-name">{{ userData.Displayname }}</span
                 ><img
                   src="../assets/icon/pen.png"
-                  class="ml-2"
+                  class="ml-2 edit-pen"
                   width="24"
                   height="24"
                   @click="edit = true"
@@ -55,7 +55,7 @@
                 <v-row align="end">
                   <v-col cols="12" sm="12" md="8" lg="8" class="pb-0">
                     <v-text-field
-                      label="Username"
+                      label="Displayname"
                       color="#4C4C4C"
                       counter
                       maxlength="30"
@@ -63,7 +63,7 @@
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="12" md="4" lg="4">
-                    <v-btn color="#AD9F86">
+                    <v-btn color="#AD9F86" style="font-size:medium;">
                       <img src="../assets/icon/white-pen.png" class="mr-2" />
                       บันทึกการแก้ไข
                     </v-btn>
@@ -270,8 +270,8 @@ export default {
 }
 .circle-image {
   border-radius: 50%;
-  width: 400px;
-  height: 400px;
+  width: 225px;
+  height: 225px;
 }
 .center-my {
   margin-top: 14%;
@@ -367,5 +367,9 @@ export default {
   text-align: center;
 
   color: #ffffff;
+}
+
+.edit-pen{
+  cursor: pointer;
 }
 </style>

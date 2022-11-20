@@ -533,36 +533,6 @@ export default {
   display: inline;
 }
 
-/* .input-style,
-.quill {
-    width: 50%;
-} */
-
-.test {
-  margin: 1.5%;
-  padding: 1.5%;
-  /* background-color: aquamarine; */
-}
-
-@media screen and (max-width: 2000px) {
-  .test {
-    width: 70%;
-  }
-}
-
-@media screen and (max-width: 1023px) {
-  .test {
-    /* width: 40%; */
-    width: 60%;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .test {
-    width: 90%;
-  }
-}
-
 @media screen and (max-width: 2000px) {
   .inside-width {
     width: 80%;
