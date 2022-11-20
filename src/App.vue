@@ -2,7 +2,7 @@
   <v-app>
     <v-main>
       <div id="app">
-        <div class="nav-bar justify-center d-none d-lg-flex d-xl-flex d-md">
+        <div class="nav-bar justify-center d-none d-lg-flex d-xl-flex d-md-flex">
           <div class="nav-wid mt-auto">
             <router-link to="/"
               ><img src="./assets/logo/EduValor_New.png"

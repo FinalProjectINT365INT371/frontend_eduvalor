@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="container" id="container">
+    <div class="container d-none d-lg-flex d-xl-flex d-md-flex" id="container">
       <div class="form-container sign-up-container">
-        <v-form action="#" v-model="valid" @submit.prevent="submit" ref="form" >
+        <v-form action="#" @submit.prevent="submit" ref="form">
           <h1>สมัครสมาชิก</h1>
           <span class="body-1 pb-5">กรุณากรอกข้อมูลให้ครบทุกช่อง</span>
           <div class="text-field-area">
@@ -40,22 +40,19 @@
 
             <div class="d-flex justify-space-between" id="profileUpload">
               <div class="d-flex align-center justify-space-between">
-                <p class="pic-cover">
-                  รูปโปรไฟล์<span style="color: red">*</span>
-                </p>
+                <p>รูปโปรไฟล์<span style="color: red">*</span></p>
                 <v-file-input
                   v-model="image"
                   @change="Preview_image"
                   hide-input
                   :rules="imageRules"
                   truncate-length="15"
-            
                 ></v-file-input>
               </div>
               <v-avatar size="104"><v-img :src="url" /></v-avatar>
             </div>
           </div>
-          <button @click="registAlert" >Sign Up</button>
+          <button @click="registAlert">Sign Up</button>
         </v-form>
 
         <v-snackbar v-model="snackbar">
@@ -69,7 +66,7 @@
       <div class="form-container sign-in-container">
         <v-form action="#" @submit.prevent="login" ref="form">
           <h1>เข้าสู่ระบบ</h1>
-          <input type="email" placeholder="Username" v-model="usernameLogin" />
+          <input type="text" placeholder="Username" v-model="usernameLogin" />
           <input
             type="password"
             placeholder="Password"
@@ -80,7 +77,7 @@
             >หรือล็อกอินด้วย Social Media
           </span>
           <div class="social-container">
-            <a href="#" class="social">
+            <a @click="goToFacebook" class="social">
               <v-icon color="#333333"> mdi-facebook </v-icon>
             </a>
           </div>
@@ -110,30 +107,103 @@
       </div>
     </div>
 
-    <div class="d-flex justify-center">
+    <div class="d-flex justify-center d-sm-flex d-md-none d-lg-none d-xl-none">
       <div class="form-structor" id="container">
-        <div class="signup" @click="switchModeMobile">
-          <h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
-          <div class="form-holder">
-            <input type="text" class="input" placeholder="Name" />
-            <input type="email" class="input" placeholder="Email" />
-
-            <input type="password" class="input" placeholder="Password" />
-          </div>
-          <button class="submit-btn">Sign up</button>
-        </div>
-        <div class="login slide-up">
-          <div class="center">
-            <h2 class="form-title" id="login" @click="switchModeMobile">
-              <span>or</span>Log in
-            </h2>
+        <v-form action="#" @submit.prevent="login" ref="form">
+          <div class="signup" @click="switchModeMobile">
+            <h2 class="form-title" id="signup"><span>หรือ</span>เข้าสู่ระบบ</h2>
             <div class="form-holder">
-              <input type="email" class="input" placeholder="Email" />
-              <input type="password" class="input" placeholder="Password" />
+              <input
+                type="text"
+                class="input"
+                placeholder="Username"
+                v-model="usernameLogin"
+              />
+              <input
+                type="password"
+                class="input"
+                placeholder="Password"
+                v-model="passwordLogin"
+              />
             </div>
-            <button class="submit-btn">Log in</button>
+            <button class="submit-btn">Log In</button>
+            <span class="pt-12" style="font-size:medium; color:#333; font-weight:500"
+              >หรือล็อกอินด้วย Social Media
+            </span>
+            <div class="social-container">
+              <a @click="goToFacebook" class="social" id="fb-mobile">
+                <v-icon color="#333333"> mdi-facebook </v-icon>
+              </a>
+            </div>
           </div>
-        </div>
+        </v-form>
+
+        <v-form action="#"  @submit.prevent="submit" ref="form">
+          <div class="login slide-up">
+            <div class="center">
+              <h2 class="form-title" id="login" @click="switchModeMobile">
+                <span>หรือ</span> สมัครสมาชิก
+              </h2>
+              <div class="form-holder">
+                <v-text-field
+                  class="p-0"
+                  type="text"
+                  regular
+                  v-model="username"
+                  :rules="usernameRule"
+                  placeholder="Username"
+                />
+                <v-text-field
+                  regular
+                  v-model="password"
+                  :rules="passwordRule"
+                  type="password"
+                  placeholder="Password"
+                />
+                <v-text-field
+                  v-model="email"
+                  :rules="emailRule"
+                  regular
+                  type="email"
+                  placeholder="Email"
+                />
+                <v-text-field
+                  regular
+                  v-model="displayName"
+                  :rules="displayNameRule"
+                  type="text"
+                  placeholder="Display Name"
+                />
+                <div
+                  class="d-flex justify-space-between"
+                  id="profileUpload-mobile"
+                >
+                  <div class="d-flex align-center justify-space-between">
+                    <p class="pic-cover-mobile">
+                      รูปโปรไฟล์<span style="color: red">*</span>
+                    </p>
+                    <v-file-input
+                      v-model="image"
+                      @change="Preview_image"
+                      hide-input
+                      :rules="imageRules"
+                      truncate-length="15"
+                    ></v-file-input>
+                  </div>
+                  <v-avatar size="104"><v-img :src="url" /></v-avatar>
+                </div>
+              </div>
+              <button class="submit-btn" @click="registAlert">SIGN UP</button>
+            </div>
+          </div>
+        </v-form>
+        <v-snackbar v-model="snackbar">
+          {{ snackbarRegistText }}
+
+          <template v-slot:action="{ attrs }">
+            <v-btn text v-bind="attrs" @click="snackbar = false"> Close </v-btn>
+          </template>
+        </v-snackbar>
       </div>
     </div>
   </div>
@@ -319,6 +389,13 @@ export default {
         });
         this.$router.go(0);
       }
+    },
+
+    async goToFacebook() {
+      await axios.get(
+        process.env.VUE_APP_BACKEND_API + "/authentication/facebook"
+        //"https://www.eduvalor.ml/backendDev/authentication/facebook",
+      );
     },
   },
 };
@@ -566,6 +643,15 @@ input:focus {
   width: 52px;
 }
 
+#fb-mobile {
+  background-color: #ffffff;
+}
+#fb-mobile:hover {
+  border: none;
+  transition: all 0.3s ease;
+  background-color: #ad9f86;
+}
+
 .social-container a:hover {
   transition: all 0.3s ease;
   background-color: #ad9f86;
@@ -583,7 +669,6 @@ input:focus {
   border-bottom-style: solid;
   border-top-style: solid;
   border-color: #dddddd;
-  
 }
 
 .v-text-field {
@@ -595,15 +680,25 @@ input:focus {
   width: 85%;
   padding: 8% 0;
 }
+
+#profileUpload-mobile {
+  padding: 0;
+}
+.pic-cover-mobile {
+}
 </style>
 
 <style scoped lang="scss">
 .form-structor {
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  box-shadow: 0;
+
   background-color: #222;
   border-radius: 15px;
-  height: 550px;
-  width: 350px;
+  border-radius: 0px;
+
+  height: 640px;
+  width: 100%;
+  min-height: 100%;
   position: relative;
   overflow: hidden;
 
@@ -635,7 +730,7 @@ input:focus {
     -webkit-transition: all 0.3s ease;
 
     &.slide-up {
-      top: 5%;
+      top: 10%;
       -webkit-transform: translate(-50%, 0%);
       -webkit-transition: all 0.3s ease;
     }
@@ -647,7 +742,8 @@ input:focus {
     }
 
     &.slide-up .form-title {
-      font-size: 1em;
+      font-size: 1.3em;
+      font-weight: 600;
       cursor: pointer;
     }
 
@@ -655,18 +751,21 @@ input:focus {
       margin-right: 5px;
       opacity: 1;
       visibility: visible;
+      font-size: 16px;
       -webkit-transition: all 0.3s ease;
     }
 
     .form-title {
       color: #fff;
-      font-size: 1.7em;
+      font-size: 1.9em;
+      font-weight: 600;
       text-align: center;
 
       span {
-        color: rgba(0, 0, 0, 0.4);
+        color: white;
         opacity: 0;
         visibility: hidden;
+        font-size: 14px;
         -webkit-transition: all 0.3s ease;
       }
     }
@@ -675,7 +774,7 @@ input:focus {
       border-radius: 15px;
       background-color: #fff;
       overflow: hidden;
-      margin-top: 50px;
+      margin-top: 8%;
       opacity: 1;
       visibility: visible;
       -webkit-transition: all 0.3s ease;
@@ -685,12 +784,12 @@ input:focus {
         outline: none;
         box-shadow: none;
         display: block;
-        height: 30px;
+        height: 52px;
         line-height: 30px;
         padding: 8px 15px;
         border-bottom: 1px solid #eee;
         width: 100%;
-        font-size: 12px;
+        font-size: 16px;
 
         &:last-child {
           border-bottom: 0;
@@ -703,14 +802,15 @@ input:focus {
 
     .submit-btn {
       background-color: rgba(0, 0, 0, 0.4);
-      color: rgba(256, 256, 256, 0.7);
+      color: white;
       border: 0;
       border-radius: 15px;
       display: block;
       margin: 15px auto;
       padding: 15px 45px;
       width: 100%;
-      font-size: 13px;
+      font-family: "Kanit";
+      font-size: 14px;
       font-weight: bold;
       cursor: pointer;
       opacity: 1;
@@ -726,7 +826,7 @@ input:focus {
 
   .login {
     position: absolute;
-    top: 20%;
+    top: 25%;
     left: 0;
     right: 0;
     bottom: 0;
@@ -750,31 +850,31 @@ input:focus {
 
     .center {
       position: absolute;
-      top: calc(50% - 10%);
+      top: calc(60% - 10%);
       left: 50%;
       -webkit-transform: translate(-50%, -50%);
-      width: 65%;
+      width: 80%;
       z-index: 5;
       -webkit-transition: all 0.3s ease;
 
       .form-title {
-        color: #000;
-        font-size: 1.7em;
+        color: black;
+        font-size: 1.6em;
+        font-weight: 600;
         text-align: center;
 
         span {
           color: rgba(0, 0, 0, 0.4);
           opacity: 0;
+          font-size: 14px;
           -webkit-transition: all 0.3s ease;
         }
       }
 
       .form-holder {
-        border-radius: 15px;
-        background-color: #fff;
-        border: 1px solid #eee;
+        background-color: white;
         overflow: hidden;
-        margin-top: 50px;
+        margin-top: 24px;
         opacity: 1;
         visibility: visible;
         -webkit-transition: all 0.3s ease;
@@ -784,12 +884,11 @@ input:focus {
           outline: none;
           box-shadow: none;
           display: block;
-          height: 30px;
+          height: 52px;
           line-height: 30px;
           padding: 8px 15px;
-          border-bottom: 1px solid #eee;
           width: 100%;
-          font-size: 12px;
+          font-size: 16px;
 
           &:last-child {
             border-bottom: 0;
@@ -801,8 +900,8 @@ input:focus {
       }
 
       .submit-btn {
-        background-color: #6b92a4;
-        color: rgba(256, 256, 256, 0.7);
+        background-color: #333333;
+        color: white;
         border: 0;
         border-radius: 15px;
         display: block;
@@ -818,7 +917,7 @@ input:focus {
 
         &:hover {
           transition: all 0.3s ease;
-          background-color: rgba(0, 0, 0, 0.8);
+          background-color: #AD9F86;
         }
       }
     }
@@ -842,9 +941,10 @@ input:focus {
     }
 
     &.slide-up .form-title {
-      font-size: 1em;
+      font-size: 1.2em;
       margin: 0;
       padding: 0;
+      font-weight: 600;
       cursor: pointer;
       -webkit-transition: all 0.3s ease;
     }
