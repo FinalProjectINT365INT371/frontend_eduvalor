@@ -2,22 +2,20 @@
   <div>
     <div class="container" id="container">
       <div class="form-container sign-up-container">
-        <v-form action="#" v-model="valid" @submit.prevent="submit" ref="form">
+        <v-form action="#" v-model="valid" @submit.prevent="submit" ref="form" >
           <h1>สมัครสมาชิก</h1>
           <span class="body-1 pb-5">กรุณากรอกข้อมูลให้ครบทุกช่อง</span>
-          <div>
+          <div class="text-field-area">
             <v-text-field
-              background-color="#EDE6DA"
               type="text"
-              solo
+              regular
               v-model="username"
               :rules="usernameRule"
               placeholder="Username"
             />
 
             <v-text-field
-              background-color="#EDE6DA"
-              solo
+              regular
               v-model="password"
               :rules="passwordRule"
               type="password"
@@ -25,17 +23,15 @@
             />
 
             <v-text-field
-              background-color="#EDE6DA"
               v-model="email"
-              :rules="email"
-              solo
+              :rules="emailRule"
+              regular
               type="email"
               placeholder="Email"
             />
 
             <v-text-field
-              background-color="#EDE6DA"
-              solo
+              regular
               v-model="displayName"
               :rules="displayNameRule"
               type="text"
@@ -53,12 +49,13 @@
                   hide-input
                   :rules="imageRules"
                   truncate-length="15"
+            
                 ></v-file-input>
               </div>
-              <v-avatar size="100"><img :src="url" /></v-avatar>
+              <v-avatar size="104"><v-img :src="url" /></v-avatar>
             </div>
           </div>
-          <button @click="registAlert">Sign Up</button>
+          <button @click="registAlert" >Sign Up</button>
         </v-form>
 
         <v-snackbar v-model="snackbar">
@@ -78,62 +75,64 @@
             placeholder="Password"
             v-model="passwordLogin"
           />
-          <button>Sign In</button>
-          <!-- <a href="#">Forgot your password?</a> -->
+          <button>Log In</button>
           <span class="pt-12 text-md-body-1"
             >หรือล็อกอินด้วย Social Media
           </span>
           <div class="social-container">
-            <a href="#" class="social"
-              ><img src="../assets/icon/login/facebook_f_logo_icon_145290.png"
-            /></a>
+            <a href="#" class="social">
+              <v-icon color="#333333"> mdi-facebook </v-icon>
+            </a>
           </div>
         </v-form>
       </div>
       <div class="overlay-container">
         <div class="overlay">
           <div class="overlay-panel overlay-left">
-            <h1>Welcome Back!</h1>
-            <p>
-              To keep connected with us please login with your personal info
-            </p>
-            <button class="ghost" id="signIn">Sign In</button>
+            <h1>เป็นสมาชิกกับเราแล้ว</h1>
+            <h2>ใช่รึเปล่า?</h2>
+
+            <p class="pt-3">เข้าสู่ระบบ เพื่อใช้งานเว็บไซต์อย่างไร้ขีดจำกัด!</p>
+            <button class="ghost" id="signIn">เข้าสู่ระบบ</button>
           </div>
           <div class="overlay-panel overlay-right">
             <h2>ยังไม่เคยสมัครสมาชิก</h2>
             <h1>ใช่รึเปล่า?</h1>
-            <p>
+            <p class="pt-3">
               มาร่วมเป็นส่วนหนึ่งในแวดวงเหล่านักเรียนรู้ <br />
-              ด้วยการเป็นสมาชิกกับเราสิ!
+              <span style="font-size: larger">ด้วยการเป็นสมาชิกกับเราสิ!</span>
             </p>
             <button class="ghost" id="signUp" @click="switchMode()">
-              Sign Up
+              สมัครสมาชิก
             </button>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="form-structor" id="container">
-      <div class="signup" @click="switchModeMobile">
-        <h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
-        <div class="form-holder">
-          <input type="text" class="input" placeholder="Name" />
-          <input type="email" class="input" placeholder="Email" />
-          <input type="password" class="input" placeholder="Password" />
-        </div>
-        <button class="submit-btn">Sign up</button>
-      </div>
-      <div class="login slide-up">
-        <div class="center">
-          <h2 class="form-title" id="login" @click="switchModeMobile">
-            <span>or</span>Log in
-          </h2>
+    <div class="d-flex justify-center">
+      <div class="form-structor" id="container">
+        <div class="signup" @click="switchModeMobile">
+          <h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
           <div class="form-holder">
+            <input type="text" class="input" placeholder="Name" />
             <input type="email" class="input" placeholder="Email" />
+
             <input type="password" class="input" placeholder="Password" />
           </div>
-          <button class="submit-btn">Log in</button>
+          <button class="submit-btn">Sign up</button>
+        </div>
+        <div class="login slide-up">
+          <div class="center">
+            <h2 class="form-title" id="login" @click="switchModeMobile">
+              <span>or</span>Log in
+            </h2>
+            <div class="form-holder">
+              <input type="email" class="input" placeholder="Email" />
+              <input type="password" class="input" placeholder="Password" />
+            </div>
+            <button class="submit-btn">Log in</button>
+          </div>
         </div>
       </div>
     </div>
@@ -229,13 +228,6 @@ export default {
         console.log(this.image);
         console.log(this.imageUri);
       };
-    },
-    emailErrors() {
-      const errors = [];
-      if (!this.$v.email.$dirty) return errors;
-      !this.$v.email.email && errors.push("Must be valid e-mail");
-      !this.$v.email.required && errors.push("E-mail is required");
-      return errors;
     },
 
     registAlert() {
@@ -353,9 +345,6 @@ p {
   font-family: "Bai Jamjuree";
   font-size: 16px;
   font-weight: 400;
-  /* line-height: 20px; */
-  /* letter-spacing: 0.5px; */
-  /* margin: 20px 0 30px; */
 }
 
 span {
@@ -373,7 +362,7 @@ a {
 button {
   border-radius: 20px;
   border: 1px solid #ad9f86;
-  background-color: #ad9f86;
+  background-color: #333333;
   color: #ffffff;
   font-size: 12px;
   font-weight: bold;
@@ -381,6 +370,10 @@ button {
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: transform 80ms ease-in;
+}
+button:hover {
+  transition: all 0.3s ease;
+  background-color: #ad9f86;
 }
 
 button:active {
@@ -392,8 +385,19 @@ button:focus {
 }
 
 button.ghost {
+  margin-top: 5%;
   background-color: transparent;
   border-color: #ffffff;
+  font-family: "Kanit";
+  font-weight: 500;
+  font-size: 14px;
+}
+
+button.ghost:hover {
+  border-color: transparent;
+  transition: all 0.3s ease;
+  background-color: white;
+  color: #ad9f86;
 }
 
 .v-form {
@@ -407,17 +411,22 @@ button.ghost {
   text-align: center;
 }
 
-input,
-.v-text-field {
-  /* background-color: #eee; */
+input {
   font-family: "Bai Jamjuree";
-  /* background-color: #EDE6DA; */
   border: none;
   padding: 12px 15px;
   margin: 8px 0;
   width: 100%;
+  border: 1px solid #dddddd;
+  border-radius: 20px;
 }
-
+.text-field-area {
+  font-family: "Bai Jamjuree";
+  width: 100%;
+}
+input:focus {
+  outline: none;
+}
 .container {
   background-color: #fff;
   border-radius: 10px;
@@ -491,9 +500,9 @@ input,
 }
 
 .overlay {
-  background: #ad9f86;
-  background: -webkit-linear-gradient(to right, #ad9f86, rgb(119, 102, 102));
-  background: linear-gradient(to right, #ad9f86, rgb(119, 102, 102));
+  background-image: url(https://bit.ly/3hNbJDA);
+  box-shadow: inset 0 0 0 1000px rgba(74, 62, 62, 0.2);
+
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
@@ -553,10 +562,19 @@ input,
   justify-content: center;
   align-items: center;
   margin: 0 5px;
-  height: 40px;
-  width: 40px;
+  height: 52px;
+  width: 52px;
 }
 
+.social-container a:hover {
+  transition: all 0.3s ease;
+  background-color: #ad9f86;
+}
+
+.social-container a .v-icon:hover {
+  transition: all 0.3s ease;
+  color: #dddddd;
+}
 .v-application p {
   margin-bottom: 0px;
 }
@@ -564,7 +582,8 @@ input,
 .v-avatar {
   border-bottom-style: solid;
   border-top-style: solid;
-  border-color: #ede6da;
+  border-color: #dddddd;
+  
 }
 
 .v-text-field {
@@ -574,11 +593,13 @@ input,
 
 #profileUpload {
   width: 85%;
+  padding: 8% 0;
 }
 </style>
 
 <style scoped lang="scss">
 .form-structor {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   background-color: #222;
   border-radius: 15px;
   height: 550px;
@@ -595,9 +616,13 @@ input,
     bottom: 0;
     left: 0;
     background-repeat: no-repeat;
-    background-position: left bottom;
-    background-size: 500px;
-    background-image: url("https://images.unsplash.com/photo-1503602642458-232111445657?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bf884ad570b50659c5fa2dc2cfb20ecf&auto=format&fit=crop&w=1000&q=100");
+    background-position: center;
+
+    background-image: url("https://bit.ly/3XfYWtD");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
   }
 
   .signup {
