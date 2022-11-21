@@ -196,9 +196,9 @@ export default {
       });
 
       for (let index = 0; index < this.contents.length; index++) {
-        console.log(this.contents[index]._id);
-        console.log(this.userData.ContentCreated);
-        console.log(this.userData.ContentCreated.includes(this.contents[index]._id));
+        // console.log(this.contents[index]._id);
+        // console.log(this.userData.ContentCreated);
+        // console.log(this.userData.ContentCreated.includes(this.contents[index]._id));
         if (this.userData.ContentCreated.includes(this.contents[index]._id)) {
           this.eduvalor.push(this.contents[index]);
           let Url =

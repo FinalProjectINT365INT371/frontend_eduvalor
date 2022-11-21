@@ -11,7 +11,7 @@
       </v-col>
       <v-col cols="12" sm="12" md="4" lg="4">
         <v-row>
-          <v-col v-if="login">
+          <v-col v-if="creatorOfContent">
             <div class="d-flex justify-center">
               <v-btn
                 elevation="0"
@@ -25,7 +25,7 @@
               >
             </div>
           </v-col>
-          <v-col v-if="login">
+          <v-col v-if="creatorOfContent">
             <div class="d-flex justify-center">
               <v-btn elevation="0" class="text-brown" @click="deleteArticle"
                 ><img
@@ -294,7 +294,8 @@ export default {
 
       allGPSStrings: "",
 
-      userData:null
+      userData:null,
+      creatorOfContent:false
     };
   },
   methods: {
@@ -361,6 +362,7 @@ export default {
     },
   },
   async mounted() {
+    this.setUserData();
     let head = this.$route.params;
     this.id = head.id;
     this.shareURL =
@@ -396,9 +398,14 @@ export default {
     document.getElementsByClassName("body-content")[0].innerHTML =
       res.data.TextData;
     if (this.$cookies.get("USER_DATA") != null) {
-      this.login = true;
+      // console.log(this.id);
+      // console.log(this.userData.ContentCreated.includes(this.id));
+      if (this.userData.ContentCreated.includes(this.id)){
+        this.creatorOfContent = true;
+      }
+      //this.login = true;
     }
-    this.setUserData();
+
     console.log(this.userData);
   },
 };
