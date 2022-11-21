@@ -63,7 +63,7 @@
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="12" md="4" lg="4">
-                    <v-btn color="#AD9F86" style="font-size:medium;">
+                    <v-btn color="#AD9F86" style="font-size: medium">
                       <img src="../assets/icon/white-pen.png" class="mr-2" />
                       บันทึกการแก้ไข
                     </v-btn>
@@ -97,7 +97,7 @@
     <v-col class="pa-0" cols="12" sm="10" md="8" lg="4">
       <p class="header d-flex justify-center">
         <v-icon large color="white" class="mr-2">mdi-table-of-contents</v-icon>
-        บทความทั้งหมดของฉัน ({{ contents.length }})
+        บทความทั้งหมดของฉัน ({{ eduvalor.length }})
       </p>
     </v-col>
     <v-divider class="divider-m"></v-divider>
@@ -152,7 +152,7 @@ export default {
       eduvalor: [],
       edit: false,
       userImage: null,
-      userData:null
+      userData: null,
     };
   },
   computed: {
@@ -173,8 +173,8 @@ export default {
       this.article = this.contents.slice(startIndex, endIndex);
       this.pageTotal = Math.floor(this.contents.length / 10) + 1;
     },
-    setUserData(){
-      this.userData = this.$cookies.get("USER_DATA")
+    setUserData() {
+      this.userData = this.$cookies.get("USER_DATA");
     },
     setUserImage() {
       let Url = this.userData.ImageUrl;
@@ -185,6 +185,8 @@ export default {
   },
   mounted() {
     const res = axios.get(process.env.VUE_APP_BACKEND_API + "/content/");
+    this.setUserData();
+    this.setUserImage();
     res.then((result) => {
       this.contents = result.data;
       this.contents = this.contents.map(function (el) {
@@ -194,29 +196,30 @@ export default {
       });
 
       for (let index = 0; index < this.contents.length; index++) {
-        let Url =
-          this.contents[index].ImageUrl[
-            this.contents[index].ImageUrl.length - 1
-          ];
-        if (this.contents[index].CreateBy == "EduValor") {
+        console.log(this.contents[index]._id);
+        console.log(this.userData.ContentCreated);
+        console.log(this.userData.ContentCreated.includes(this.contents[index]._id));
+        if (this.userData.ContentCreated.includes(this.contents[index]._id)) {
           this.eduvalor.push(this.contents[index]);
+          let Url =
+            this.contents[index].ImageUrl[
+              this.contents[index].ImageUrl.length - 1
+            ];
+          const resImg = axios.get(
+            process.env.VUE_APP_BACKEND_API +
+              "/content/getImageContentByName?imageName=" +
+              Url
+          );
+          resImg.then((result) => {
+            this.getImg = result.data;
+            const srcUrl = this.getImg.split("imageUrl : ");
+            this.contents[index].imgSrc = srcUrl[1];
+          });
         }
-        const resImg = axios.get(
-          process.env.VUE_APP_BACKEND_API +
-            "/content/getImageContentByName?imageName=" +
-            Url
-        );
-        resImg.then((result) => {
-          this.getImg = result.data;
-          const srcUrl = this.getImg.split("imageUrl : ");
-          this.contents[index].imgSrc = srcUrl[1];
-        });
       }
-      this.article = this.contents.slice(0, 10);
-      this.pageTotal = Math.floor(this.contents.length / 10) + 1;
+      this.article = this.eduvalor.slice(0, 10);
+      this.pageTotal = Math.floor(this.eduvalor.length / 10) + 1;
     });
-    this.setUserData();
-    this.setUserImage();
   },
 };
 </script>
@@ -369,7 +372,7 @@ export default {
   color: #ffffff;
 }
 
-.edit-pen{
+.edit-pen {
   cursor: pointer;
 }
 </style>

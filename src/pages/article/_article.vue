@@ -293,6 +293,8 @@ export default {
       optLatLng: {},
 
       allGPSStrings: "",
+
+      userData:null
     };
   },
   methods: {
@@ -354,6 +356,9 @@ export default {
         }
       }
     },
+    setUserData(){
+      this.userData = this.$cookies.get("USER_DATA")
+    },
   },
   async mounted() {
     let head = this.$route.params;
@@ -390,9 +395,11 @@ export default {
     });
     document.getElementsByClassName("body-content")[0].innerHTML =
       res.data.TextData;
-    if (localStorage.getItem("login") == "true") {
+    if (this.$cookies.get("USER_DATA") != null) {
       this.login = true;
     }
+    this.setUserData();
+    console.log(this.userData);
   },
 };
 </script>
