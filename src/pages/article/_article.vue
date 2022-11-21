@@ -1,10 +1,11 @@
 <template>
   <div class="all-content wid-80 ma-auto">
-    <v-row class="my-2 pt-5">
+    <v-row class="my-2">
       <v-col cols="8">
         <p class="backHome d-flex align-center" @click="backHome">
           <img
-            class="pr-3" id="back-arrow"
+            class="pr-3"
+            id="back-arrow"
             src="../../assets/icon/left-arrow.png"
           />กลับหน้าแรก
         </p>
@@ -39,36 +40,40 @@
       </v-col>
       <v-divider inset></v-divider>
     </v-row>
-    <v-row class="align-center">
+    <v-row class="d-flex align-center">
       <v-col cols="9">
         <p class="user-name">
-          <img class="pr-3 img-icon" src="../../assets/icon/user.png" />{{
-            author
-          }}
+          <img
+            class="pr-3 img-icon"
+            id="avatar-pic"
+            src="../../assets/icon/user.png"
+          />{{ author }}
         </p>
       </v-col>
-      <v-col cols="12" sm="12" md="3" lg="3">
-        <img
-          class="pr-3 img-icon"
+      <v-col cols="12" sm="12" md="3" lg="3" class="col-date">
+        <!-- <img
+          class="pr-2 img-icon" id="img-date"
           src="../../assets/icon/brown_clock.png"
-        />{{ date }}
+        /> -->
+        {{ date }}
       </v-col>
       <v-divider inset></v-divider>
     </v-row>
 
     <h1 class="header-content">{{ title }}</h1>
     <v-img :src="imgSrc" id="coverPic"></v-img>
-    <div class="body-content width: 100%;"></div>
+    <div class="body-content"></div>
 
     <v-divider inset style="padding-bottom: 2%"></v-divider>
     <div style="padding-bottom: 2%">
       <p class="pic-cover-arti d-flex align-center">
         <img
           class="pr-3 img-icon"
+          id="pegman-img"
           src="../../assets/icon/bx_street-view.png"
         />เห็นตัวอย่างสถานที่จริงด้วย Street View!
       </p>
-      <div class="d-flex justify-center pb-12">
+      <div class="d-flex justify-center pb-5">
         <gmap-street-view-panorama
           ref="pano"
           :position="mainLatLng"
@@ -85,14 +90,17 @@
           />ตามรอยสถานที่อื่น ๆ ที่เกี่ยวข้อง
         </p>
 
-        <div class="d-flex justify-center" v-for="(optGPS, index) in optGPSobj" :key="index">
-          <v-card class="d-flex justify-space-between" style="width: 920px">
+        <div
+          class="d-flex justify-center"
+          v-for="(optGPS, index) in optGPSobj"
+          :key="index"
+        >
+          <v-card class="d-flex justify-space-between gps-card">
             <gmap-map
-              class="d-flex"
+              class="d-flex gmap-pin"
               :center="optGPS.geometry"
               :zoom="15"
               map-type-id="terrain"
-              style="width: 300px; height: 200px"
               :options="{
                 zoomControl: false,
                 mapTypeControl: false,
@@ -132,13 +140,13 @@
             </div>
           </v-card>
         </div>
-        
       </div>
     </div>
     <v-divider inset style="padding-bottom: 2%"></v-divider>
     <div>
-      <div class="d-flex row align-center justify-space-between">
-        <div id="tag-relate" class="pb-10">
+      <!-- <div class="d-flex row align-center justify-space-between bottom-content"> -->
+      <div class="d-flex bottom-content">
+        <div id="tag-relate" class="pb-6">
           <p class="pic-cover-arti d-flex align-center">
             <img
               class="pr-3 img-icon"
@@ -193,7 +201,7 @@
           </div>
         </div>
 
-        <div class="d-flex justify-space-around">
+        <div class="d-flex justify-space-around social-container">
           <ShareNetwork
             network="facebook"
             :url="shareURL"
@@ -202,6 +210,7 @@
             hashtags="EduValor"
           >
             <img
+              class="social-icons"
               src="../../assets/icon/f_logo_RGB-Blue_58 1.png"
               height="48px"
             />
@@ -213,6 +222,7 @@
             hashtags="EduValor"
           >
             <img
+              class="social-icons"
               src="../../assets/icon/Twitter social icons - circle - blue 1.png"
               height="48px"
             />
@@ -223,34 +233,41 @@
             :title="title"
             hashtags="EduValor"
           >
-            <img src="../../assets/icon/LINE_Brand_icon 1.png" height="48px" />
+            <img
+              src="../../assets/icon/LINE_Brand_icon 1.png"
+              class="social-icons"
+              height="48px"
+            />
           </ShareNetwork>
           <button @click="copyClipboard">
-            <img src="../../assets/icon/el_paper-clip-alt.png" height="48px" />
+            <img
+              src="../../assets/icon/el_paper-clip-alt.png"
+              class="social-icons"
+              height="48px"
+            />
           </button>
-
-          <v-snackbar v-model="snackbar" color="#333333">
-            {{ snackbarText }}
-
-            <template v-slot:action="{ attrs }">
-              <v-btn
-                color="#AD9F86"
-                text
-                v-bind="attrs"
-                @click="snackbar = false"
-              >
-                Close
-              </v-btn>
-            </template>
-          </v-snackbar>
         </div>
-      </div>
-      <v-divider inset></v-divider>
+        <v-snackbar v-model="snackbar" color="#333333">
+          {{ snackbarText }}
 
-      <div class="commentZone">
-        <approve-comment />
-        <!-- <comment-section /> -->
+          <template v-slot:action="{ attrs }">
+            <v-btn
+              color="#AD9F86"
+              text
+              v-bind="attrs"
+              @click="snackbar = false"
+            >
+              Close
+            </v-btn>
+          </template>
+        </v-snackbar>
       </div>
+    </div>
+    <v-divider inset></v-divider>
+
+    <div class="commentZone">
+      <approve-comment />
+      <!-- <comment-section /> -->
     </div>
   </div>
 </template>
@@ -398,27 +415,45 @@ export default {
 </script>
 
 <style scoped>
+.button-active {
+  background: #ad9f86;
+  border-radius: 20px;
+  color: #ffffff;
+  border-color: #ad9f86;
+}
 .wid-80 {
   width: 80%;
   font-family: "Bai Jamjuree";
 }
-
+.gmap-pin {
+  width: 280px;
+  height: auto;
+}
 .header-content {
   font-family: "Kanit";
   font-style: normal;
   font-weight: 700;
-  font-size: 36px;
-  line-height: 54px;
-  padding-top: 2%;
+  font-size: 24px;
+  line-height: normal;
+  padding-top: 36px;
 }
-
 .user-name {
   font-family: "Bai Jamjuree";
   font-style: normal;
   font-weight: 500;
-  font-size: 28px;
-  line-height: 35px;
+  font-size: 18px;
   color: #ad9f86;
+}
+#avatar-pic {
+  width: 56px;
+}
+#img-date {
+  width: 32px;
+}
+.col-date {
+  padding-top: 0%;
+  font-size: 14px;
+  text-align: end;
 }
 
 .img-icon {
@@ -449,25 +484,40 @@ export default {
 }
 
 .pic-cover-arti {
+  margin-top: 28px;
+  margin-bottom: 20px;
   font-family: "Kanit";
   font-weight: 600;
-  font-size: 24px;
+  font-size: 20px;
   color: #333333;
-  margin-bottom: 0px;
 }
-.body-content >>> img{
-  width: 90%;
+.body-content {
+  margin-bottom: 36px;
+}
+.body-content >>> img {
+  width: 100%;
 }
 
 #coverPic {
-  width: 50%;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+#pegman-img {
+  width: auto;
+  height: 40px;
+}
+
+.v-application--is-ltr .v-divider--inset:not(.v-divider--vertical) {
+  margin-left: 40px;
 }
 
 @media screen and (min-width: 320px) {
   .img-icon {
     width: 36px;
   }
-  #back-arrow{
+  #back-arrow {
     width: 36px;
   }
   .backHome {
@@ -481,15 +531,35 @@ export default {
   .wid-80 {
     width: 90%;
   }
-  .col-crud-btn{
+  .col-crud-btn {
+    padding-bottom: 28px;
     flex-direction: row;
   }
-  .img-icon-crud{
+  .img-icon-crud {
     width: 32px;
   }
-  .v-btn:not(.v-btn--round).v-size--default{
+  .v-btn:not(.v-btn--round).v-size--default {
     padding: 0 6px;
   }
+  .col-9 {
+    min-width: 100%;
+    padding-bottom: 0%;
+  }
+  .gps-card {
+    margin-bottom: 16px;
+    width: 920px;
+  }
+  .bottom-content {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+  .social-container {
+    align-self:flex-end;
+    width: 55%;
+    margin-bottom: 16px;
+  }
+  .social-icons {
+    height: 40px;
+  }
 }
-
 </style>

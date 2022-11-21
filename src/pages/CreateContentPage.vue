@@ -589,13 +589,13 @@ export default {
 
 @media screen and (min-width: 320px) {
   .save-btn {
-    padding-top: 8%;
+    padding-top: 4%;
   }
   .backHome {
     font-family: 'Bai Jamjuree';
     color: #ad9f86;
     font-size: 18px;
-    padding-top: 10%;
+    padding-top: 8%;
     cursor: pointer;
   }
 
