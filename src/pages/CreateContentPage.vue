@@ -1,8 +1,8 @@
 <template>
   <div id="app" class="overflow-auto">
     <v-form v-model="valid" @submit.prevent="submit" ref="form">
-      <div class="d-flex justify-center">
-        <div class="d-inline test">
+      <div class="d-flex justify-center big-box">
+        <div class="d-inline box-padding" style="background-color: white">
           <p class="backHome d-flex align-center" @click="backHome">
             <img
               class="pr-3"
@@ -42,7 +42,7 @@
             </v-text-field>
 
             <v-row id="img-input-box">
-              <v-col cols="10" sm="11" md="4" lg="4">
+              <v-col cols="10" sm="11" md="4" lg="4" id="col-img">
                 <p class="pic-cover">
                   รูปหน้าปกบทความ<span style="color: red">*</span>
                 </p>
@@ -154,7 +154,7 @@
             <div class="ggMapPin">
               <p class="sub-detail">
                 <b>กรุณากรอกสถานที่ 1 ตำแหน่ง</b> โดยส่วนนี้จะแสดงผลเป็น Street
-                View <br/>(จะเป็นสถานที่แรกที่พูดถึงในบทความ,
+                View <br />(จะเป็นสถานที่แรกที่พูดถึงในบทความ,
                 สถานที่ที่อยากแนะนำเป็นพิเศษ ฯลฯ ก็ได้)
               </p>
               <g-g-map-pinning @addMarkers="addCoordinate($event)" />
@@ -168,7 +168,7 @@
               </p>
               <more-autocomplete @addMoreGPS="addMoreCoords($event)" />
             </div>
-            <div class="d-flex justify-center pb-10" style="padding-top: 8%">
+            <div class="d-flex justify-center pb-10 save-btn">
               <v-btn
                 elevation="3"
                 x-large
@@ -580,8 +580,25 @@ export default {
   font-size: 14px;
   line-height: 22px;
 }
+.sub-detail {
+  font-family: "Bai Jamjuree";
+  font-style: normal;
+  font-weight: 400;
+  color: #ad9f86;
+  font-size: 16px;
+}
 
 @media screen and (min-width: 320px) {
+  .save-btn {
+    padding-top: 8%;
+  }
+  .backHome {
+    color: #ad9f86;
+    font-size: 18px;
+    padding-top: 5%;
+    cursor: pointer;
+  }
+
   .inside-width {
     width: 90%;
   }
@@ -638,7 +655,101 @@ export default {
 
 @media screen and (min-width: 768px) {
   .inside-width {
+    width: 70%;
+  }
+  .v-btn {
+    font-size: 16px;
+  }
+  .v-btn:not(.v-btn--round).v-size--default {
+    padding: 0 10px;
+  }
+  .sub-detail {
+    font-size: 18px;
+  }
+  .pic-cover {
+    font-size: 22px;
+  }
+  #preview-img {
+    max-width: 360px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  #mainGPS-heading{
+    padding-top: 2%;
+  }
+  #body-block {
+    padding-top: 3%;
+    padding-bottom: 5%;
+  }
+  .backHome {
+    font-size: 22px;
+    padding-top: 5%;
+    padding-bottom: 3%;
+    cursor: pointer;
+  }
+  .head-topic {
+    font-size: 32px;
+  }
+  .inside-width {
+    background-color: white;
     width: 100%;
+  }
+  .input-style {
+    font-size: 18px;
+  }
+  .label-input {
+    font-size: 1.2em;
+    line-height: 28px;
+  }
+
+  .v-btn {
+    font-size: 16px;
+  }
+  .v-btn:not(.v-btn--round).v-size--default {
+    padding: 0 16px;
+  }
+  #img-input-box {
+    padding-top: 7%;
+  }
+  .sub-detail {
+    font-size: 18px;
+  }
+  .pic-cover {
+    font-size: 22px;
+    padding-bottom: 2%;
+  }
+  #preview-img {
+    max-width: 360px;
+    height: auto;
+  }
+  .preview-img-box {
+    padding-bottom: 4%;
+  }
+  * >>> .v-messages {
+    font-size: 16px;
+    padding-top: 0.5em;
+  }
+  .col-md-4 {
+    min-width: 40%;
+  }
+  .col-md-7 {
+    max-width: 50%;
+  }
+  .big-box {
+    background: rgb(102, 88, 88);
+    background: linear-gradient(
+      0deg,
+      rgba(102, 88, 88, 1) 0%,
+      rgba(173, 159, 134, 1) 35%,
+      rgba(237, 230, 218, 1) 100%
+    );
+  }
+  .save-btn {
+    padding-top: 0%;
+  }
+  .box-padding {
+    padding: 0 3%;
   }
 }
 
@@ -665,14 +776,6 @@ button {
   color: #ad9f86 !important;
 }
 
-.sub-detail {
-  font-family: "Bai Jamjuree";
-  font-style: normal;
-  font-weight: 400;
-  color: #ad9f86;
-  font-size: 16px;
-}
-
 .v-btn--outlined {
   border-color: #ede6da;
 }
@@ -684,27 +787,10 @@ button {
   border-color: #ad9f86;
 }
 
-/*.v-text-field .v-label {
-  background-color: red;
-  max-width: 90%;
-  overflow: visible !important;
-  text-overflow: ellipsis;
-  top: 6px;
-  white-space: nowrap;
-  pointer-events: none;
-} */
-
 .text-white {
   color: white;
   font-family: "Kanit";
   font-weight: 400;
   font-size: 16px;
-}
-
-.backHome {
-  color: #ad9f86;
-  font-size: 18px;
-  padding-top: 5%;
-  cursor: pointer;
 }
 </style>

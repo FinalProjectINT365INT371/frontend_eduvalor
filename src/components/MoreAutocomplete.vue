@@ -249,4 +249,38 @@ export default {
     justify-content: center;
   }
 }
+@media screen and (min-width: 768px) {
+  #addMarker {
+    font-size: 14px;
+    padding: 4% 1%;
+    width: 30%;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .auto-box {
+    flex-direction: row;
+    vertical-align: middle;
+  }
+  .pac-target-input {
+    padding: 3%;
+    width: 100%;
+    height: 40px;
+  }
+
+  #addMarker {
+    margin-top: 0;
+    font-size: 14px;
+    padding: 20px 16px;
+    width: 60%;
+  }
+  .buttons-box {
+    width: 60%;
+    margin-top: 0;
+    padding: 0;
+  }
+
+  .v-application .d-flex {
+    margin-left: 2%;
+  }
+}
 </style>

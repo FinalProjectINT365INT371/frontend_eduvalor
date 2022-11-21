@@ -22,23 +22,25 @@
         />
       </gmap-map>
       <!--  d-flex justify-space-around  -->
-      <div class="auto-box pt-5">
+      <div class="auto-box pt-5 d-flex  ">
         <GmapAutocomplete class="gmap" @place_changed="setPlace" />
+        <!-- <p v-if="mainGPSRules" class="text-red .d-none .d-sm-flex .d-md-none">
+          กรุณาใส่พิกัดของสถานที่ที่ต้องการแนะนำ
+        </p> -->
         <span class="d-flex">
-        <v-btn
-          @click="addMarkers"
-          id="addMarker"
-          rounded
-          elevation="2"
-          color="#AD9F86"
-        >
-          <img src="../assets/icon/eva_pin-fill.png" id="pin-icon" />
-          เพิ่มหมุดใหม่
-        </v-btn>
-      </span>
+          <v-btn
+            @click="addMarkers"
+            id="addMarker"
+            rounded
+            elevation="2"
+            color="#AD9F86"
+          >
+            <img src="../assets/icon/eva_pin-fill.png" id="pin-icon" />
+            เพิ่มหมุดใหม่
+          </v-btn>
+        </span>
       </div>
-
-      <p v-if="mainGPSRules" class="text-red">
+      <p v-if="mainGPSRules" class="text-red .d-none .d-md-flex">
         กรุณาใส่พิกัดของสถานที่ที่ต้องการแนะนำ
       </p>
     </div>
@@ -117,13 +119,11 @@ export default {
   color: white;
   font-family: "Bai Jamjuree";
   font-weight: 400;
-  padding: 6% 3%;
 }
 .gmap-map {
   width: 800px;
   height: 300px;
   width: 100%;
-
 }
 
 .text-red {
@@ -140,7 +140,7 @@ export default {
     width: 100%;
     height: 40px;
   }
-  #pin-icon{
+  #pin-icon {
     width: 28px;
   }
 
@@ -150,8 +150,41 @@ export default {
     padding: 6% 16%;
     width: 40%;
   }
-  .v-application .d-flex{
+  .v-application .d-flex {
     justify-content: center;
   }
 }
+
+@media screen and (min-width: 768px) {
+  #addMarker {
+    margin-top: 8px;
+    font-size: 14px;
+    padding: 4% 1%;
+    width: 30%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .auto-box {
+    flex-direction: row;
+    vertical-align: middle;
+  }
+  .pac-target-input {
+    padding: 3%;
+    width: 75%;
+    height: 40px;
+  }
+
+  #addMarker {
+    margin-top: 0;
+    font-size: 14px;
+    padding: 20px 16px;
+    width: 100%;
+  }
+  .v-application .d-flex {
+    justify-content: space-around;
+
+  }
+}
+
 </style>
