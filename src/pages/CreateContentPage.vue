@@ -528,12 +528,7 @@ export default {
 </script>
 
 <style scoped>
-.submit {
-  background-color: brown;
-  display: inline;
-}
-
-@media screen and (max-width: 2000px) {
+/* @media screen and (max-width: 2000px) {
   .inside-width {
     width: 80%;
   }
@@ -541,12 +536,23 @@ export default {
 
 @media screen and (max-width: 1023px) {
   .inside-width {
-    /* width: 40%; */
+     width: 40%; 
     width: 90%;
   }
 }
 
 @media screen and (max-width: 767px) {
+  .inside-width {
+    width: 100%;
+  }
+}*/
+
+@media screen and (min-width: 320px){
+  .inside-width {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 320px){
   .inside-width {
     width: 100%;
   }

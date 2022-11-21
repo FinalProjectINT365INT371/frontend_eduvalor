@@ -198,6 +198,7 @@ export default {
   background-color: #ede6da;
   border-radius: 24px;
   border-color: #ede6da;
+  outline: none;
 
   font-family: "Bai Jamjuree";
   font-style: normal;
