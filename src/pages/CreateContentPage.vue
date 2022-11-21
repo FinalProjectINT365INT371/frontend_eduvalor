@@ -496,11 +496,7 @@ export default {
               process.env.VUE_APP_BACKEND_API + "/content/addcontent",
               formData
             )
-            // .then(this.backHome());
-            .then(
-              console.log("textContent: " + this.textEditorContent),
-              console.log("Delta: " + this.delta)
-            );
+            .then(this.backHome());
         } else {
           axios
             .put(
@@ -675,7 +671,7 @@ export default {
 }
 
 @media screen and (min-width: 1024px) {
-  #mainGPS-heading{
+  #mainGPS-heading {
     padding-top: 2%;
   }
   #body-block {
@@ -744,6 +740,10 @@ export default {
       rgba(173, 159, 134, 1) 35%,
       rgba(237, 230, 218, 1) 100%
     );
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
   }
   .save-btn {
     padding-top: 0%;
