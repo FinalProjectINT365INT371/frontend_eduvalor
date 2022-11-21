@@ -158,6 +158,9 @@
                 สถานที่ที่อยากแนะนำเป็นพิเศษ ฯลฯ ก็ได้)
               </p>
               <g-g-map-pinning @addMarkers="addCoordinate($event)" />
+              <p v-if="params != undefined" class="text-red" id="new-pinning">
+                กรุณาใส่พิกัดสถานที่ใหม่ทุกครั้งที่มีการแก้ไข
+              </p>
             </div>
 
             <div class="pt-7">
@@ -671,6 +674,9 @@ export default {
 }
 
 @media screen and (min-width: 1024px) {
+  #new-pinning{
+    padding: 0;
+  }
   #mainGPS-heading {
     padding-top: 2%;
   }
@@ -733,11 +739,10 @@ export default {
     max-width: 50%;
   }
   .big-box {
-    background: rgb(102, 88, 88);
+    background: rgb(255, 255, 255);
     background: linear-gradient(
       0deg,
-      rgba(102, 88, 88, 1) 0%,
-      rgba(173, 159, 134, 1) 35%,
+      rgba(255, 255, 255, 1) 0%,
       rgba(237, 230, 218, 1) 100%
     );
     -webkit-background-size: cover;
@@ -749,6 +754,7 @@ export default {
     padding-top: 0%;
   }
   .box-padding {
+    width: 60%;
     padding: 0 3%;
   }
 }
