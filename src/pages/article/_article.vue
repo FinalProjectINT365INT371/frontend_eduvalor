@@ -2,14 +2,14 @@
   <div class="all-content wid-80 ma-auto">
     <v-row class="my-2 pt-5">
       <v-col cols="8">
-        <p class="sub-detail backHome" @click="backHome">
+        <p class="backHome d-flex align-center" @click="backHome">
           <img
-            class="pr-3 img-middle"
+            class="pr-3" id="back-arrow"
             src="../../assets/icon/left-arrow.png"
           />กลับหน้าแรก
         </p>
       </v-col>
-      <v-col cols="12" sm="12" md="4" lg="4">
+      <v-col cols="12" sm="12" md="4" lg="4" class="col-crud-btn">
         <v-row>
           <v-col v-if="login">
             <div class="d-flex justify-center">
@@ -19,7 +19,7 @@
                 class="text-white"
                 @click="navTo()"
                 ><img
-                  class="py-3 pr-3 img-middle"
+                  class="py-3 pr-3 img-icon-crud"
                   src="../../assets/icon/edit_white.png"
                 />แก้ไขเนื้อหา</v-btn
               >
@@ -29,7 +29,7 @@
             <div class="d-flex justify-center">
               <v-btn elevation="0" class="text-brown" @click="deleteArticle"
                 ><img
-                  class="py-3 pr-3 img-middle"
+                  class="py-3 pr-3 img-icon-crud"
                   src="../../assets/icon/trash.png"
                 />ลบบทความ</v-btn
               >
@@ -42,14 +42,14 @@
     <v-row class="align-center">
       <v-col cols="9">
         <p class="user-name">
-          <img class="pr-3 img-middle" src="../../assets/icon/user.png" />{{
+          <img class="pr-3 img-icon" src="../../assets/icon/user.png" />{{
             author
           }}
         </p>
       </v-col>
       <v-col cols="12" sm="12" md="3" lg="3">
         <img
-          class="pr-3 img-middle"
+          class="pr-3 img-icon"
           src="../../assets/icon/brown_clock.png"
         />{{ date }}
       </v-col>
@@ -64,7 +64,7 @@
     <div style="padding-bottom: 2%">
       <p class="pic-cover-arti d-flex align-center">
         <img
-          class="pr-3 img-relate"
+          class="pr-3 img-icon"
           src="../../assets/icon/bx_street-view.png"
         />เห็นตัวอย่างสถานที่จริงด้วย Street View!
       </p>
@@ -80,7 +80,7 @@
       <div id="opt-places">
         <p class="pic-cover-arti d-flex align-center">
           <img
-            class="pr-3 img-relate"
+            class="pr-3 img-icon"
             src="../../assets/icon/gps.png"
           />ตามรอยสถานที่อื่น ๆ ที่เกี่ยวข้อง
         </p>
@@ -124,7 +124,7 @@
                 color="#AD9F86"
                 class="text-white"
                 ><img
-                  class="py-3 pr-3 img-middle"
+                  class="py-3 pr-3 img-icon"
                   src="../../assets/icon/eva_pin-fill.png"
                 />
                 ข้อมูลเพิ่มเติม
@@ -141,7 +141,7 @@
         <div id="tag-relate" class="pb-10">
           <p class="pic-cover-arti d-flex align-center">
             <img
-              class="pr-3 img-relate"
+              class="pr-3 img-icon"
               src="../../assets/icon/tag.png"
             />แท็กที่เกี่ยวข้อง
           </p>
@@ -397,14 +397,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .wid-80 {
   width: 80%;
   font-family: "Bai Jamjuree";
-}
-
-.sub-wid {
-  width: 90%;
 }
 
 .header-content {
@@ -416,14 +412,6 @@ export default {
   padding-top: 2%;
 }
 
-.sub-detail {
-  font-family: "Bai Jamjuree";
-  font-style: normal;
-  font-weight: 400;
-  color: #ad9f86;
-  font-size: 24px;
-}
-
 .user-name {
   font-family: "Bai Jamjuree";
   font-style: normal;
@@ -433,7 +421,7 @@ export default {
   color: #ad9f86;
 }
 
-.img-middle {
+.img-icon {
   vertical-align: middle;
 }
 
@@ -442,10 +430,8 @@ export default {
   font-family: "Kanit";
   font-style: normal;
   border-radius: 10px;
-
   font-weight: 400;
-  font-size: 20px;
-  line-height: 30px;
+  font-size: 16px;
 }
 
 .text-brown {
@@ -456,14 +442,8 @@ export default {
   font-family: "Kanit";
   font-style: normal;
   font-weight: 400;
-  font-size: 20px;
-  line-height: 30px;
+  font-size: 16px;
 }
-
-.backHome {
-  cursor: pointer;
-}
-
 .commentZone {
   padding-top: 3%;
 }
@@ -475,8 +455,41 @@ export default {
   color: #333333;
   margin-bottom: 0px;
 }
-.body-content img,
+.body-content >>> img{
+  width: 90%;
+}
+
 #coverPic {
   width: 50%;
 }
+
+@media screen and (min-width: 320px) {
+  .img-icon {
+    width: 36px;
+  }
+  #back-arrow{
+    width: 36px;
+  }
+  .backHome {
+    font-family: "Bai Jamjuree";
+    font-style: normal;
+    font-weight: 400;
+    color: #ad9f86;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  .wid-80 {
+    width: 90%;
+  }
+  .col-crud-btn{
+    flex-direction: row;
+  }
+  .img-icon-crud{
+    width: 32px;
+  }
+  .v-btn:not(.v-btn--round).v-size--default{
+    padding: 0 6px;
+  }
+}
+
 </style>

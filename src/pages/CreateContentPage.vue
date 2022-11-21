@@ -592,9 +592,10 @@ export default {
     padding-top: 8%;
   }
   .backHome {
+    font-family: 'Bai Jamjuree';
     color: #ad9f86;
     font-size: 18px;
-    padding-top: 5%;
+    padding-top: 10%;
     cursor: pointer;
   }
 
@@ -653,6 +654,9 @@ export default {
 }
 
 @media screen and (min-width: 768px) {
+  .backHome{
+    padding-top: 5%;
+  }
   .inside-width {
     width: 70%;
   }

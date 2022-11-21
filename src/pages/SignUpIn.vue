@@ -126,7 +126,7 @@
                 v-model="passwordLogin"
               />
             </div>
-            <button class="submit-btn">Log In</button>
+            <v-btn class="submit-btn" type="submit">Log In</v-btn>
             <span class="pt-12" style="font-size:medium; color:#333; font-weight:500"
               >หรือล็อกอินด้วย Social Media
             </span>
@@ -193,7 +193,7 @@
                   <v-avatar size="104"><v-img :src="url" /></v-avatar>
                 </div>
               </div>
-              <button class="submit-btn" @click="registAlert">SIGN UP</button>
+              <v-btn class="submit-btn" type="submit" @click="registAlert">SIGN UP</v-btn>
             </div>
           </div>
         </v-form>
@@ -689,6 +689,9 @@ input:focus {
 </style>
 
 <style scoped lang="scss">
+.v-btn:not(.v-btn--round).v-size--default {
+  height: 48px;
+} 
 .form-structor {
   box-shadow: 0;
 
