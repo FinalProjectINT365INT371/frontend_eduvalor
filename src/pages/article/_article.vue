@@ -12,7 +12,7 @@
       </v-col>
       <v-col cols="12" sm="12" md="4" lg="4" class="col-crud-btn">
         <v-row>
-          <v-col v-if="login">
+          <v-col v-if="creatorOfContent">
             <div class="d-flex justify-center">
               <v-btn
                 elevation="0"
@@ -26,7 +26,7 @@
               >
             </div>
           </v-col>
-          <v-col v-if="login">
+          <v-col v-if="creatorOfContent">
             <div class="d-flex justify-center">
               <v-btn elevation="0" class="text-brown" @click="deleteArticle"
                 ><img
@@ -310,6 +310,9 @@ export default {
       optLatLng: {},
 
       allGPSStrings: "",
+
+      userData:null,
+      creatorOfContent:false
     };
   },
   methods: {
@@ -371,8 +374,12 @@ export default {
         }
       }
     },
+    setUserData(){
+      this.userData = this.$cookies.get("USER_DATA")
+    },
   },
   async mounted() {
+    this.setUserData();
     let head = this.$route.params;
     this.id = head.id;
     this.shareURL =
@@ -407,9 +414,16 @@ export default {
     });
     document.getElementsByClassName("body-content")[0].innerHTML =
       res.data.TextData;
-    if (localStorage.getItem("login") == "true") {
-      this.login = true;
+    if (this.$cookies.get("USER_DATA") != null) {
+      // console.log(this.id);
+      // console.log(this.userData.ContentCreated.includes(this.id));
+      if (this.userData.ContentCreated.includes(this.id)){
+        this.creatorOfContent = true;
+      }
+      //this.login = true;
     }
+
+    console.log(this.userData);
   },
 };
 </script>

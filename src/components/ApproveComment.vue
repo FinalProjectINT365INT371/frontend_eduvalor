@@ -205,7 +205,7 @@
               <div class="d-flex">
                 <v-checkbox
                   v-model="checkbox"
-                  :label="`บ.ก. EduValor ขอแนะนำคอนเทนต์นี้!: ${checkbox.toString()}`"
+                  :label="`บ.ก. EduValor ขอแนะนำคอนเทนต์นี้`"
                   color="#333333"
                 ></v-checkbox>
 
