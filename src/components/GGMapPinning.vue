@@ -21,9 +21,10 @@
           @click="center = m.position"
         />
       </gmap-map>
-      <div class="d-flex justify-space-around pt-5">
+      <!--  d-flex justify-space-around  -->
+      <div class="auto-box pt-5">
         <GmapAutocomplete class="gmap" @place_changed="setPlace" />
-
+        <span class="d-flex">
         <v-btn
           @click="addMarkers"
           id="addMarker"
@@ -31,9 +32,10 @@
           elevation="2"
           color="#AD9F86"
         >
-          <img src="../assets/icon/eva_pin-fill.png" />
+          <img src="../assets/icon/eva_pin-fill.png" id="pin-icon" />
           เพิ่มหมุดใหม่
         </v-btn>
+      </span>
       </div>
 
       <p v-if="mainGPSRules" class="text-red">
@@ -98,7 +100,6 @@ export default {
 </script>
 <style scoped>
 .pac-target-input {
-
   padding: 2%;
   height: 48px;
   width: 80%;
@@ -115,26 +116,42 @@ export default {
 #addMarker {
   color: white;
   font-family: "Bai Jamjuree";
-  font-style: bold;
-  font-size: 14px;
-  padding: 3% 1%;
+  font-weight: 400;
+  padding: 6% 3%;
 }
-.gmap:focus {
-  border-color: #ede6da;
-}
-
 .gmap-map {
   width: 800px;
   height: 300px;
+  width: 100%;
+
 }
 
-@media screen and (max-width: 768px) {
-  .gmap-map {
-    width: 95%;
-  }
-}
 .text-red {
   padding-top: 2%;
   color: red;
+}
+
+@media screen and (min-width: 320px) {
+  .auto-box {
+    flex-direction: column;
+  }
+  .pac-target-input {
+    padding: 4%;
+    width: 100%;
+    height: 40px;
+  }
+  #pin-icon{
+    width: 28px;
+  }
+
+  #addMarker {
+    margin-top: 8px;
+    font-size: 14px;
+    padding: 6% 16%;
+    width: 40%;
+  }
+  .v-application .d-flex{
+    justify-content: center;
+  }
 }
 </style>

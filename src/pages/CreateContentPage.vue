@@ -3,13 +3,14 @@
     <v-form v-model="valid" @submit.prevent="submit" ref="form">
       <div class="d-flex justify-center">
         <div class="d-inline test">
-          <p class="sub-detail backHome" @click="backHome">
+          <p class="backHome d-flex align-center" @click="backHome">
             <img
-              class="pr-3 img-middle"
+              class="pr-3"
+              id="back-arrow"
               src="../assets/icon/left-arrow.png"
             />กลับหน้าแรก
           </p>
-          <p class="head-topic">แบ่งปันเรื่องราวความรู้</p>
+          <p class="inside-width head-topic ma-auto">แบ่งปันเรื่องราวความรู้</p>
           <div class="inside-width ma-auto">
             <v-text-field
               class="input-style blog_title"
@@ -17,10 +18,11 @@
               :rules="titleRules"
               :counter="50"
               required
+              label="ชื่อบทความ"
             >
               <template #label>
                 <div class="label-input">
-                  ชื่อบทความ<span class="red--text"><strong> *</strong></span>
+                  ชื่อบทความ<span class="red--text">*</span>
                 </div>
               </template>
             </v-text-field>
@@ -34,12 +36,12 @@
             >
               <template #label>
                 <div class="label-input">
-                  ชื่อผู้เขียน<span class="red--text"><strong> *</strong></span>
+                  ชื่อผู้เขียน<span class="red--text">*</span>
                 </div>
               </template>
             </v-text-field>
 
-            <v-row>
+            <v-row id="img-input-box">
               <v-col cols="10" sm="11" md="4" lg="4">
                 <p class="pic-cover">
                   รูปหน้าปกบทความ<span style="color: red">*</span>
@@ -55,8 +57,14 @@
                   truncate-length="15"
                 ></v-file-input>
               </v-col>
-              <v-col cols="12" sm="12" md="7" lg="7">
-                <v-img :src="url" />
+              <v-col
+                cols="12"
+                sm="12"
+                md="7"
+                lg="7"
+                class="pt-0 d-flex justify-center preview-img-box"
+              >
+                <v-img :src="url" id="preview-img" />
               </v-col>
             </v-row>
 
@@ -72,23 +80,22 @@
                 required
                 :rules="quillRules"
               />
-              <p v-if="quillRules" class="text-red">กรุณาใส่เนื้อหา</p>
               <p v-if="params != undefined" class="text-red">
-                กรุณาใส่รูปใหม่ทุกครั้งที่มีการแก้ไข
+                กรุณาใส่รูปทั้งหมดใหม่ทุกครั้งที่มีการแก้ไข
               </p>
             </div>
 
             <div id="tag-relate" class="pb-5">
-              <p class="pic-cover">
+              <p class="pic-cover d-flex align-center">
                 <img
-                  class="pr-3 img-relate"
+                  class="pr-3 img-icon"
                   src="../assets/icon/tag.png"
                 />แท็กที่เกี่ยวข้อง<span style="color: red">*</span>
               </p>
               <p class="sub-detail">
                 ติดขั้นต่ำ 1 แท็ก แต่มากสุดได้ไม่เกิน 3 แท็ก
               </p>
-              <div>
+              <div class="">
                 <v-btn
                   elevation="2"
                   @click="activeButton(0)"
@@ -138,17 +145,17 @@
                 กรุณาเลือกแท็กที่เกี่ยวข้อง
               </p>
             </div>
-            <p class="pic-cover">
+            <p class="pic-cover d-flex align-center" id="mainGPS-heading">
               <img
-                class="pr-3 img-middle"
+                class="pr-3 img-icon"
                 src="../assets/icon/gps.png"
               />แหล่งเรียนรู้ที่เกี่ยวข้อง<span style="color: red">*</span>
             </p>
             <div class="ggMapPin">
               <p class="sub-detail">
-                กรุณากรอกสถานที่ 1 ตำแหน่ง โดยส่วนนี้จะแสดงผลเป็น Street View
-                (จะเป็นสถานที่แรกที่พูดถึงในบทความ, สถานที่ที่อยากแนะนำเป็นพิเศษ
-                ฯลฯ ก็ได้)
+                <b>กรุณากรอกสถานที่ 1 ตำแหน่ง</b> โดยส่วนนี้จะแสดงผลเป็น Street
+                View <br/>(จะเป็นสถานที่แรกที่พูดถึงในบทความ,
+                สถานที่ที่อยากแนะนำเป็นพิเศษ ฯลฯ ก็ได้)
               </p>
               <g-g-map-pinning @addMarkers="addCoordinate($event)" />
             </div>
@@ -157,11 +164,11 @@
               <p class="pic-cover">แหล่งเรียนรู้ที่เกี่ยวข้องอื่น ๆ</p>
               <p class="sub-detail">
                 กรอกตำแหน่งสถานที่อื่น ๆ เพิ่มเติม
-                แต่ส่วนนี้จะแสดงผลเป็นลิงก์ไปยัง Map แทน (ไม่บังคับ)
+                แต่ส่วนนี้จะแสดงผลเป็นลิงก์ไปยัง Google Map แทน (ไม่บังคับ)
               </p>
               <more-autocomplete @addMoreGPS="addMoreCoords($event)" />
             </div>
-            <div class="d-flex justify-center" style="padding-top: 3%">
+            <div class="d-flex justify-center pb-10" style="padding-top: 8%">
               <v-btn
                 elevation="3"
                 x-large
@@ -169,7 +176,7 @@
                 class="text-white"
                 @click="submit"
                 ><img
-                  class="py-3 pr-3 img-middle"
+                  class="py-3 pr-3 img-icon"
                   src="../assets/icon/save.png"
                 />บันทึกและเผยแพร่</v-btn
               >
@@ -230,7 +237,7 @@ export default {
           [{ align: [] }],
         ],
       },
-      placeholder: "Compose an epic...",
+      placeholder: "เขียนเล่าเรื่องราวสถานที่ที่น่าสนใจตรงนี้เลย!",
       readOnly: true,
       theme: "snow",
     },
@@ -528,31 +535,108 @@ export default {
 </script>
 
 <style scoped>
-/* @media screen and (max-width: 2000px) {
-  .inside-width {
-    width: 80%;
-  }
+.head-topic {
+  font-family: "Kanit";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 54px;
+  color: #333333;
 }
 
-@media screen and (max-width: 1023px) {
+.label-input {
+  font-family: "Bai Jamjuree" !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  line-height: 24px;
+  color: #4c4c4c !important;
+}
+
+.v-text-field >>> label {
+  overflow: visible;
+  top: 0;
+}
+
+.pic-cover {
+  font-family: "Bai Jamjuree";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 28px;
+  margin-bottom: 0;
+  color: #4c4c4c;
+}
+
+.text-red {
+  padding-top: 2%;
+  display: block;
+  position: relative;
+  color: red;
+}
+
+.v-btn {
+  font-family: "Bai Jamjuree";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+@media screen and (min-width: 320px) {
   .inside-width {
-     width: 40%; 
     width: 90%;
   }
+  .head-topic {
+    font-size: 28px;
+  }
+  .input-style {
+    font-size: 16px;
+  }
+  .label-input {
+    font-size: 1.2em;
+    line-height: 28px;
+  }
+  #back-arrow {
+    width: 36px;
+  }
+  .v-text-field {
+    padding-top: 5%;
+  }
+  .pic-cover {
+    font-size: 20px;
+    padding-bottom: 4%;
+  }
+  #img-input-box {
+    padding-top: 7%;
+  }
+  #preview-img {
+    max-width: 280px;
+    height: auto;
+    margin-top: 0;
+  }
+  .preview-img-box {
+    padding-bottom: 8%;
+  }
+  #body-block {
+    padding-bottom: 8%;
+  }
+  .img-icon {
+    width: 36px;
+  }
+  .v-btn {
+    margin-top: 8px;
+  }
+  .v-btn:not(.v-btn--round).v-size--default {
+    padding: 0 10px;
+  }
+  .text-red {
+    padding-top: 5%;
+  }
+  #mainGPS-heading {
+    padding-top: 5%;
+  }
 }
 
-@media screen and (max-width: 767px) {
-  .inside-width {
-    width: 100%;
-  }
-}*/
-
-@media screen and (min-width: 320px){
-  .inside-width {
-    width: 100%;
-  }
-}
-@media screen and (min-width: 320px){
+@media screen and (min-width: 768px) {
   .inside-width {
     width: 100%;
   }
@@ -573,24 +657,6 @@ button {
   color: red;
 }
 
-.head-topic {
-  font-family: "Kanit";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 36px;
-  line-height: 54px;
-  color: #333333;
-}
-
-.label-input {
-  font-family: "Bai Jamjuree" !important;
-  font-style: normal !important;
-  font-weight: 500 !important;
-  line-height: 24px;
-  font-size: 28px;
-  color: #4c4c4c !important;
-}
-
 .v-counter {
   font-family: "Bai Jamjuree" !important;
   font-style: normal !important;
@@ -599,37 +665,16 @@ button {
   color: #ad9f86 !important;
 }
 
-.pic-cover {
-  font-family: "Bai Jamjuree";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 28px;
-  margin-bottom: 0;
-  color: #4c4c4c;
-}
-
 .sub-detail {
   font-family: "Bai Jamjuree";
   font-style: normal;
   font-weight: 400;
   color: #ad9f86;
-  font-size: 18px;
+  font-size: 16px;
 }
 
-.img-middle {
-  vertical-align: middle;
-}
-
-.v-btn {
-  font-family: "Bai Jamjuree";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 22px;
-}
-
-.v-btn--outlined .non-active {
-  border: thin solid #ede6da;
+.v-btn--outlined {
+  border-color: #ede6da;
 }
 
 .button-active {
@@ -639,14 +684,15 @@ button {
   border-color: #ad9f86;
 }
 
-.v-text-field .v-label {
+/*.v-text-field .v-label {
+  background-color: red;
   max-width: 90%;
   overflow: visible !important;
   text-overflow: ellipsis;
   top: 6px;
   white-space: nowrap;
   pointer-events: none;
-}
+} */
 
 .text-white {
   color: white;
@@ -656,14 +702,9 @@ button {
 }
 
 .backHome {
+  color: #ad9f86;
+  font-size: 18px;
+  padding-top: 5%;
   cursor: pointer;
-}
-
-.text-red {
-  padding-top: 2%;
-  color: red;
-}
-#body-block{
-  padding-bottom: 2%;
 }
 </style>

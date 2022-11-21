@@ -390,7 +390,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @media screen and (max-width: 2000px) {
   .test {
     width: 70%;
@@ -415,23 +415,6 @@ export default {
   margin: 1.5%;
 }
 
-// @media screen and (max-width: 767px) {
-//   .thumbnails {
-//   width: 30%;
-// }
-// }
-
-// @media screen and (max-width: 1023px) {
-//   .thumbnails {
-//   width: 40%;
-// }
-// }
-
-// @media screen and (max-width: 2000px) {
-//   .thumbnails {
-//   width: 70%;
-// }
-// }
 .test-underline {
   text-decoration: none;
 }

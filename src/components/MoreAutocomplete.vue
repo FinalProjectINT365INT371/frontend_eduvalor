@@ -6,21 +6,23 @@
       >
     </div>
     <div v-if="box01">
-      <div class="d-flex justify-space-around pt-5 pb-5 align-center">
+      <div class="auto-box d-flex pt-5 pb-5 align-center">
         <GmapAutocomplete class="gmap" @place_changed="setPlace01" />
-        <v-btn
-          @click="addMarkers"
-          id="addMarker"
-          rounded
-          elevation="2"
-          color="#AD9F86"
-        >
-          <img src="../assets/icon/eva_pin-fill.png" />
-          เพิ่มหมุดใหม่
-        </v-btn>
-        <v-btn color="white" @click="removeMoreGPS(0)">
-          <v-icon color="grey"> mdi-minus</v-icon>
-        </v-btn>
+        <div class="buttons-box d-flex">
+          <v-btn
+            @click="addMarkers"
+            id="addMarker"
+            rounded
+            elevation="2"
+            color="#AD9F86"
+          >
+            <img src="../assets/icon/eva_pin-fill.png" />
+            เพิ่มหมุดใหม่
+          </v-btn>
+          <v-btn color="white" @click="removeMoreGPS(0)">
+            <v-icon color="grey"> mdi-minus</v-icon>
+          </v-btn>
+        </div>
       </div>
       <div class="d-flex justify-center">
         <v-btn v-if="addBoxs1" fab color="#EDE6DA" @click="addMoreGPS(1)"
@@ -30,21 +32,23 @@
     </div>
 
     <div v-if="box02">
-      <div class="d-flex justify-space-around pb-5 align-center">
+      <div class="auto-box d-flex pb-5 align-center">
         <GmapAutocomplete class="gmap" @place_changed="setPlace02" />
-        <v-btn
-          @click="addMarkers"
-          id="addMarker"
-          rounded
-          elevation="2"
-          color="#AD9F86"
-        >
-          <img src="../assets/icon/eva_pin-fill.png" />
-          เพิ่มหมุดใหม่
-        </v-btn>
-        <v-btn color="white" @click="removeMoreGPS(1)">
-          <v-icon color="grey"> mdi-minus</v-icon>
-        </v-btn>
+        <div class="buttons-box d-flex">
+          <v-btn
+            @click="addMarkers"
+            id="addMarker"
+            rounded
+            elevation="2"
+            color="#AD9F86"
+          >
+            <img src="../assets/icon/eva_pin-fill.png" />
+            เพิ่มหมุดใหม่
+          </v-btn>
+          <v-btn color="white" @click="removeMoreGPS(1)">
+            <v-icon color="grey"> mdi-minus</v-icon>
+          </v-btn>
+        </div>
       </div>
       <div class="d-flex justify-center">
         <v-btn v-if="addBoxs2" fab color="#EDE6DA" @click="addMoreGPS(2)"
@@ -54,21 +58,23 @@
     </div>
 
     <div v-if="box03">
-      <div class="d-flex justify-space-around pb-5 align-center">
+      <div class="auto-box d-flex pb-5 align-center">
         <GmapAutocomplete class="gmap" @place_changed="setPlace03" />
-        <v-btn
-          @click="addMarkers"
-          id="addMarker"
-          rounded
-          elevation="2"
-          color="#AD9F86"
-        >
-          <img src="../assets/icon/eva_pin-fill.png" />
-          เพิ่มหมุดใหม่
-        </v-btn>
-        <v-btn color="white" @click="removeMoreGPS(2)">
-          <v-icon color="grey"> mdi-minus</v-icon>
-        </v-btn>
+        <div class="buttons-box d-flex">
+          <v-btn
+            @click="addMarkers"
+            id="addMarker"
+            rounded
+            elevation="2"
+            color="#AD9F86"
+          >
+            <img src="../assets/icon/eva_pin-fill.png" />
+            เพิ่มหมุดใหม่
+          </v-btn>
+          <v-btn color="white" @click="removeMoreGPS(2)">
+            <v-icon color="grey"> mdi-minus</v-icon>
+          </v-btn>
+        </div>
       </div>
     </div>
   </div>
@@ -80,7 +86,7 @@ export default {
   data() {
     return {
       center: { lat: 10, lng: 10 },
-      
+
       addBoxs: true,
       addBoxs1: true,
       addBoxs2: true,
@@ -213,19 +219,34 @@ export default {
   font-size: 14px;
   padding: 3% 1%;
 }
+@media screen and (min-width: 320px) {
+  .auto-box {
+    flex-direction: column;
+  }
+  .buttons-box {
+    margin-top: 3%;
+    vertical-align: middle;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .pac-target-input {
+    padding: 4%;
+    width: 100%;
+    height: 40px;
+  }
+  #pin-icon {
+    width: 28px;
+  }
 
-.gmap:focus {
-  border-color: #ede6da;
-}
-
-.gmap-map {
-  width: 800px;
-  height: 300px;
-}
-
-@media screen and (max-width: 768px) {
-  .gmap-map {
-    width: 95%;
+  #addMarker {
+    margin: 0px 16px;
+    font-size: 14px;
+    padding: 6% 16%;
+    width: 40%;
+  }
+  .v-application .d-flex {
+    justify-content: center;
   }
 }
 </style>
