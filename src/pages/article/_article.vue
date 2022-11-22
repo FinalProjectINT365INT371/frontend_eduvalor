@@ -1,26 +1,27 @@
 <template>
-  <div class="all-content wid-80 ma-auto">
-    <v-row class="my-2">
-      <v-col cols="8">
-        <p class="backHome d-flex align-center" @click="backHome">
-          <img
-            class="pr-3"
-            id="back-arrow"
-            src="../../assets/icon/left-arrow.png"
-          />กลับหน้าแรก
-        </p>
-      </v-col>
-      <v-col
-        v-if="creatorOfContent"
-        cols="12"
-        sm="12"
-        md="4"
-        lg="4"
-        class="col-crud-btn"
-      >
-        <!-- <v-col cols="12" sm="12" md="4" lg="4" class="col-crud-btn"> -->
-        <v-row class="row-crud-btn">
-          <!-- <v-col> -->
+  <div class="all-content">
+    <div class="wid-80 ma-auto">
+      <v-row class="my-auto">
+        <v-col cols="8">
+          <p class="backHome d-flex align-center" @click="backHome">
+            <img
+              class="pr-3"
+              id="back-arrow"
+              src="../../assets/icon/left-arrow.png"
+            />กลับหน้าแรก
+          </p>
+        </v-col>
+        <v-col
+          v-if="creatorOfContent"
+          cols="12"
+          sm="12"
+          md="4"
+          lg="4"
+          class="col-crud-btn"
+        >
+          <!-- <v-col cols="12" sm="12" md="4" lg="4" class="col-crud-btn"> -->
+          <v-row class="row-crud-btn">
+            <!-- <v-col> -->
             <div class="d-flex justify-center">
               <v-btn
                 elevation="0"
@@ -33,8 +34,8 @@
                 />แก้ไขเนื้อหา</v-btn
               >
             </div>
-          <!-- </v-col> -->
-          <!-- <v-col> -->
+            <!-- </v-col> -->
+            <!-- <v-col> -->
             <div class="d-flex justify-center">
               <v-btn elevation="0" class="text-brown" @click="deleteArticle"
                 ><img
@@ -43,238 +44,239 @@
                 />ลบบทความ</v-btn
               >
             </div>
-          <!-- </v-col> -->
-        </v-row>
-        <!-- <v-divider inset></v-divider> -->
-      </v-col>
-    </v-row>
-    <v-row class="d-flex align-center">
-      <v-col cols="9">
-        <p class="user-name">
-          <img
-            class="pr-3 img-icon"
-            id="avatar-pic"
-            src="../../assets/icon/user.png"
-          />{{ author }}
-        </p>
-      </v-col>
-      <v-col cols="12" sm="12" md="3" lg="3" class="col-date">
-        <!-- <img
+            <!-- </v-col> -->
+          </v-row>
+          <!-- <v-divider inset></v-divider> -->
+        </v-col>
+      </v-row>
+      <v-row class="d-flex align-center">
+        <v-col cols="9">
+          <p class="user-name">
+            <img
+              class="pr-3 img-icon"
+              id="avatar-pic"
+              src="../../assets/icon/user.png"
+            />{{ author }}
+          </p>
+        </v-col>
+        <v-col cols="12" sm="12" md="3" lg="3" class="col-date">
+          <!-- <img
           class="pr-2 img-icon" id="img-date"
           src="../../assets/icon/brown_clock.png"
         /> -->
-        {{ date }}
-      </v-col>
-    </v-row>
-    <v-divider></v-divider>
+          {{ date }}
+        </v-col>
+      </v-row>
+      <v-divider></v-divider>
 
-    <h1 class="header-content">{{ title }}</h1>
-    <v-img :src="imgSrc" id="coverPic"></v-img>
-    <div class="body-content"></div>
+      <h1 class="header-content">{{ title }}</h1>
+      <v-img :src="imgSrc" id="coverPic"></v-img>
+      <div class="body-content"></div>
 
-    <v-divider style="padding-bottom: 2%"></v-divider>
-    <div style="padding-bottom: 2%">
-      <p class="pic-cover-arti d-flex align-center">
-        <img
-          class="pr-3 img-icon"
-          id="pegman-img"
-          src="../../assets/icon/bx_street-view.png"
-        />เห็นตัวอย่างสถานที่จริงด้วย Street View!
-      </p>
-      <div class="d-flex justify-center pb-5">
-        <gmap-street-view-panorama
-          ref="pano"
-          :position="mainLatLng"
-          :zoom="1"
-          style="width: 920px; height: 300px"
-        >
-        </gmap-street-view-panorama>
-      </div>
-      <div id="opt-places">
+      <v-divider style="padding-bottom: 2%"></v-divider>
+      <div style="padding-bottom: 2%">
         <p class="pic-cover-arti d-flex align-center">
           <img
             class="pr-3 img-icon"
-            src="../../assets/icon/gps.png"
-          />ตามรอยสถานที่อื่น ๆ ที่เกี่ยวข้อง
+            id="pegman-img"
+            src="../../assets/icon/bx_street-view.png"
+          />เห็นตัวอย่างสถานที่จริงด้วย Street View!
         </p>
-
-        <div
-          class="d-flex justify-center"
-          v-for="(optGPS, index) in optGPSobj"
-          :key="index"
-        >
-          <v-card class="d-flex justify-space-between gps-card" outlined>
-            <gmap-map
-              class="d-flex gmap-pin"
-              :center="optGPS.geometry"
-              :zoom="15"
-              map-type-id="terrain"
-              :options="{
-                zoomControl: false,
-                mapTypeControl: false,
-                scaleControl: false,
-                streetViewControl: false,
-                rotateControl: false,
-                fullscreenControl: false,
-                disableDefaultUi: false,
-                draggable: false,
-              }"
-            >
-              <gmap-marker
-                :position="optGPS.geometry"
-                :clickable="true"
-                :draggable="false"
-                @click="center = optGPS.geometry"
-              />
-            </gmap-map>
-
-            <div style="width: 500px">
-              <v-card-title> {{ optGPS.name }}</v-card-title>
-              <v-card-text> {{ optGPS.formatted_address }}</v-card-text>
-
-              <v-btn
-                :href="optGPS.url"
-                elevation="1"
-                x-large
-                color="#AD9F86"
-                class="text-white more-info-btn"
-                ><img
-                  class="img-icon-btn"
-                  src="../../assets/icon/eva_pin-fill.png"
-                />
-                ข้อมูลเพิ่มเติม
-              </v-btn>
-            </div>
-          </v-card>
+        <div class="d-flex justify-center pb-5">
+          <gmap-street-view-panorama
+            ref="pano"
+            :position="mainLatLng"
+            :zoom="1"
+            style="width: 920px; height: 300px"
+          >
+          </gmap-street-view-panorama>
         </div>
-      </div>
-    </div>
-    <v-divider style="padding-bottom: 2%"></v-divider>
-    <div>
-      <!-- <div class="d-flex row align-center justify-space-between bottom-content"> -->
-      <div class="d-flex bottom-content">
-        <div id="tag-relate" class="pb-6">
+        <div id="opt-places">
           <p class="pic-cover-arti d-flex align-center">
             <img
               class="pr-3 img-icon"
-              src="../../assets/icon/tag.png"
-            />แท็กที่เกี่ยวข้อง
+              src="../../assets/icon/gps.png"
+            />ตามรอยสถานที่อื่น ๆ ที่เกี่ยวข้อง
           </p>
-          <div>
-            <v-btn
-              v-if="b1"
-              elevation="2"
-              rounded
-              outlined
-              class="button-active"
-              >รีวิว</v-btn
-            >
-            <v-btn
-              v-if="b2"
-              elevation="2"
-              rounded
-              outlined
-              class="mx-2 button-active"
-            >
-              ศิลป์และดนตรี</v-btn
-            >
-            <v-btn
-              v-if="b3"
-              elevation="2"
-              rounded
-              outlined
-              class="mx-2 button-active"
-            >
-              วิทยาศาสตร์</v-btn
-            >
-            <v-btn
-              v-if="b4"
-              elevation="2"
-              rounded
-              outlined
-              class="mx-2 button-active"
-            >
-              สังคมและการเมือง</v-btn
-            >
-            <v-btn
-              v-if="b5"
-              elevation="2"
-              rounded
-              outlined
-              class="mx-2 button-active"
-            >
-              สิ่งแวดล้อม</v-btn
-            >
+
+          <div
+            class="d-flex justify-center"
+            v-for="(optGPS, index) in optGPSobj"
+            :key="index"
+          >
+            <v-card class="d-flex justify-space-between gps-card" outlined>
+              <gmap-map
+                class="d-flex gmap-pin"
+                :center="optGPS.geometry"
+                :zoom="15"
+                map-type-id="terrain"
+                :options="{
+                  zoomControl: false,
+                  mapTypeControl: false,
+                  scaleControl: false,
+                  streetViewControl: false,
+                  rotateControl: false,
+                  fullscreenControl: false,
+                  disableDefaultUi: false,
+                  draggable: false,
+                }"
+              >
+                <gmap-marker
+                  :position="optGPS.geometry"
+                  :clickable="true"
+                  :draggable="false"
+                  @click="center = optGPS.geometry"
+                />
+              </gmap-map>
+
+              <div style="width: 500px">
+                <v-card-title> {{ optGPS.name }}</v-card-title>
+                <v-card-text> {{ optGPS.formatted_address }}</v-card-text>
+
+                <v-btn
+                  :href="optGPS.url"
+                  elevation="1"
+                  x-large
+                  color="#AD9F86"
+                  class="text-white more-info-btn"
+                  ><img
+                    class="img-icon-btn"
+                    src="../../assets/icon/eva_pin-fill.png"
+                  />
+                  ข้อมูลเพิ่มเติม
+                </v-btn>
+              </div>
+            </v-card>
           </div>
         </div>
-
-        <div class="d-flex justify-space-around social-container">
-          <ShareNetwork
-            network="facebook"
-            :url="shareURL"
-            :title="title"
-            :quote="title"
-            hashtags="EduValor"
-          >
-            <img
-              class="social-icons"
-              src="../../assets/icon/f_logo_RGB-Blue_58 1.png"
-              height="48px"
-            />
-          </ShareNetwork>
-          <ShareNetwork
-            network="twitter"
-            :url="shareURL"
-            :title="title"
-            hashtags="EduValor"
-          >
-            <img
-              class="social-icons"
-              src="../../assets/icon/Twitter social icons - circle - blue 1.png"
-              height="48px"
-            />
-          </ShareNetwork>
-          <ShareNetwork
-            network="line"
-            :url="shareURL"
-            :title="title"
-            hashtags="EduValor"
-          >
-            <img
-              src="../../assets/icon/LINE_Brand_icon 1.png"
-              class="social-icons"
-              height="48px"
-            />
-          </ShareNetwork>
-          <button @click="copyClipboard">
-            <img
-              src="../../assets/icon/el_paper-clip-alt.png"
-              class="social-icons"
-              height="48px"
-            />
-          </button>
-        </div>
-        <v-snackbar v-model="snackbar" color="#333333">
-          {{ snackbarText }}
-
-          <template v-slot:action="{ attrs }">
-            <v-btn
-              color="#AD9F86"
-              text
-              v-bind="attrs"
-              @click="snackbar = false"
-            >
-              Close
-            </v-btn>
-          </template>
-        </v-snackbar>
       </div>
-    </div>
-    <v-divider></v-divider>
+      <v-divider style="padding-bottom: 2%"></v-divider>
+      <div>
+        <!-- <div class="d-flex row align-center justify-space-between bottom-content"> -->
+        <div class="d-flex bottom-content">
+          <div id="tag-relate" class="pb-6">
+            <p class="pic-cover-arti d-flex align-center">
+              <img
+                class="pr-3 img-icon"
+                src="../../assets/icon/tag.png"
+              />แท็กที่เกี่ยวข้อง
+            </p>
+            <div>
+              <v-btn
+                v-if="b1"
+                elevation="2"
+                rounded
+                outlined
+                class="button-active"
+                >รีวิว</v-btn
+              >
+              <v-btn
+                v-if="b2"
+                elevation="2"
+                rounded
+                outlined
+                class="mx-2 button-active"
+              >
+                ศิลป์และดนตรี</v-btn
+              >
+              <v-btn
+                v-if="b3"
+                elevation="2"
+                rounded
+                outlined
+                class="mx-2 button-active"
+              >
+                วิทยาศาสตร์</v-btn
+              >
+              <v-btn
+                v-if="b4"
+                elevation="2"
+                rounded
+                outlined
+                class="mx-2 button-active"
+              >
+                สังคมและการเมือง</v-btn
+              >
+              <v-btn
+                v-if="b5"
+                elevation="2"
+                rounded
+                outlined
+                class="mx-2 button-active"
+              >
+                สิ่งแวดล้อม</v-btn
+              >
+            </div>
+          </div>
 
-    <div class="commentZone">
-      <approve-comment />
-      <!-- <comment-section /> -->
+          <div class="d-flex justify-space-around social-container">
+            <ShareNetwork
+              network="facebook"
+              :url="shareURL"
+              :title="title"
+              :quote="title"
+              hashtags="EduValor"
+            >
+              <img
+                class="social-icons"
+                src="../../assets/icon/f_logo_RGB-Blue_58 1.png"
+                height="48px"
+              />
+            </ShareNetwork>
+            <ShareNetwork
+              network="twitter"
+              :url="shareURL"
+              :title="title"
+              hashtags="EduValor"
+            >
+              <img
+                class="social-icons"
+                src="../../assets/icon/Twitter social icons - circle - blue 1.png"
+                height="48px"
+              />
+            </ShareNetwork>
+            <ShareNetwork
+              network="line"
+              :url="shareURL"
+              :title="title"
+              hashtags="EduValor"
+            >
+              <img
+                src="../../assets/icon/LINE_Brand_icon 1.png"
+                class="social-icons"
+                height="48px"
+              />
+            </ShareNetwork>
+            <button @click="copyClipboard">
+              <img
+                src="../../assets/icon/el_paper-clip-alt.png"
+                class="social-icons"
+                height="48px"
+              />
+            </button>
+          </div>
+          <v-snackbar v-model="snackbar" color="#333333">
+            {{ snackbarText }}
+
+            <template v-slot:action="{ attrs }">
+              <v-btn
+                color="#AD9F86"
+                text
+                v-bind="attrs"
+                @click="snackbar = false"
+              >
+                Close
+              </v-btn>
+            </template>
+          </v-snackbar>
+        </div>
+      </div>
+      <v-divider></v-divider>
+
+      <div class="commentZone">
+        <approve-comment />
+        <!-- <comment-section /> -->
+      </div>
     </div>
   </div>
 </template>
@@ -446,6 +448,7 @@ export default {
   border-color: #ad9f86;
 }
 .wid-80 {
+  background-color: #ffffff;
   font-family: "Bai Jamjuree";
 }
 .gmap-pin {
@@ -557,7 +560,7 @@ export default {
     padding-bottom: 16px;
     flex-direction: row;
   }
-  .row-crud-btn{
+  .row-crud-btn {
     justify-content: space-around;
   }
 
@@ -596,6 +599,28 @@ export default {
     font-size: 12px;
     padding: 4px !important;
     margin: 0px 0px 16px 16px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .wid-80 {
+    padding: 0% 5%;
+    width: 60%;
+  }
+  .all-content {
+    background: rgb(255, 255, 255);
+    background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(237, 230, 218, 1) 100%
+    );
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+  .social-container {
+    width: 35%;
   }
 }
 </style>

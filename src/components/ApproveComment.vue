@@ -2,13 +2,8 @@
   <div>
     <div class="allComment">
       <!-- <div v-for="approve in approveData" :key="approve" class="d-flex flex-column justfy-space-between col-9"> -->
-      <div
-        v-for="(approve, index) in approveData"
-        :key="index"
-      >
-        <div
-          v-if="index == approveData.length - 1"
-        >
+      <div v-for="(approve, index) in approveData" :key="index">
+        <div v-if="index == approveData.length - 1">
           <div v-if="index == approveData.length - 1" class="">
             <h3
               style="font-weight: 600; font-family: 'Kanit'"
@@ -99,7 +94,8 @@
 
               <div class="comment-bottom-text">
                 <h4 style="font-weight: 500" v-if="comment.Displayname">
-                  ความคิดเห็นจาก <br/> {{ comment.Displayname }}
+                  ความคิดเห็นจาก <br />
+                  {{ comment.Displayname }}
                 </h4>
                 <p class="comment-date">เมื่อ {{ comment.UpdateDate }}</p>
               </div>
@@ -448,10 +444,6 @@ $button-font-size: 0.8rem;
   padding: 12px 8px;
   width: 100%;
 
-  .img-fulid {
-    padding: 1rem;
-  }
-
   .commentFrom {
     font-family: "Kanit";
     font-weight: bold;
@@ -515,11 +507,11 @@ $button-font-size: 0.8rem;
 }
 
 #cmText {
- // width: 75%;
- overflow-wrap: break-word;
+  // width: 75%;
+  overflow-wrap: break-word;
   width: 100%;
+  font-size: 15px;
 }
-
 #divided-comment {
   margin: 12px 0px;
 }
@@ -538,12 +530,11 @@ $button-font-size: 0.8rem;
   }
 
   #approved {
-    // width: 124px;
     width: 108px;
     padding: 12px 0px;
   }
   .editor-text-comment {
-    overflow-wrap:break-word;
+    overflow-wrap: break-word;
     line-height: 28px;
     font-size: 15px;
   }
@@ -552,9 +543,6 @@ $button-font-size: 0.8rem;
   }
   #cover-text-stamp {
     width: 100%;
-  }
-  #apText {
-    width: auto;
   }
   .editor-text-bottom {
     text-align: end;
@@ -603,6 +591,36 @@ $button-font-size: 0.8rem;
   .comment-bottom {
     flex-direction: column;
     justify-content: center;
+  }
+
+  #apText{
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .comment-date{
+    font-size: 14px;
+  }
+  .comment-bottom-text {
+    h4 {
+      font-size: 15px;
+    }
+  }
+  #approved {
+    width: 112px;
+  }
+  ::v-deep .v-input .v-label {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .wid-80 {
+    width: 50%;
+  }
+  .social-container{
+    width: 25%;
   }
 }
 </style>
