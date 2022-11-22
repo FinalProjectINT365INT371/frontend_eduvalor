@@ -2,13 +2,8 @@
   <div>
     <div class="allComment">
       <!-- <div v-for="approve in approveData" :key="approve" class="d-flex flex-column justfy-space-between col-9"> -->
-      <div
-        v-for="(approve, index) in approveData"
-        :key="index"
-      >
-        <div
-          v-if="index == approveData.length - 1"
-        >
+      <div v-for="(approve, index) in approveData" :key="index">
+        <div v-if="index == approveData.length - 1">
           <div v-if="index == approveData.length - 1" class="">
             <h3
               style="font-weight: 600; font-family: 'Kanit'"
@@ -40,7 +35,7 @@
               </p>
             </div>
 
-            <div class="crud-editor">
+            <div v-if="checkCreatorOfApprove(approve)" class="crud-editor">
               <button
                 elevation="0"
                 class="btn-container"
@@ -99,7 +94,8 @@
 
               <div class="comment-bottom-text">
                 <h4 style="font-weight: 500" v-if="comment.Displayname">
-                  ความคิดเห็นจาก <br/> {{ comment.Displayname }}
+                  ความคิดเห็นจาก <br />
+                  {{ comment.Displayname }}
                 </h4>
                 <p class="comment-date">เมื่อ {{ comment.UpdateDate }}</p>
               </div>
@@ -109,7 +105,10 @@
               <div class="d-flex justify-space-between">
                 <p id="cmText">{{ comment.Comment }}</p>
               </div>
-              <div class="d-flex justify-end">
+              <div
+                v-if="checkCreatorOfComment(comment)"
+                class="d-flex justify-end"
+              >
                 <div class="d-flex justify-center">
                   <button
                     elevation="0"
@@ -232,7 +231,6 @@ export default {
     approveID: undefined,
     login: false,
     userData: null,
-    creatorOfComment: false,
     isAdmin: false,
   }),
 
@@ -259,6 +257,20 @@ export default {
       this.$router.push({
         path: "/Login",
       });
+    },
+    checkCreatorOfComment(comment) {
+      if (this.$cookies.get("USER_DATA") != null) {
+        if (this.userData.id == comment.UserId) {
+          return true;
+        } else return false;
+      } else return false;
+    },
+    checkCreatorOfApprove(approve) {
+      if (this.$cookies.get("USER_DATA") != null) {
+        if (this.userData.id == approve.UserId) {
+          return true;
+        } else return false;
+      } else return false;
     },
     async submit() {
       const objComment = {
@@ -515,8 +527,8 @@ $button-font-size: 0.8rem;
 }
 
 #cmText {
- // width: 75%;
- overflow-wrap: break-word;
+  // width: 75%;
+  overflow-wrap: break-word;
   width: 100%;
 }
 
@@ -543,7 +555,7 @@ $button-font-size: 0.8rem;
     padding: 12px 0px;
   }
   .editor-text-comment {
-    overflow-wrap:break-word;
+    overflow-wrap: break-word;
     line-height: 28px;
     font-size: 15px;
   }
