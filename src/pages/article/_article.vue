@@ -10,9 +10,11 @@
           />กลับหน้าแรก
         </p>
       </v-col>
-      <v-col cols="12" sm="12" md="4" lg="4" class="col-crud-btn">
+      <v-col v-if="creatorOfContent" cols="12" sm="12" md="4" lg="4" class="col-crud-btn">
+      <!-- <v-col cols="12" sm="12" md="4" lg="4" class="col-crud-btn"> -->
+
         <v-row>
-          <v-col v-if="creatorOfContent">
+          <v-col >
             <div class="d-flex justify-center">
               <v-btn
                 elevation="0"
@@ -26,7 +28,7 @@
               >
             </div>
           </v-col>
-          <v-col v-if="creatorOfContent">
+          <v-col>
             <div class="d-flex justify-center">
               <v-btn elevation="0" class="text-brown" @click="deleteArticle"
                 ><img
