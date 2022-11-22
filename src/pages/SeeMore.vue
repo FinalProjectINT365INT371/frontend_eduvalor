@@ -2,7 +2,7 @@
   <div class="all-content wid-80 ma-auto">
     <v-row class="my-2">
       <v-col cols="12">
-        <p class="sub-detail backHome" @click="backHome">
+        <p class="sub-detail backHome " @click="backHome">
           <img
             class="pr-3 img-middle"
             src="../assets/icon/left-arrow.png"
@@ -343,6 +343,9 @@ export default {
 .backHome {
   font-size: 18px;
   cursor: pointer;
+}
+.cursor{
+  cursor: pointer
 }
 .button-active {
   background: #ad9f86;

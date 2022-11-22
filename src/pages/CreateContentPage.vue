@@ -491,7 +491,7 @@ export default {
         formData.append("ContentCategory[]", bufferArray);
 
         //console.log(bufferArray);
-        formData.append("CreateBy", this.author_name);
+        formData.append("CreateBy", this.userData.Displayname);
         formData.append("Coordinate[0]", this.coordinates);
 
         for (let index = 0; index < this.moreCoordinates.length; index++) {
