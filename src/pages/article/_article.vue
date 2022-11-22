@@ -552,6 +552,7 @@ export default {
     color: #ad9f86;
     font-size: 18px;
     cursor: pointer;
+    padding-top:5%;
   }
   .wid-80 {
     width: 90%;
@@ -605,7 +606,7 @@ export default {
 @media screen and (min-width: 768px) {
   .wid-80 {
     padding: 0% 5%;
-    width: 60%;
+    width: 75%;
   }
   .all-content {
     background: rgb(255, 255, 255);

@@ -12,7 +12,7 @@
               EduValor ว่าคอนเทนต์นี้ดี!
             </h3>
 
-            <div id="cover-text-stamp">
+            <div class="cover-text-stamp">
               <!-- <div id="approve-stamp" class="d-flex justify-end flex-column" style="background-color:blue"> -->
               <div id="approve-stamp">
                 <img
@@ -28,7 +28,7 @@
               </div>
             </div>
             <div style="font-family: 'Kanit'" class="editor-text-bottom">
-              <h4 style="font-weight: 500">ความคิดเห็นจาก บก. EduValor</h4>
+              <h4 style="font-weight: 500">ความคิดเห็นจาก บ.ก. EduValor</h4>
               <p class="approved-date">
                 Approved ล่าสุดเมื่อ <br />
                 {{ approve.UpdateDate }}
@@ -557,7 +557,7 @@ $button-font-size: 0.8rem;
   .approved-date {
     font-size: 13px;
   }
-  #cover-text-stamp {
+  .cover-text-stamp {
     width: 100%;
   }
   .editor-text-bottom {
@@ -624,10 +624,22 @@ $button-font-size: 0.8rem;
     }
   }
   #approved {
-    width: 112px;
+    width: 100px;
   }
   ::v-deep .v-input .v-label {
     font-size: 16px;
+  }
+  .cover-text-stamp{
+    margin-top: 5%;
+    display: flex;
+  }
+  #approve-stamp{
+    width: 50%;
+    text-align: left;
+  }
+  .editor-text-comment {
+    padding-left: 5%;
+    width: 75%;
   }
 }
 
@@ -637,6 +649,9 @@ $button-font-size: 0.8rem;
   }
   .social-container{
     width: 25%;
+  }
+  .cover-text-stamp{
+    display: flex;
   }
 }
 </style>
