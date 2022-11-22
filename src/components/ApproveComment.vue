@@ -10,203 +10,206 @@
         <div
           v-if="index == approveData.length - 1"
           class="d-flex justify-space-between align-center"
-        > -->
-        <div v-if="index == approveData.length - 1" class="">
-          <h3
-            style="font-weight: 600; font-family: 'Kanit'"
-            id="editor-heading"
-          >
-            EduValor ว่าคอนเทนต์นี้ดี!
-          </h3>
+        >
+          -->
+          <div v-if="index == approveData.length - 1" class="">
+            <h3
+              style="font-weight: 600; font-family: 'Kanit'"
+              id="editor-heading"
+            >
+              EduValor ว่าคอนเทนต์นี้ดี!
+            </h3>
 
-          <div id="cover-text-stamp">
-            <!-- <div id="approve-stamp" class="d-flex justify-end flex-column" style="background-color:blue"> -->
-            <div id="approve-stamp">
-              <img
-                id="approved"
-                src="../assets/icon/commentManage/approved.png"
-              />
-            </div>
+            <div id="cover-text-stamp">
+              <!-- <div id="approve-stamp" class="d-flex justify-end flex-column" style="background-color:blue"> -->
+              <div id="approve-stamp">
+                <img
+                  id="approved"
+                  src="../assets/icon/commentManage/approved.png"
+                />
+              </div>
 
-            <div class="editor-text-comment">
-              <div>
-                <p id="apText">{{ approve.Comment }}</p>
+              <div class="editor-text-comment">
+                <div>
+                  <p id="apText">{{ approve.Comment }}</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div style="font-family: 'Kanit'" class="editor-text-bottom">
-            <h4 style="font-weight: 500">ความคิดเห็นจาก บก. EduValor</h4>
-            <p class="approved-date">
-              Approved ล่าสุดเมื่อ <br />
-              {{ approve.UpdateDate }}
-            </p>
-          </div>
-
-          <div class="crud-editor">
-            <button
-              elevation="0"
-              class="btn-container"
-              color="#AD9F86"
-              @click="editCall(approve)"
-            >
-              <img
-                class="img-middle unhovered"
-                src="../assets/icon//commentManage/fluent_document-edit-20-filled.png"
-                width="28px"
-              />
-              <img
-                class="hovered img-middle"
-                src="../assets/icon//commentManage/fluent_document-edit-20-filled-bl.png"
-                width="28px"
-              />
-            </button>
-            <button
-              elevation="0"
-              class="btn-container"
-              @click="deleteCm(approve)"
-            >
-              <img
-                class="img-middle cmDelete unhovered"
-                src="../assets/icon/commentManage/fluent_delete-dismiss-20-filled.png"
-                width="28px"
-              />
-              <img
-                class="hovered img-middle"
-                src="../assets/icon/commentManage/fluent_delete-dismiss-20-filled-bl.png"
-                width="28px"
-              />
-            </button>
-          </div>
-          <v-divider></v-divider>
-        </div>
-      </div>
-    </div>
-
-    <!--  -->
-
-    <div class="d-flex align-center comment-heading-box">
-      <img
-        src="../assets/icon/fa-regular_comment-dots.png"
-        class="comment-pic"
-      />
-      <p class="p-comment">ความคิดเห็นทั้งหมด</p>
-    </div>
-
-    <section class="">
-      <div class="allComment">
-        <div v-for="comment in getComment" :key="comment.ContentId" class="">
-          <!-- <div class="col-1"> -->
-          <div class="top-of-comment d-flex justify-space-between">
-            <img id="avatar" src="../assets/icon/user.png" />
-
-            <div class="comment-bottom-text">
-              <h4 style="font-weight: 500" v-if="comment.Displayname">
-                ความคิดเห็นจาก {{ comment.Displayname }}
-              </h4>
-              <p class="comment-date">เมื่อ {{ comment.UpdateDate }}</p>
+            <div style="font-family: 'Kanit'" class="editor-text-bottom">
+              <h4 style="font-weight: 500">ความคิดเห็นจาก บก. EduValor</h4>
+              <p class="approved-date">
+                Approved ล่าสุดเมื่อ <br />
+                {{ approve.UpdateDate }}
+              </p>
             </div>
-          </div>
-          <!-- <div class="col-9"> -->
-          <div>
-            <div class="d-flex justify-space-between">
-              <p id="cmText">{{ comment.Comment }}</p>
-            </div>
-            <div class="d-flex justify-end">
-              <div class="d-flex justify-center">
-                <button
-                  elevation="0"
-                  class="btn-container"
-                  color="#AD9F86"
-                  @click="editCall(comment)"
-                >
-                  <img
-                    class="img-middle unhovered"
-                    src="../assets/icon//commentManage/fluent_document-edit-20-filled.png"
-                    width="28px"
-                  />
-                  <img
-                    class="hovered img-middle"
-                    src="../assets/icon//commentManage/fluent_document-edit-20-filled-bl.png"
-                    width="28px"
-                  />
-                </button>
-              </div>
-              <div class="d-flex justify-center">
-                <button
-                  elevation="0"
-                  class="btn-container"
-                  @click="deleteCm(comment)"
-                >
-                  <img
-                    class="img-middle cmDelete unhovered"
-                    src="../assets/icon/commentManage/fluent_delete-dismiss-20-filled.png"
-                    width="28px"
-                  />
-                  <img
-                    class="hovered img-middle"
-                    src="../assets/icon/commentManage/fluent_delete-dismiss-20-filled-bl.png"
-                    width="28px"
-                  />
-                </button>
-              </div>
-            </div>
-            <v-divider id="divided-comment"></v-divider>
-          </div>
-        </div>
-      </div>
 
-      <aside v-if="login" id="comment-card-box" class="card">
-        <div class="d-flex align-center top-comment-box">
-          <img src="../assets/icon/user.png" id="avatar-comment-box" />
-          <h4 class="pl-5">{{ userID }}</h4>
-        </div>
-
-        <div class="">
-          <v-form v-model="valid" @submit.prevent="submit" ref="Commentform">
-            <v-textarea
-              v-model="commentText"
-              :rules="commentTextRules"
-              solo
-              auto-grow
-              clearable
-              counter
-              :maxlength="240"
-              rows="4"
-              id="inputStatus"
-              ref="commentRef"
-              placeholder="แสดงความคิดเห็นของคุณต่อคอนเทนต์นี้ที่นี่!"
-            >
-            </v-textarea>
-            <div class="comment-bottom">
-              <v-checkbox v-if="isAdmin"
-                v-model="checkbox"
-                :label="`บ.ก. EduValor ขอแนะนำคอนเทนต์นี้`"
-                color="#333333"
-              ></v-checkbox>
-
-              <span class="d-flex justify-center">
-                <button
-                  class="d-inline-flex align-center publish-btn"
-                  type="button"
-                  @click="submit"
-                >
-                  <v-img src="../assets/icon/carbon_send-alt-filled.png">
-                  </v-img
-                  >เผยแพร่
-                </button></span
+            <div class="crud-editor">
+              <button
+                elevation="0"
+                class="btn-container"
+                color="#AD9F86"
+                @click="editCall(approve)"
               >
+                <img
+                  class="img-middle unhovered"
+                  src="../assets/icon//commentManage/fluent_document-edit-20-filled.png"
+                  width="28px"
+                />
+                <img
+                  class="hovered img-middle"
+                  src="../assets/icon//commentManage/fluent_document-edit-20-filled-bl.png"
+                  width="28px"
+                />
+              </button>
+              <button
+                elevation="0"
+                class="btn-container"
+                @click="deleteCm(approve)"
+              >
+                <img
+                  class="img-middle cmDelete unhovered"
+                  src="../assets/icon/commentManage/fluent_delete-dismiss-20-filled.png"
+                  width="28px"
+                />
+                <img
+                  class="hovered img-middle"
+                  src="../assets/icon/commentManage/fluent_delete-dismiss-20-filled-bl.png"
+                  width="28px"
+                />
+              </button>
             </div>
-          </v-form>
+            <v-divider></v-divider>
+          </div>
         </div>
-      </aside>
-
-      <div class="for-guest">
-        <p>คุณยังไม่ได้ทำการเข้าสู่ระบบ</p>
-        <p>
-          <a @click="goToLogin"> <b>Log In </b></a> เพื่อคอมเมนต์เลย!
-        </p>
       </div>
-    </section>
+
+      <!--  -->
+
+      <div class="d-flex align-center comment-heading-box">
+        <img
+          src="../assets/icon/fa-regular_comment-dots.png"
+          class="comment-pic"
+        />
+        <p class="p-comment">ความคิดเห็นทั้งหมด</p>
+      </div>
+
+      <section class="">
+        <div class="allComment">
+          <div v-for="comment in getComment" :key="comment.ContentId" class="">
+            <!-- <div class="col-1"> -->
+            <div class="top-of-comment d-flex justify-space-between">
+              <img id="avatar" src="../assets/icon/user.png" />
+
+              <div class="comment-bottom-text">
+                <h4 style="font-weight: 500" v-if="comment.Displayname">
+                  ความคิดเห็นจาก {{ comment.Displayname }}
+                </h4>
+                <p class="comment-date">เมื่อ {{ comment.UpdateDate }}</p>
+              </div>
+            </div>
+            <!-- <div class="col-9"> -->
+            <div>
+              <div class="d-flex justify-space-between">
+                <p id="cmText">{{ comment.Comment }}</p>
+              </div>
+              <div class="d-flex justify-end">
+                <div class="d-flex justify-center">
+                  <button
+                    elevation="0"
+                    class="btn-container"
+                    color="#AD9F86"
+                    @click="editCall(comment)"
+                  >
+                    <img
+                      class="img-middle unhovered"
+                      src="../assets/icon//commentManage/fluent_document-edit-20-filled.png"
+                      width="28px"
+                    />
+                    <img
+                      class="hovered img-middle"
+                      src="../assets/icon//commentManage/fluent_document-edit-20-filled-bl.png"
+                      width="28px"
+                    />
+                  </button>
+                </div>
+                <div class="d-flex justify-center">
+                  <button
+                    elevation="0"
+                    class="btn-container"
+                    @click="deleteCm(comment)"
+                  >
+                    <img
+                      class="img-middle cmDelete unhovered"
+                      src="../assets/icon/commentManage/fluent_delete-dismiss-20-filled.png"
+                      width="28px"
+                    />
+                    <img
+                      class="hovered img-middle"
+                      src="../assets/icon/commentManage/fluent_delete-dismiss-20-filled-bl.png"
+                      width="28px"
+                    />
+                  </button>
+                </div>
+              </div>
+              <v-divider id="divided-comment"></v-divider>
+            </div>
+          </div>
+        </div>
+
+        <aside v-if="login" id="comment-card-box" class="card">
+          <div class="d-flex align-center top-comment-box">
+            <img src="../assets/icon/user.png" id="avatar-comment-box" />
+            <h4 class="pl-5">{{ userID }}</h4>
+          </div>
+
+          <div class="">
+            <v-form v-model="valid" @submit.prevent="submit" ref="Commentform">
+              <v-textarea
+                v-model="commentText"
+                :rules="commentTextRules"
+                solo
+                auto-grow
+                clearable
+                counter
+                :maxlength="240"
+                rows="4"
+                id="inputStatus"
+                ref="commentRef"
+                placeholder="แสดงความคิดเห็นของคุณต่อคอนเทนต์นี้ที่นี่!"
+              >
+              </v-textarea>
+              <div class="comment-bottom">
+                <v-checkbox
+                  v-if="isAdmin"
+                  v-model="checkbox"
+                  :label="`บ.ก. EduValor ขอแนะนำคอนเทนต์นี้`"
+                  color="#333333"
+                ></v-checkbox>
+
+                <span class="d-flex justify-center">
+                  <button
+                    class="d-inline-flex align-center publish-btn"
+                    type="button"
+                    @click="submit"
+                  >
+                    <v-img src="../assets/icon/carbon_send-alt-filled.png">
+                    </v-img
+                    >เผยแพร่
+                  </button></span
+                >
+              </div>
+            </v-form>
+          </div>
+        </aside>
+
+        <div v-if="!login" class="for-guest">
+          <p>คุณยังไม่ได้ทำการเข้าสู่ระบบ</p>
+          <p>
+            <a @click="goToLogin"> <b>Log In </b></a> เพื่อคอมเมนต์เลย!
+          </p>
+        </div>
+      </section>
+    </div>
   </div>
 </template>
 
@@ -233,7 +236,7 @@ export default {
     login: false,
     userData: null,
     creatorOfComment: false,
-    isAdmin:false
+    isAdmin: false,
   }),
 
   methods: {
@@ -398,21 +401,16 @@ export default {
       }
       this.commentID = undefined;
       this.approveID = undefined;
-    },
-    goToLogin() {
-      this.$router.push({
-        path: "/Login",
-      });
-    },
+    }
   },
   mounted() {
     this.setUserData();
     if (this.$cookies.get("USER_DATA") != null) {
       this.login = true;
-      this.userID = this.userData.id
-      if (this.userData.Role == "Admin" || this.userData.Role == "Developer"){
-         this.isAdmin= true;
-       }
+      this.userID = this.userData.id;
+      if (this.userData.Role == "Admin" || this.userData.Role == "Developer") {
+        this.isAdmin = true;
+      }
     }
     this.fetchData();
   },
@@ -431,7 +429,6 @@ $button-font-size: 0.8rem;
   p a {
     color: black;
   }
-  
 }
 * {
   padding: 0px;
