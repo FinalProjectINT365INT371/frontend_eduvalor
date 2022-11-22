@@ -408,6 +408,12 @@ export default {
     },
 
     submit() {
+      let token = this.$cookies.get("JWT_TOKEN");
+      const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
       this.checkTag();
       this.quillValidation();
       function DataURIToBlob(dataURI) {
@@ -497,7 +503,7 @@ export default {
           axios
             .post(
               process.env.VUE_APP_BACKEND_API + "/content/addcontent",
-              formData
+              formData,config
             )
             .then(this.backHome());
         } else {
@@ -506,7 +512,7 @@ export default {
               process.env.VUE_APP_BACKEND_API +
                 "/content/editcontent?id=" +
                 this.params,
-              formData
+              formData,config
             )
             .then(this.backHome());
         }

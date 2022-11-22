@@ -334,11 +334,18 @@ export default {
       });
     },
     deleteArticle() {
+      let token = this.$cookies.get("JWT_TOKEN");
+      const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
       axios
         .delete(
           process.env.VUE_APP_BACKEND_API +
             "/content/deletecontent?id=" +
-            this.id
+            this.id,
+            config
         )
         .then(this.backHome(), location.reload());
     },
