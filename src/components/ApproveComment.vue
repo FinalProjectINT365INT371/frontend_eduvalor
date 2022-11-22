@@ -1,17 +1,16 @@
 <template>
   <div>
-    <div class="allComment d-flex flex-column align-center">
+    <div class="allComment d-flex flex-column">
       <!-- <div v-for="approve in approveData" :key="approve" class="d-flex flex-column justfy-space-between col-9"> -->
       <div
         v-for="(approve, index) in approveData"
         :key="index"
-        class="d-flex flex-column justfy-space-between col-9"
+        class="d-flex"
       >
         <div
           v-if="index == approveData.length - 1"
           class="d-flex justify-space-between align-center"
         >
-          -->
           <div v-if="index == approveData.length - 1" class="">
             <h3
               style="font-weight: 600; font-family: 'Kanit'"
@@ -85,7 +84,7 @@
 
       <!--  -->
 
-      <div class="d-flex align-center comment-heading-box">
+      <div class="d-flex comment-heading-box">
         <img
           src="../assets/icon/fa-regular_comment-dots.png"
           class="comment-pic"
@@ -401,7 +400,7 @@ export default {
       }
       this.commentID = undefined;
       this.approveID = undefined;
-    }
+    },
   },
   mounted() {
     this.setUserData();
