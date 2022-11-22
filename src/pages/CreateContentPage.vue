@@ -29,9 +29,9 @@
 
             <v-text-field
               class="input-style"
-              v-model="author_name"
+              v-model="userData.Displayname"
               :rules="nameRules"
-              :counter="90"
+              :counter="30"
               required
             >
               <template #label>
@@ -263,8 +263,12 @@ export default {
     },
     coordinates: [],
     moreCoordinates: [],
+    userData: null,
   }),
   methods: {
+    setUserData() {
+      this.userData = this.$cookies.get("USER_DATA");
+    },
     Preview_image() {
       this.url = URL.createObjectURL(this.image);
     },
@@ -520,6 +524,7 @@ export default {
     },
   },
   async mounted() {
+    this.setUserData()
     let head = this.$route.params;
     if (head != undefined) {
       this.params = head.id;
