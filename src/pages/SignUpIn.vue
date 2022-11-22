@@ -73,14 +73,14 @@
             v-model="passwordLogin"
           />
           <button>Log In</button>
-          <span class="pt-12 text-md-body-1"
+          <!-- <span class="pt-12 text-md-body-1"
             >หรือล็อกอินด้วย Social Media
           </span>
           <div class="social-container">
             <a @click="goToFacebook" class="social">
               <v-icon color="#333333"> mdi-facebook </v-icon>
             </a>
-          </div>
+          </div> -->
         </v-form>
       </div>
       <div class="overlay-container">
@@ -127,14 +127,14 @@
               />
             </div>
             <v-btn class="submit-btn" type="submit">Log In</v-btn>
-            <span class="pt-12" style="font-size:medium; color:#333; font-weight:500"
+            <!-- <span class="pt-12" style="font-size:medium; color:#333; font-weight:500"
               >หรือล็อกอินด้วย Social Media
             </span>
             <div class="social-container">
               <a @click="goToFacebook" class="social" id="fb-mobile">
                 <v-icon color="#333333"> mdi-facebook </v-icon>
               </a>
-            </div>
+            </div> -->
           </div>
         </v-form>
 
