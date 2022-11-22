@@ -1,15 +1,13 @@
 <template>
   <div>
-    <div class="allComment d-flex flex-column">
+    <div class="allComment">
       <!-- <div v-for="approve in approveData" :key="approve" class="d-flex flex-column justfy-space-between col-9"> -->
       <div
         v-for="(approve, index) in approveData"
         :key="index"
-        class="d-flex"
       >
         <div
           v-if="index == approveData.length - 1"
-          class="d-flex justify-space-between align-center"
         >
           <div v-if="index == approveData.length - 1" class="">
             <h3
@@ -517,7 +515,8 @@ $button-font-size: 0.8rem;
 }
 
 #cmText {
-  width: 75%;
+ // width: 75%;
+ overflow-wrap: break-word;
   width: 100%;
 }
 
@@ -544,6 +543,7 @@ $button-font-size: 0.8rem;
     padding: 12px 0px;
   }
   .editor-text-comment {
+    overflow-wrap:break-word;
     line-height: 28px;
     font-size: 15px;
   }
@@ -554,7 +554,7 @@ $button-font-size: 0.8rem;
     width: 100%;
   }
   #apText {
-    width: 100%;
+    width: auto;
   }
   .editor-text-bottom {
     text-align: end;
