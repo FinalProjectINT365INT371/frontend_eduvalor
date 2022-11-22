@@ -36,13 +36,14 @@
                 v-if="!edit"
               >
                 <span class="p-name">{{ userData.Displayname }}</span
-                ><img
+                >
+                <!-- <img
                   src="../assets/icon/pen.png"
                   class="ml-2 edit-pen"
                   width="24"
                   height="24"
                   @click="edit = true"
-                />
+                /> -->
               </v-col>
               <v-col
                 cols="12"
@@ -63,7 +64,7 @@
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="12" md="4" lg="4">
-                    <v-btn color="#AD9F86" style="font-size: medium">
+                    <v-btn color="#AD9F86" style="font-size: medium" >
                       <img src="../assets/icon/white-pen.png" class="mr-2" />
                       บันทึกการแก้ไข
                     </v-btn>
@@ -78,15 +79,6 @@
               <v-spacer class="d-none d-sm-flex d-md-flex d-lg-flex" />
               <v-col cols="12" sm="12" md="8" lg="8" align-self="end">
                 <p class="my-auto p-id">{{ userData.id }}</p>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" sm="12" md="3" lg="3" align-self="end">
-                <p class="my-auto header-p">Password</p>
-              </v-col>
-              <v-spacer class="d-none d-sm-flex d-md-flex d-lg-flex" />
-              <v-col cols="12" sm="12" md="8" lg="8" align-self="end">
-                <a class="a-password" href="">Reset Password</a>
               </v-col>
             </v-row>
           </div>
@@ -138,6 +130,7 @@
 <script>
 import { mapGetters } from "vuex";
 import axios from "axios";
+//import { login_auth } from "../plugins/auth";
 export default {
   data() {
     return {
@@ -153,15 +146,14 @@ export default {
       edit: false,
       userImage: null,
       userData: null,
+      displayName: "",
+      imageUri: "",
     };
   },
   computed: {
     ...mapGetters(["getUserData"]),
   },
   methods: {
-    Preview_image() {
-      this.url = URL.createObjectURL(this.image);
-    },
     navTo(articleId) {
       this.$router.push({
         path: "/article/" + articleId,
@@ -181,6 +173,58 @@ export default {
       const srcUrl = Url.split("imageUrl : ");
       this.url = srcUrl[1];
       console.log(this.url);
+    },
+    async submitImage(imageConvert) {
+      let token = this.$cookies.get("JWT_TOKEN");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      function DataURIToBlob(dataURI) {
+        const splitDataURI = dataURI.split(",");
+        const byteString =
+          splitDataURI[0].indexOf("base64") >= 0
+            ? atob(splitDataURI[1])
+            : decodeURI(splitDataURI[1]);
+        const mimeString = splitDataURI[0].split(":")[1].split(";")[0];
+
+        const ia = new Uint8Array(byteString.length);
+        for (let i = 0; i < byteString.length; i++)
+          ia[i] = byteString.charCodeAt(i);
+
+        return new Blob([ia], { type: mimeString });
+      }
+      let convert_image = DataURIToBlob(imageConvert);
+      //console.log(convert_image);
+      const formData = new FormData();
+      //formData.append("Displayname", this.displayName);
+      formData.append("ImageFile", convert_image);
+
+      let res = await axios.put(
+        process.env.VUE_APP_BACKEND_API +
+          "/user/edituser?id=" +
+          this.userData.id,
+        formData,
+        config
+      );
+      if (res) {
+        location.reload()
+      }
+    },
+    
+    async Preview_image() {
+      this.url = URL.createObjectURL(this.image);
+      let imageConvert = null;
+      var reader = new FileReader();
+      reader.readAsDataURL(this.image);
+      reader.onload = async () => {
+        this.imageUri = reader.result;
+        imageConvert = reader.result;
+        //console.log(this.image);
+        //console.log(this.imageUri);
+        await this.submitImage(imageConvert);
+      };
     },
   },
   mounted() {
