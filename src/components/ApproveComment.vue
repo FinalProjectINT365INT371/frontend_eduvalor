@@ -442,7 +442,7 @@ $button-font-size: 0.8rem;
 .card {
   background-color: white;
   border-radius: 0.5rem;
-  box-shadow: 0px 0px 5px 3px #ad9f86;
+  box-shadow: 0px 0px 2px 1px #ad9f86;
   display: block;
   margin: 16px 0px;
   padding: 12px 8px;
