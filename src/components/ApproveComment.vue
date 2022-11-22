@@ -156,7 +156,7 @@
         </div>
       </div>
 
-      <aside class="card">
+      <aside id="comment-card-box" class="card">
         <div class="d-flex align-center top-comment-box">
           <img src="../assets/icon/user.png" id="avatar-comment-box" />
           <h4 class="pl-5">{{ userID }}</h4>
@@ -200,6 +200,13 @@
           </v-form>
         </div>
       </aside>
+
+      <div class="for-guest">
+        <p>คุณยังไม่ได้ทำการเข้าสู่ระบบ</p>
+        <p>
+          <a @click="goToLogin"> <b>Log In </b></a> เพื่อคอมเมนต์เลย!
+        </p>
+      </div>
     </section>
   </div>
 </template>
@@ -382,6 +389,11 @@ export default {
       this.commentID = undefined;
       this.approveID = undefined;
     },
+    goToLogin() {
+      this.$router.push({
+        path: "/Login",
+      });
+    },
   },
   mounted() {
     this.fetchData();
@@ -396,6 +408,13 @@ $muted: #737373;
 $white: #ffffff;
 $button-font-size: 0.8rem;
 
+.for-guest {
+  text-align: center;
+  p a {
+    color: black;
+  }
+  
+}
 * {
   padding: 0px;
   margin: 0px;
