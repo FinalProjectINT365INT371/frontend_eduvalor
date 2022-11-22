@@ -18,9 +18,29 @@
     </gmap-map>
 
     <div id="test-show-results">
-      <p>
-        พบ Aquarium {{ aquariums }} แห่ง | Art Gallery {{ art_gallerries }} แห่ง
-        | พบ Museum {{ museums }} แห่ง | พบพิพิธภัณฑ์ {{ pipittapan }} แห่ง
+      <p v-if="aquariums">
+        พบ
+        <b>
+          Aquarium <span> {{ aquariums }} </span></b
+        >
+        แห่ง
+      </p>
+      |
+
+      <p v-if="art_gallerries">
+        พบ
+        <b>
+          Gallery <span>{{ art_gallerries }} </span></b
+        >
+        แห่ง
+      </p>
+      |
+      <p v-if="pipittapan">
+        พบ
+        <b>
+          Museum <span>{{ pipittapan }} </span></b
+        >
+        แห่ง
       </p>
     </div>
   </div>
@@ -40,7 +60,7 @@ export default {
       art_gallerries: "",
       aquariums: "",
       museums: "",
-      pipittapan:"",
+      pipittapan: "",
     };
   },
 
@@ -62,27 +82,43 @@ export default {
     async filteredMap() {
       const res0 = await axios.get(
         "https://cors-anywhere.herokuapp.com/" +
-          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ this.center.lat + '%2C' + this.center.lng + "&radius=2500&keyword=พิพิธภัณฑ์&key=" +
+          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+          this.center.lat +
+          "%2C" +
+          this.center.lng +
+          "&radius=2500&keyword=พิพิธภัณฑ์&key=" +
           process.env.VUE_APP_MAP_ACCESS_TOKEN
       );
 
-        const res = await axios.get(
+      const res = await axios.get(
         "https://cors-anywhere.herokuapp.com/" +
-          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ this.center.lat + '%2C' + this.center.lng + "&radius=2500&type=art_gallery&key=" +
+          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+          this.center.lat +
+          "%2C" +
+          this.center.lng +
+          "&radius=2500&type=art_gallery&key=" +
           process.env.VUE_APP_MAP_ACCESS_TOKEN
       );
 
       const res2 = await axios.get(
         "https://cors-anywhere.herokuapp.com/" +
-          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ this.center.lat + '%2C' + this.center.lng + "&radius=2500&type=aquarium&key=" +
+          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+          this.center.lat +
+          "%2C" +
+          this.center.lng +
+          "&radius=2500&type=aquarium&key=" +
           process.env.VUE_APP_MAP_ACCESS_TOKEN
       );
 
-      const res3 = await axios.get(
-        "https://cors-anywhere.herokuapp.com/" +
-          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ this.center.lat + '%2C' + this.center.lng + "&radius=2500&type=museum&key=" +
-          process.env.VUE_APP_MAP_ACCESS_TOKEN
-      );
+      // const res3 = await axios.get(
+      //   "https://cors-anywhere.herokuapp.com/" +
+      //     "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+      //     this.center.lat +
+      //     "%2C" +
+      //     this.center.lng +
+      //     "&radius=2500&type=museum&key=" +
+      //     process.env.VUE_APP_MAP_ACCESS_TOKEN
+      // );
 
       if (res) {
         for (let i = 0; i < res0.data.results.length; i++) {
@@ -106,12 +142,12 @@ export default {
           this.aquariums = res2.data.results.length;
         }
 
-        for (let i = 0; i < res3.data.results.length; i++) {
-          this.markersText.push(
-            JSON.stringify(res3.data.results[i].geometry.location)
-          );
-          this.museums = res3.data.results.length;
-        }
+        // for (let i = 0; i < res3.data.results.length; i++) {
+        //   this.markersText.push(
+        //     JSON.stringify(res3.data.results[i].geometry.location)
+        //   );
+        //   this.museums = res3.data.results.length;
+        // }
 
         for (let index = 0; index < this.markersText.length; index++) {
           this.markers.push({ position: JSON.parse(this.markersText[index]) });
@@ -124,10 +160,35 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .gmap-map {
   width: 800px;
   height: 300px;
   width: 100%;
+}
+
+#test-show-results {
+  margin-top: 16px;
+  justify-content: space-around;
+  font-family: "Kanit";
+  font-weight: 300;
+  font-size: 18px;
+  display: flex;
+  color: #333333;
+  b {
+    color: #ad9f86;
+    font-weight: 500;
+  }
+}
+@media screen and (min-width: 768px) {
+  #test-show-results {
+    justify-content:space-evenly;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #test-show-results {
+    font-size: 20px;
+  }
 }
 </style>>
