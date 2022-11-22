@@ -99,7 +99,7 @@
 
               <div class="comment-bottom-text">
                 <h4 style="font-weight: 500" v-if="comment.Displayname">
-                  ความคิดเห็นจาก {{ comment.Displayname }}
+                  ความคิดเห็นจาก <br/> {{ comment.Displayname }}
                 </h4>
                 <p class="comment-date">เมื่อ {{ comment.UpdateDate }}</p>
               </div>
