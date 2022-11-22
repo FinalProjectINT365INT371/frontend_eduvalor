@@ -110,7 +110,7 @@ export default {
       pageTotal: 1,
       contents: [],
       inputNews: "",
-      b1: false,
+      b1: true,
       b2: false,
       b3: false,
       b4: false,

@@ -189,6 +189,9 @@ export default {
 @media screen and (min-width: 768px) {
   #test-show-results {
     font-size: 20px;
+    b {
+      font-size: 22px;
+    }
   }
 }
 </style>>

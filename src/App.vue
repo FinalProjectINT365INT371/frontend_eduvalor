@@ -2,10 +2,10 @@
   <v-app>
     <v-main>
       <div id="app">
-        <div class="nav-bar justify-center d-none d-lg-flex d-xl-flex d-md-flex">
-          <div class="nav-wid mt-auto">
+        <div class="nav-bar justify-center d-none d-lg-flex d-xl-flex d-md-flex ">
+          <div class="nav-wid ma-auto ">
             <router-link to="/"
-              ><img src="./assets/logo/EduValor_New.png"
+              ><img src="./assets/logo/EduValor_New.png" class="banner-logo"
             /></router-link>
             <div class="on-right mt-6">
               <v-btn
@@ -20,14 +20,16 @@
                   class="mx-2"
                   v-if="this.login"
                   src="@/assets/icon/edit_brown.png"
+                  width="40"
+                  height="40"
               /></router-link>
               <router-link to="/Profile" class="mx-2 my-auto"
                 ><img
                   class="mx-2 my-auto"
                   v-if="this.login"
                   src="@/assets/icon/user.png"
-                  width="48"
-                  height="48"
+                  width="40"
+                  height="40"
               /></router-link>
               <v-btn
                 class="login-button"
@@ -161,6 +163,9 @@ export default {
   .nav-wid {
     width: 70%;
   }
+  .banner-logo{
+    width: 40%;
+  }
 }
 
 @media screen and (max-width: 1023px) {
@@ -185,15 +190,14 @@ export default {
   height: 100%;
 }
 .login-button {
-  width: 90px !important;
-  height: 55px !important;
+  width: 76px !important;
+  height: 48px !important;
   background: #ad9f86 !important;
   border-radius: 16px !important;
   font-family: "Lusitana" !important;
   font-style: normal !important;
   font-weight: 400 !important;
-  font-size: 24px;
-  line-height: 31px !important;
+  font-size: 12px !important;
   color: #ffffff !important;
 }
 
@@ -237,8 +241,4 @@ nav {
 
 @import url("https://fonts.googleapis.com/css2?family=Lusitana&display=swap");
 
-.logo-banner {
-  background-color: #202120;
-  color: whitesmoke;
-}
 </style>
