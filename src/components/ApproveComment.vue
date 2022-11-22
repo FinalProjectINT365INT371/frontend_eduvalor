@@ -281,13 +281,19 @@ export default {
         CommentId: this.commentID,
         ApproveId: this.approveID,
       };
-
+      let token = this.$cookies.get("JWT_TOKEN");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
       console.log(this.approvementEnum);
       if (!this.checkbox) {
         if (this.commentID == undefined) {
           const res = await axios.post(
             process.env.VUE_APP_BACKEND_API + "/content/comment/addcomment",
-            objComment
+            objComment,
+            config
           );
           console.log(objComment);
           if (res) {
@@ -297,7 +303,8 @@ export default {
         } else {
           const res = await axios.put(
             process.env.VUE_APP_BACKEND_API + "/content/comment/updatecomment",
-            objComment
+            objComment,
+            config
           );
           if (res) {
             const objIndex = this.getComment.findIndex(
@@ -318,7 +325,8 @@ export default {
 
           const res = await axios.post(
             process.env.VUE_APP_BACKEND_API + "/content/approve/addapprove",
-            objComment
+            objComment,
+            config
           );
           if (res) {
             this.getComment.push(objComment);
@@ -330,7 +338,8 @@ export default {
         } else {
           const res = await axios.put(
             process.env.VUE_APP_BACKEND_API + "/content/approve/updateapprove",
-            objComment
+            objComment,
+            config
           );
           if (res) {
             const objIndex = this.getComment.findIndex(
@@ -365,6 +374,8 @@ export default {
     },
 
     deleteCm: async function (d) {
+      let token = this.$cookies.get("JWT_TOKEN");
+
       const deleteItem = d;
       this.userID = deleteItem.UserId;
       this.contentID = this.params;
@@ -377,6 +388,9 @@ export default {
         const res = await axios.delete(
           process.env.VUE_APP_BACKEND_API + "/content/comment/deletecomment",
           {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
             data: {
               UserId: this.userID,
               ContentId: this.contentID,
@@ -391,9 +405,13 @@ export default {
           );
         }
       } else {
+        let token = this.$cookies.get("JWT_TOKEN");
         const res = await axios.delete(
           process.env.VUE_APP_BACKEND_API + "/content/approve/deleteapprove",
           {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
             data: {
               UserId: this.userID,
               ContentId: this.contentID,
