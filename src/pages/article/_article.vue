@@ -10,10 +10,17 @@
           />กลับหน้าแรก
         </p>
       </v-col>
-      <v-col v-if="creatorOfContent" cols="12" sm="12" md="4" lg="4" class="col-crud-btn">
-      <!-- <v-col cols="12" sm="12" md="4" lg="4" class="col-crud-btn"> -->
-        <v-row>
-          <v-col >
+      <v-col
+        v-if="creatorOfContent"
+        cols="12"
+        sm="12"
+        md="4"
+        lg="4"
+        class="col-crud-btn"
+      >
+        <!-- <v-col cols="12" sm="12" md="4" lg="4" class="col-crud-btn"> -->
+        <v-row class="row-crud-btn">
+          <!-- <v-col> -->
             <div class="d-flex justify-center">
               <v-btn
                 elevation="0"
@@ -26,8 +33,8 @@
                 />แก้ไขเนื้อหา</v-btn
               >
             </div>
-          </v-col>
-          <v-col>
+          <!-- </v-col> -->
+          <!-- <v-col> -->
             <div class="d-flex justify-center">
               <v-btn elevation="0" class="text-brown" @click="deleteArticle"
                 ><img
@@ -36,10 +43,10 @@
                 />ลบบทความ</v-btn
               >
             </div>
-          </v-col>
+          <!-- </v-col> -->
         </v-row>
+        <!-- <v-divider inset></v-divider> -->
       </v-col>
-      <v-divider inset></v-divider>
     </v-row>
     <v-row class="d-flex align-center">
       <v-col cols="9">
@@ -58,14 +65,14 @@
         /> -->
         {{ date }}
       </v-col>
-      <v-divider inset></v-divider>
     </v-row>
+    <v-divider></v-divider>
 
     <h1 class="header-content">{{ title }}</h1>
     <v-img :src="imgSrc" id="coverPic"></v-img>
     <div class="body-content"></div>
 
-    <v-divider inset style="padding-bottom: 2%"></v-divider>
+    <v-divider style="padding-bottom: 2%"></v-divider>
     <div style="padding-bottom: 2%">
       <p class="pic-cover-arti d-flex align-center">
         <img
@@ -96,7 +103,7 @@
           v-for="(optGPS, index) in optGPSobj"
           :key="index"
         >
-          <v-card class="d-flex justify-space-between gps-card">
+          <v-card class="d-flex justify-space-between gps-card" outlined>
             <gmap-map
               class="d-flex gmap-pin"
               :center="optGPS.geometry"
@@ -132,7 +139,7 @@
                 color="#AD9F86"
                 class="text-white more-info-btn"
                 ><img
-                  class=" img-icon-btn"
+                  class="img-icon-btn"
                   src="../../assets/icon/eva_pin-fill.png"
                 />
                 ข้อมูลเพิ่มเติม
@@ -142,7 +149,7 @@
         </div>
       </div>
     </div>
-    <v-divider inset style="padding-bottom: 2%"></v-divider>
+    <v-divider style="padding-bottom: 2%"></v-divider>
     <div>
       <!-- <div class="d-flex row align-center justify-space-between bottom-content"> -->
       <div class="d-flex bottom-content">
@@ -263,7 +270,7 @@
         </v-snackbar>
       </div>
     </div>
-    <v-divider inset></v-divider>
+    <v-divider></v-divider>
 
     <div class="commentZone">
       <approve-comment />
@@ -311,8 +318,8 @@ export default {
 
       allGPSStrings: "",
 
-      userData:null,
-      creatorOfContent:false
+      userData: null,
+      creatorOfContent: false,
     };
   },
   methods: {
@@ -374,8 +381,8 @@ export default {
         }
       }
     },
-    setUserData(){
-      this.userData = this.$cookies.get("USER_DATA")
+    setUserData() {
+      this.userData = this.$cookies.get("USER_DATA");
     },
   },
   async mounted() {
@@ -417,7 +424,7 @@ export default {
     if (this.$cookies.get("USER_DATA") != null) {
       // console.log(this.id);
       // console.log(this.userData.ContentCreated.includes(this.id));
-      if (this.userData.ContentCreated.includes(this.id)){
+      if (this.userData.ContentCreated.includes(this.id)) {
         this.creatorOfContent = true;
       }
       //this.login = true;
@@ -429,6 +436,9 @@ export default {
 </script>
 
 <style scoped>
+.v-divider {
+  width: 100%;
+}
 .button-active {
   background: #ad9f86;
   border-radius: 20px;
@@ -464,6 +474,7 @@ export default {
   width: 32px;
 }
 .col-date {
+  margin-bottom: 8px;
   padding-top: 0%;
   font-size: 14px;
   text-align: end;
@@ -472,14 +483,13 @@ export default {
 .img-icon {
   vertical-align: middle;
 }
-
 .text-white {
   color: white !important;
   font-family: "Kanit";
   font-style: normal;
   border-radius: 10px;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 13px;
 }
 
 .text-brown {
@@ -490,7 +500,7 @@ export default {
   font-family: "Kanit";
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 13px;
 }
 .commentZone {
   padding-top: 3%;
@@ -522,15 +532,11 @@ export default {
   height: 40px;
 }
 
-.v-application--is-ltr .v-divider--inset:not(.v-divider--vertical) {
-  margin-left: 40px;
-}
-
 @media screen and (min-width: 320px) {
   .img-icon {
     width: 36px;
   }
-  .img-icon-btn{
+  .img-icon-btn {
     width: 28px;
   }
   #back-arrow {
@@ -548,9 +554,13 @@ export default {
     width: 90%;
   }
   .col-crud-btn {
-    padding-bottom: 28px;
+    padding-bottom: 16px;
     flex-direction: row;
   }
+  .row-crud-btn{
+    justify-content: space-around;
+  }
+
   .img-icon-crud {
     width: 32px;
   }
@@ -570,22 +580,22 @@ export default {
     align-items: flex-start !important;
   }
   .social-container {
-    align-self:flex-end;
+    align-self: flex-end;
     width: 55%;
     margin-bottom: 16px;
   }
   .social-icons {
     height: 40px;
   }
-  .v-card__title{
+  .v-card__title {
     font-size: 1em;
     font-weight: 600;
   }
-  .more-info-btn{
+  .more-info-btn {
     height: fit-content !important;
-    font-size: 14px; 
+    font-size: 12px;
     padding: 4px !important;
-    margin:0px 0px 16px 16px;
+    margin: 0px 0px 16px 16px;
   }
 }
 </style>
