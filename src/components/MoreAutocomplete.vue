@@ -77,6 +77,13 @@
         </div>
       </div>
     </div>
+    <v-snackbar v-model="snackbar">
+      ใส่พิกัดใหม่เรียบร้อยแล้ว
+
+      <template v-slot:action="{ attrs }">
+        <v-btn text v-bind="attrs" @click="snackbar = false"> Close </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
     
@@ -98,6 +105,8 @@ export default {
       optPlace01: null,
       optPlace02: null,
       optPlace03: null,
+
+      snackbar: false,
     };
   },
   mounted() {
@@ -106,7 +115,10 @@ export default {
   methods: {
     addMarkers() {
       let arrayContainer = [this.optPlace01, this.optPlace02, this.optPlace03];
-      this.$emit("addMoreGPS", arrayContainer);
+      if (this.optPlace01 || this.optPlace02 || this.optPlace03) {
+        this.$emit("addMoreGPS", arrayContainer);
+        this.snackbar = true;
+      }
     },
 
     setPlace01(place) {

@@ -269,52 +269,6 @@ export default {
 </script>
 
 <style scoped>
-@media screen and (max-width: 2000px) {
-  .wid-page {
-    width: 70%;
-  }
-}
-
-@media screen and (max-width: 1023px) {
-  .wid-page {
-    /* width: 40%; */
-    width: 60%;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .wid-page {
-    width: 90%;
-  }
-  .center-my {
-    margin-top: 1% !important;
-  }
-  .header {
-    font-size: 20px !important;
-  }
-  .a-password {
-    font-size: 16px !important;
-  }
-  .p-id {
-    font-size: 16px !important;
-  }
-  .p-name {
-    font-size: 16px !important;
-  }
-  .p-username {
-    font-size: 16px !important;
-  }
-  .header-p {
-    font-size: 24px !important;
-  }
-  .v-btn {
-    font-size: 14px !important;
-  }
-  .center-my .col-sm-12 {
-    padding-top: 4px;
-    padding-bottom: 4px;
-  }
-}
 .circle-image {
   border-radius: 50%;
   width: 225px;
@@ -325,10 +279,9 @@ export default {
 }
 .header {
   background-color: #a89b84;
-  font-family: "KaLaTeXa Display";
   font-style: normal;
-  font-weight: 650;
-  font-size: 32px;
+  font-weight: 400;
+  font-size: 20px;
   line-height: 45px;
   display: flex;
   align-items: center;
@@ -356,10 +309,10 @@ export default {
   transition: inherit;
 }
 .header-p {
-  font-family: "KaLaTeXa Display";
+  font-family: "Bai Jamjuree";
   font-style: normal;
   font-weight: 650;
-  font-size: 32px;
+  font-size: 24px;
   line-height: 45px;
 
   /* Logo-Branding */
@@ -370,7 +323,7 @@ export default {
   font-family: "Bai Jamjuree";
   font-style: normal;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 30px;
   color: #a89b84;
 }
@@ -378,7 +331,7 @@ export default {
   font-family: "Bai Jamjuree";
   font-style: normal;
   font-weight: 700;
-  font-size: 32px;
+  font-size: 20px;
   line-height: 40px;
   color: #4c4c4c;
 }
@@ -418,5 +371,57 @@ export default {
 
 .edit-pen {
   cursor: pointer;
+}
+
+@media screen and (max-width: 2000px) {
+  .wid-page {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .wid-page {
+    /* width: 40%; */
+    width: 60%;
+  }
+  .header{
+    font-family: 'Bai Jamjuree';
+    font-size: 20px;
+  }
+  
+}
+
+@media screen and (max-width: 767px) {
+  .wid-page {
+    width: 90%;
+  }
+  .center-my {
+    margin-top: 1% !important;
+  }
+  .header {
+    font-size: 20px !important;
+  }
+  .a-password {
+    font-size: 16px !important;
+  }
+  .p-id {
+    font-size: 16px !important;
+  }
+  .p-name {
+    font-size: 16px !important;
+  }
+  .p-username {
+    font-size: 16px !important;
+  }
+  .header-p {
+    font-size: 24px !important;
+  }
+  .v-btn {
+    font-size: 14px !important;
+  }
+  .center-my .col-sm-12 {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
 }
 </style>

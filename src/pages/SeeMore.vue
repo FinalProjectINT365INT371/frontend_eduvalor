@@ -10,10 +10,10 @@
         </p>
       </v-col>
     </v-row>
-    <p class="pic-cover">
-      <img class="pr-3 img-relate" src="../assets/icon/fire.png" />บทความล่าสุด
+    <p class="see-more-heading">
+      <img class="pr-3 " src="../assets/icon/fire.png" />บทความทั้งหมด
     </p>
-    <p class="count">จำนวนทั้งหมด {{ news.length }} บทความ</p>
+    <p class="count">จำนวนทั้งหมด {{ contentAll.length }} บทความ</p>
     <v-row justify="space-between" align="center">
       <v-col cols="12" sm="12" md="3" lg="3">
         <v-text-field
@@ -323,20 +323,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .wid-80 {
+  color: #4c4c4c;
   width: 80%;
   font-family: "Bai Jamjuree";
-}
-.sub-wid {
-  width: 90%;
-}
-.header-content {
-  font-family: "Kanit";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 36px;
-  line-height: 54px;
 }
 .sub-detail {
   font-family: "Bai Jamjuree";
@@ -345,37 +336,12 @@ export default {
   color: #ad9f86;
   font-size: 24px;
 }
-.user-name {
-  font-family: "Bai Jamjuree";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 28px;
-  line-height: 35px;
-  color: #ad9f86;
-}
+
 .img-middle {
   vertical-align: middle;
 }
-.text-white {
-  color: white !important;
-  font-family: "Kanit";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 30px;
-}
-.text-brown {
-  color: #ad9f86 !important;
-  border: 1px solid #ad9f86 !important;
-  background-color: white;
-  border-radius: 10px;
-  font-family: "Kanit";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 30px;
-}
 .backHome {
+  font-size: 18px;
   cursor: pointer;
 }
 .button-active {
@@ -391,5 +357,18 @@ export default {
   line-height: 23px;
   text-align: center;
   color: #4c4c4c;
+}
+.see-more-heading{
+  font-family: 'Kanit';
+  font-size: 24px;
+  color: #333;
+  font-weight: 500;
+}
+.count{
+  font-size: 20px;
+}
+.p-title{
+  font-weight: 600;
+  font-size: 18px;
 }
 </style>

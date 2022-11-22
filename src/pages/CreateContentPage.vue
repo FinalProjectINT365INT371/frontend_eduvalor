@@ -28,6 +28,7 @@
             </v-text-field>
 
             <v-text-field
+            disabled
               class="input-style"
               v-model="userData.Displayname"
               :rules="nameRules"

@@ -44,6 +44,13 @@
         กรุณาใส่พิกัดของสถานที่ที่ต้องการแนะนำ
       </p>
     </div>
+    <v-snackbar v-model="snackbar">
+      ใส่พิกัดใหม่เรียบร้อยแล้ว
+
+      <template v-slot:action="{ attrs }">
+        <v-btn text v-bind="attrs" @click="snackbar = false"> Close </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
   
@@ -59,6 +66,7 @@ export default {
 
       mainGPSRules: true,
       GmapAutocompletes: [],
+      snackbar: false,
     };
   },
   mounted() {
@@ -67,6 +75,7 @@ export default {
   methods: {
     addMarkers() {
       if (this.currentPlace) {
+        this.snackbar = true;
         const marker = {
           lat: this.currentPlace.geometry.location.lat(),
           lng: this.currentPlace.geometry.location.lng(),

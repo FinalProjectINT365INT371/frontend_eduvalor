@@ -65,7 +65,7 @@
             </v-col>
           </v-row>
           <p class="p-addition cursor" @click="filterContent">
-            ดูบทความล่าสุดเพิ่มเติม >
+            ดูบทความทั้งหมดเพิ่มเติม >
           </p>
         </div>
 
@@ -104,9 +104,9 @@
               </v-slide-item>
             </v-slide-group>
           </v-sheet>
-          <p class="p-addition cursor" @click="filterContent">
+          <!-- <p class="p-addition cursor" @click="filterContent">
             ดูบทความรีวิวเพิ่มเติม >
-          </p>
+          </p> -->
         </div>
 
         <div>
@@ -184,9 +184,9 @@
               </v-row>
             </v-col>
           </v-row>
-          <p class="p-addition cursor" @click="filterContent">
+          <!-- <p class="p-addition cursor" @click="filterContent">
             ดูบทความทั้งหมดเพิ่มเติม >
-          </p>
+          </p> -->
         </div>
         <div>
           <p class="pic-cover mb-0">บ.ก. EduValor ขอแนะนำ!</p>
@@ -225,9 +225,9 @@
               </v-slide-item>
             </v-slide-group>
           </v-sheet>
-          <p class="p-addition cursor" @click="filterContent">
+          <!-- <p class="p-addition cursor" @click="filterContent">
             ดูบทความแนะนำโดยบ.ก. เพิ่มเติม >
-          </p>
+          </p> -->
         </div>
       </div>
     </div>
@@ -427,6 +427,9 @@ export default {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
+.p-title:hover, .p-title-slide:hover{
+color: #a89b84;
+}
 .p-title-slide {
   font-family: "Kanit";
   font-style: normal;
@@ -467,6 +470,10 @@ export default {
   line-height: 30px;
   text-align: right;
   color: #a89b84;
+}
+
+.p-addition:hover {
+  color: #333333;
 }
 .p-subtitle {
   font-family: "Bai Jamjuree";
@@ -516,7 +523,7 @@ export default {
   }
   .corousel-img {
     width: 400px;
-    height: 200px;;
+    height: 200px;
     object-fit: cover;
   }
   .pic-cover {
@@ -534,25 +541,25 @@ export default {
   .test {
     width: 65%;
   }
-  .pic-cover{
+  .pic-cover {
     font-size: 28px;
   }
   .p-subtitle {
     font-size: 20px;
   }
-  .v-btn{
-    border-color: #EDE6DA;
+  .v-btn {
+    border-color: #ede6da;
   }
-  .row{
+  .row {
     padding: 10px 8px;
   }
-  .p-addition{
-    font-size: 20px;
+  .p-addition {
+    font-size: 24px;
   }
   .p-date {
     font-size: 16px;
   }
-  .p-author{
+  .p-author {
     font-size: 20px;
   }
   .corousel-img {
