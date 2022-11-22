@@ -24,8 +24,7 @@
             src="../assets/icon/gps.png"
           />ส่องแหล่งเรียนรู้ใกล้ตัวคุณ!
         </p>
-        <!-- <img src="../assets/gpsmap.png" alt="" width="100%" /> -->
-        <NearbySuggest/>
+        <NearbySuggest class="gps-homepage"/>
 
         <div>
           <p class="pic-cover">
@@ -391,23 +390,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media screen and (max-width: 2000px) {
-  .test {
-    width: 70%;
-  }
+@media screen and (min-width: 320px) {
+.test{
+  width: 90%;
 }
-
-@media screen and (max-width: 1023px) {
-  .test {
-    /* width: 40%; */
-    width: 60%;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .test {
-    width: 90%;
-  }
+ .gps-homepage{
+  width: 100%;
+ }
 }
 
 .content-thumbnail {
@@ -422,7 +411,7 @@ export default {
   font-family: "Kanit";
   font-style: normal;
   font-weight: 700;
-  font-size: 36px;
+  font-size: 24px;
   line-height: 54px;
   color: #333333;
 }

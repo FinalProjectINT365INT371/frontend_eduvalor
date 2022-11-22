@@ -5,7 +5,7 @@
       :center="center"
       :zoom="16"
       map-type-id="terrain"
-      style="width: 1100px; height: 300px"
+      class="gmap-map"
     >
       <gmap-marker
         :key="index"
@@ -124,4 +124,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.gmap-map {
+  width: 800px;
+  height: 300px;
+  width: 100%;
+}
+</style>>

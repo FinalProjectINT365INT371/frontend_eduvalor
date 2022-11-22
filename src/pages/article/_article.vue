@@ -659,5 +659,8 @@ export default {
     flex-direction: row;
     justify-content: space-between;
   }  
+  #coverPic {
+    height: 300px;
+  }
 }
 </style>
