@@ -11,7 +11,6 @@
           v-if="index == approveData.length - 1"
           class="d-flex justify-space-between align-center"
         >
-        
           <div class="d-flex flex-column">
             <h3 style="font-weight: 700">EduValor ว่าคอนเทนต์นี้ดี!</h3>
             <div class="d-flex justify-space-between">
@@ -175,7 +174,7 @@
         </div>
       </div>
 
-      <aside class="card">
+      <aside v-if="login" class="card">
         <div class="row d-flex justify-center">
           <div class="col-1">
             <img
@@ -203,7 +202,7 @@
               >
               </v-textarea>
               <div class="d-flex">
-                <v-checkbox
+                <v-checkbox v-if="isAdmin"
                   v-model="checkbox"
                   :label="`บ.ก. EduValor ขอแนะนำคอนเทนต์นี้`"
                   color="#333333"
@@ -223,6 +222,45 @@
           </div>
         </div>
       </aside>
+
+      <aside v-if="!login" class="card">
+        <div class="row d-flex justify-center">
+          <div class="col-1">
+            <img
+              src="../assets/icon/user.png"
+              class="rounded-circle img-fluid"
+              width="56"
+              height="56"
+            />
+          </div>
+          <div class="col-9">
+            <h4>Anonymous User</h4>
+              <v-textarea
+                v-model="commentText"
+                :rules="commentTextRules"
+                solo
+                auto-grow
+                clearable
+                counter
+                :maxlength="240"
+                rows="4"
+                id="inputStatus"
+                ref="commentRef"
+                placeholder="ถ้าหากต้องการแสดงความคิดเห็นของคุณต่อคอนเทนต์นี้ กรุณาเข้าสู่ระบบ"
+              >
+              </v-textarea>
+              <div class="d-flex">
+                <button
+                  class="ml-auto d-inline-flex align-center publish-btn"
+                  type="button"
+                  @click="goToLogin()"
+                >
+                  เข้าสู่ระบบ
+                </button>
+              </div>
+          </div>
+        </div>
+      </aside>
     </section>
   </div>
 </template>
@@ -239,7 +277,7 @@ export default {
       (v) => !!v || "กรุณาใส่ตัวอักษรเพื่อแสดงความคิดเห็น",
       (v) => v.length <= 240 || "ตัวอักษรต้องไม่เกิน 240 ตัว",
     ],
-    userID: "U_2",
+    userID: "Anonymous User",
     params: undefined,
     contentID: "",
 
@@ -247,6 +285,10 @@ export default {
     commentID: undefined,
     approveData: [],
     approveID: undefined,
+    login: false,
+    userData: null,
+    creatorOfComment: false,
+    isAdmin:false
   }),
 
   methods: {
@@ -265,7 +307,14 @@ export default {
       }
       console.log(this.approveData);
     },
-
+    setUserData() {
+      this.userData = this.$cookies.get("USER_DATA");
+    },
+    goToLogin() {
+      this.$router.push({
+        path: "/Login",
+      });
+    },
     async submit() {
       const objComment = {
         UserId: this.userID,
@@ -407,6 +456,14 @@ export default {
     },
   },
   mounted() {
+    this.setUserData();
+    if (this.$cookies.get("USER_DATA") != null) {
+      this.login = true;
+      this.userID = this.userData.id
+      if (this.userData.Role == "Admin" || this.userData.Role == "Developer"){
+         this.isAdmin= true;
+       }
+    }
     this.fetchData();
   },
 };
