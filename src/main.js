@@ -54,14 +54,17 @@ Vue.use(VueGoogleMaps, {
   // installComponents: true,
 })
 Vue.use(VueGeoLocation)
-
+import store from './store'
 // import VuetifyGoogleAutocomplete from 'vuetify-google-autocomplete';
 // Vue.use(VuetifyGoogleAutocomplete, {
 //     // apiKey: process.env.VUE_APP_MAP_ACCESS_TOKEN,
 //   vueGoogleMapsCompatibility: true,
 // })
+import VueCookies from 'vue-cookies';
+Vue.use(VueCookies);
 
 new Vue({
+  store,
   vuetify,
   router,
   render: h => h(App)

@@ -138,7 +138,7 @@ export default {
           )
         if (res) {
           const objIndex = this.getComment.findIndex((item) => item._id == objComment.CommentId)
-          console.log(objIndex);
+          //console.log(objIndex);
           this.getComment[objIndex].Comment = this.commentText
         }
         this.fetchData()
@@ -154,7 +154,7 @@ export default {
       this.commentID = originalValue._id;
       this.commentText = originalValue.Comment;
 
-      console.log(originalValue)
+      //console.log(originalValue)
     },
 
     deleteCm: async function (d) {
@@ -162,7 +162,7 @@ export default {
       this.userID = deleteItem.UserId;
       this.contentID = this.params;
       this.commentID = deleteItem._id;
-      console.log(this.commentID)
+      //console.log(this.commentID)
 
       const res = await axios.delete(
         process.env.VUE_APP_BACKEND_API + "/content/comment/deletecomment", {

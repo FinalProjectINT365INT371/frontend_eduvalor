@@ -1,13 +1,15 @@
 <template>
-  <div>
+  <div class="mb-10">
     <v-sheet class="mx-auto" max-width="100%">
-      <v-slide-group v-model="model" class="pa-4" show-arrows>
-        <v-slide-item v-for="(topLoop,index) in eduvalor" :key="index" v-slot="{ active, toggle }">
+      <v-slide-group class="mb-5" v-model="model" center-active show-arrows>
+        <v-slide-item
+          v-for="(topLoop, index) in eduvalor"
+          :key="index"
+          v-slot="{ active, toggle }"
+        >
           <v-card
             :color="active ? undefined : 'grey lighten-1'"
-            class="ma-4"
-            height="300"
-            width="660"
+            class="mx-2 corousel-img"
             @click="toggle, navTo(topLoop._id)"
           >
             <v-img :src="topLoop.imgSrc" alt="" width="100%" />
@@ -20,17 +22,16 @@
       <div class="d-inline test">
         <p class="pic-cover">
           <img
-            class="pr-3 img-relate"
+            class="pr-3 img-icon"
             src="../assets/icon/gps.png"
           />ส่องแหล่งเรียนรู้ใกล้ตัวคุณ!
         </p>
-        <!-- <img src="../assets/gpsmap.png" alt="" width="100%" /> -->
-        <NearbySuggest/>
+        <NearbySuggest class="gps-homepage" />
 
         <div>
           <p class="pic-cover">
             <img
-              class="pr-3 img-relate"
+              class="pr-3 img-icon"
               src="../assets/icon/fire.png"
             />บทความล่าสุด
           </p>
@@ -52,6 +53,7 @@
                     alt=""
                     width="100%"
                     max-height="188"
+                    min-height="188"
                   />
                 </v-col>
                 <v-col cols="12" sm="12" md="5" lg="5">
@@ -63,7 +65,7 @@
             </v-col>
           </v-row>
           <p class="p-addition cursor" @click="filterContent">
-            ดูบทความล่าสุดเพิ่มเติม >
+            ดูบทความทั้งหมดเพิ่มเติม >
           </p>
         </div>
 
@@ -71,7 +73,7 @@
           <p class="pic-cover mb-0">รีวิวแนะนำแหล่งเรียนรู้</p>
           <p class="p-subtitle">รวมบทความรีวิวสถานที่น่าสนใจทั้งหมด</p>
           <v-sheet class="mx-auto" max-width="100%">
-            <v-slide-group v-model="model" class="pa-4">
+            <v-slide-group v-model="model" class="pa-0">
               <v-slide-item
                 v-for="(items, index) in reviewNews"
                 :key="'s' + index"
@@ -90,6 +92,7 @@
                     alt=""
                     width="100%"
                     max-height="188"
+                    min-height="188"
                   />
                   <v-row>
                     <v-col cols="12">
@@ -101,9 +104,9 @@
               </v-slide-item>
             </v-slide-group>
           </v-sheet>
-          <p class="p-addition cursor" @click="filterContent">
+          <!-- <p class="p-addition cursor" @click="filterContent">
             ดูบทความรีวิวเพิ่มเติม >
-          </p>
+          </p> -->
         </div>
 
         <div>
@@ -111,7 +114,7 @@
           <p class="p-subtitle">
             รวมบทความเกี่ยวกับสถานที่เรียนรู้โดยแบ่งตามแขนง
           </p>
-          <div class="mb-4">
+          <div class="my-10">
             <v-btn
               elevation="2"
               @click="selectOne(1)"
@@ -170,6 +173,7 @@
                     alt=""
                     width="100%"
                     max-height="188"
+                    min-height="188"
                   />
                 </v-col>
                 <v-col cols="12" sm="12" md="5" lg="5">
@@ -180,9 +184,9 @@
               </v-row>
             </v-col>
           </v-row>
-          <p class="p-addition cursor" @click="filterContent">
+          <!-- <p class="p-addition cursor" @click="filterContent">
             ดูบทความทั้งหมดเพิ่มเติม >
-          </p>
+          </p> -->
         </div>
         <div>
           <p class="pic-cover mb-0">บ.ก. EduValor ขอแนะนำ!</p>
@@ -190,7 +194,7 @@
             รวมบทความจากบ.ก. และจากทางบ้านที่บ.ก. อยากแนะนำ
           </p>
           <v-sheet class="mx-auto" max-width="100%">
-            <v-slide-group v-model="model" class="pa-4">
+            <v-slide-group v-model="model">
               <v-slide-item
                 v-for="(items, index) in eduvalor"
                 :key="'s' + index"
@@ -209,6 +213,7 @@
                     alt=""
                     width="100%"
                     max-height="188"
+                    min-height="188"
                   />
                   <v-row>
                     <v-col cols="12">
@@ -220,243 +225,189 @@
               </v-slide-item>
             </v-slide-group>
           </v-sheet>
-          <p class="p-addition cursor" @click="filterContent">
+          <!-- <p class="p-addition cursor" @click="filterContent">
             ดูบทความแนะนำโดยบ.ก. เพิ่มเติม >
-          </p>
+          </p> -->
         </div>
       </div>
     </div>
-
-    <!-- <router-link to="/ShowContent" >
-      <v-card hover shaped class="mx-auto content-thumbnail" @click="selectContent(_id._id)" max-width="400"
-        v-for="_id in contents" :key="_id._id">
-
-        <v-img src="https://www.traveldb.me/wp-content/uploads/2021/01/bangkok-sea-life-ocean-world.jpg"></v-img>
-        <v-img :src="`${_id.imgSrc}`" class="thumbnails"></v-img>
-        <v-card-title class="test-underline">{{ _id.Header }}</v-card-title>
-
-        <v-card-subtitle color="white">
-          โดย {{ _id.CreateBy }}
-        </v-card-subtitle>
-        <v-card-subtitle>
-          เมื่อ {{ _id.CreateDate }}
-        </v-card-subtitle>
-
-      </v-card>
-    </router-link> -->
   </div>
 </template>
 <script>
 import axios from "axios";
 import NearbySuggest from "../components/NearbySuggest.vue";
 export default {
-    data: () => ({
-        contents: [],
-        b1: true,
-        b2: false,
-        b3: false,
-        b4: false,
-        b5: false,
-        model: "",
-        getImg: [],
-        reviewNews: [],
-        eduvalor: [],
-        envNews: [],
-        scienceNews: [],
-        musicNews: [],
-        politicsNews: [],
-        knowledge: [],
-        news: [
-            {
-                title: "ปักหมุด เที่ยวกรุงเทพมิวเซียมสยาม เล่าเรื่องเมืองไทย ในพิพิธภัณฑ์มีชีวิต",
-                author: "บก. EduValor",
-                date: "5/8/2565 17:03:07",
-                img: "../assets/demo/img1.png",
-            },
-            {
-                title: "8 อควาเรียม เที่ยวกรุงเทพ และ ใกล้กรุงเทพ เที่ยวสนุก ทั้งครอบครัว วันหยุดสั้นๆ",
-                author: "บก. EduValor",
-                date: "5/8/2565 17:03:07",
-                img: "../assets/demo/img2.png",
-            },
-            {
-                title: "พิพิธภัณฑ์วิทยาศาสตร์แห่ง ชาติ ปทุมธานี เที่ยวสนุก เรียน รู้มันส์ ไปกับเทคโนโลยีล้ำ ๆ",
-                author: "บก. EduValor",
-                date: "5/8/2565 17:03:07",
-                img: "../assets/demo/img3.png",
-            },
-        ],
-    }),
-    methods: {
-        navTo(articleId) {
-            this.$router.push({
-                path: "/article/" + articleId,
-            });
-        },
-        selectOne(index) {
-            switch (index) {
-                case 1:
-                    this.b1 = true;
-                    this.b2 = false;
-                    this.b3 = false;
-                    this.b4 = false;
-                    this.b5 = false;
-                    this.knowledge = this.news;
-                    break;
-                case 2:
-                    this.b1 = false;
-                    this.b2 = true;
-                    this.b3 = false;
-                    this.b4 = false;
-                    this.b5 = false;
-                    this.knowledge = this.musicNews;
-                    break;
-                case 3:
-                    this.b1 = false;
-                    this.b2 = false;
-                    this.b3 = true;
-                    this.b4 = false;
-                    this.b5 = false;
-                    this.knowledge = this.scienceNews;
-                    break;
-                case 4:
-                    this.b1 = false;
-                    this.b2 = false;
-                    this.b3 = false;
-                    this.b4 = true;
-                    this.b5 = false;
-                    this.knowledge = this.politicsNews;
-                    break;
-                case 5:
-                    this.b1 = false;
-                    this.b2 = false;
-                    this.b3 = false;
-                    this.b4 = false;
-                    this.b5 = true;
-                    this.knowledge = this.envNews;
-                    break;
-                default:
-                    break;
-            }
-        },
-        filterContent() {
-            this.$router.push({
-                path: "/SeeMore",
-            });
-        },
+  data: () => ({
+    contents: [],
+    b1: true,
+    b2: false,
+    b3: false,
+    b4: false,
+    b5: false,
+    model: "",
+    getImg: [],
+    reviewNews: [],
+    eduvalor: [],
+    envNews: [],
+    scienceNews: [],
+    musicNews: [],
+    politicsNews: [],
+    knowledge: [],
+    news: [
+      {
+        title:
+          "ปักหมุด เที่ยวกรุงเทพมิวเซียมสยาม เล่าเรื่องเมืองไทย ในพิพิธภัณฑ์มีชีวิต",
+        author: "บก. EduValor",
+        date: "5/8/2565 17:03:07",
+        img: "../assets/demo/img1.png",
+      },
+      {
+        title:
+          "8 อควาเรียม เที่ยวกรุงเทพ และ ใกล้กรุงเทพ เที่ยวสนุก ทั้งครอบครัว วันหยุดสั้นๆ",
+        author: "บก. EduValor",
+        date: "5/8/2565 17:03:07",
+        img: "../assets/demo/img2.png",
+      },
+      {
+        title:
+          "พิพิธภัณฑ์วิทยาศาสตร์แห่ง ชาติ ปทุมธานี เที่ยวสนุก เรียน รู้มันส์ ไปกับเทคโนโลยีล้ำ ๆ",
+        author: "บก. EduValor",
+        date: "5/8/2565 17:03:07",
+        img: "../assets/demo/img3.png",
+      },
+    ],
+  }),
+  methods: {
+    navTo(articleId) {
+      this.$router.push({
+        path: "/article/" + articleId,
+      });
     },
-    mounted() {
-        // let buffer;
-        const res = axios.get(process.env.VUE_APP_BACKEND_API + "/content/");
-        // console.log(res);
-        res.then((result) => {
-            let reviewBuffer = [];
-            // buffer = result.data;
-            this.contents = result.data;
-            //console.log(result.data);
-            this.contents = this.contents.map(function (el) {
-                const o = Object.assign({}, el);
-                o.imgSrc = "";
-                return o;
-            });
-            for (let index = 0; index < this.contents.length; index++) {
-                let Url = this.contents[index].ImageUrl[this.contents[index].ImageUrl.length - 1];
-                let textCategory = this.contents[index].ContentCategory[0];
-                if (textCategory.includes("รีวิว")) {
-                    reviewBuffer.push(this.contents[index]);
-                }
-                if (textCategory.includes("สิ่งแวดล้อม")) {
-                    this.envNews.push(this.contents[index]);
-                }
-                if (textCategory.includes("วิทยาศาสตร์")) {
-                    this.scienceNews.push(this.contents[index]);
-                }
-                if (textCategory.includes("ศิลป์และดนตรี")) {
-                    this.musicNews.push(this.contents[index]);
-                }
-                if (textCategory.includes("สังคมและการเมือง")) {
-                    this.politicsNews.push(this.contents[index]);
-                }
-                if (this.contents[index].CreateBy == "EduValor") {
-                    this.eduvalor.push(this.contents[index]);
-                }
-                //console.log(Url);
-                const resImg = axios.get(process.env.VUE_APP_BACKEND_API +
-                    "/content/getImageContentByName?imageName=" +
-                    Url);
-                //console.log(resImg);
-                resImg.then((result) => {
-                    this.getImg = result.data;
-                    const srcUrl = this.getImg.split("imageUrl : ");
-                    //console.log(srcUrl[1]);
-                    this.contents[index].imgSrc = srcUrl[1];
-                    //console.log(this.contents.imgSrc);
-                });
-            }
-            this.news = this.contents.slice(0, 4);
-            this.knowledge = this.contents.slice(0, 4);
-            this.reviewNews = reviewBuffer.slice(0, 4);
-            this.envNews = this.envNews.slice(0, 4);
-            this.scienceNews = this.scienceNews.slice(0, 4);
-            this.musicNews = this.musicNews.slice(0, 4);
-            this.politicsNews = this.politicsNews.slice(0, 4);
-            // console.log(this.contents);
+    selectOne(index) {
+      switch (index) {
+        case 1:
+          this.b1 = true;
+          this.b2 = false;
+          this.b3 = false;
+          this.b4 = false;
+          this.b5 = false;
+          this.knowledge = this.news;
+          break;
+        case 2:
+          this.b1 = false;
+          this.b2 = true;
+          this.b3 = false;
+          this.b4 = false;
+          this.b5 = false;
+          this.knowledge = this.musicNews;
+          break;
+        case 3:
+          this.b1 = false;
+          this.b2 = false;
+          this.b3 = true;
+          this.b4 = false;
+          this.b5 = false;
+          this.knowledge = this.scienceNews;
+          break;
+        case 4:
+          this.b1 = false;
+          this.b2 = false;
+          this.b3 = false;
+          this.b4 = true;
+          this.b5 = false;
+          this.knowledge = this.politicsNews;
+          break;
+        case 5:
+          this.b1 = false;
+          this.b2 = false;
+          this.b3 = false;
+          this.b4 = false;
+          this.b5 = true;
+          this.knowledge = this.envNews;
+          break;
+        default:
+          break;
+      }
+    },
+    filterContent() {
+      this.$router.push({
+        path: "/SeeMore",
+      });
+    },
+  },
+  mounted() {
+    // let buffer;
+    const res = axios.get(process.env.VUE_APP_BACKEND_API + "/content/");
+    // console.log(res);
+    res.then((result) => {
+      let reviewBuffer = [];
+      // buffer = result.data;
+      this.contents = result.data;
+      //console.log(result.data);
+      this.contents = this.contents.map(function (el) {
+        const o = Object.assign({}, el);
+        o.imgSrc = "";
+        return o;
+      });
+      for (let index = 0; index < this.contents.length; index++) {
+        let Url =
+          this.contents[index].ImageUrl[
+            this.contents[index].ImageUrl.length - 1
+          ];
+        let textCategory = this.contents[index].ContentCategory[0];
+        if (textCategory.includes("รีวิว")) {
+          reviewBuffer.push(this.contents[index]);
+        }
+        if (textCategory.includes("สิ่งแวดล้อม")) {
+          this.envNews.push(this.contents[index]);
+        }
+        if (textCategory.includes("วิทยาศาสตร์")) {
+          this.scienceNews.push(this.contents[index]);
+        }
+        if (textCategory.includes("ศิลป์และดนตรี")) {
+          this.musicNews.push(this.contents[index]);
+        }
+        if (textCategory.includes("สังคมและการเมือง")) {
+          this.politicsNews.push(this.contents[index]);
+        }
+        if (this.contents[index].CreateBy == "EduValor") {
+          this.eduvalor.push(this.contents[index]);
+        }
+        //console.log(Url);
+        const resImg = axios.get(
+          process.env.VUE_APP_BACKEND_API +
+            "/content/getImageContentByName?imageName=" +
+            Url
+        );
+        //console.log(resImg);
+        resImg.then((result) => {
+          this.getImg = result.data;
+          const srcUrl = this.getImg.split("imageUrl : ");
+          //console.log(srcUrl[1]);
+          this.contents[index].imgSrc = srcUrl[1];
+          //console.log(this.contents.imgSrc);
         });
-    },
-    components: { NearbySuggest }
+      }
+      this.news = this.contents.slice(0, 4);
+      this.knowledge = this.contents.slice(0, 4);
+      this.reviewNews = reviewBuffer.slice(0, 4);
+      this.envNews = this.envNews.slice(0, 4);
+      this.scienceNews = this.scienceNews.slice(0, 4);
+      this.musicNews = this.musicNews.slice(0, 4);
+      this.politicsNews = this.politicsNews.slice(0, 4);
+      // console.log(this.contents);
+    });
+  },
+  components: { NearbySuggest },
 };
 </script>
 
-<style lang="scss">
-@media screen and (max-width: 2000px) {
-  .test {
-    width: 70%;
-  }
-}
-
-@media screen and (max-width: 1023px) {
-  .test {
-    /* width: 40%; */
-    width: 60%;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .test {
-    width: 90%;
-  }
-}
-
-.content-thumbnail {
-  padding: 1.5%;
-  margin: 1.5%;
-}
-
-// @media screen and (max-width: 767px) {
-//   .thumbnails {
-//   width: 30%;
-// }
-// }
-
-// @media screen and (max-width: 1023px) {
-//   .thumbnails {
-//   width: 40%;
-// }
-// }
-
-// @media screen and (max-width: 2000px) {
-//   .thumbnails {
-//   width: 70%;
-// }
-// }
-.test-underline {
-  text-decoration: none;
-}
+<style lang="scss" scoped>
 .pic-cover {
   font-family: "Kanit";
   font-style: normal;
   font-weight: 700;
-  font-size: 36px;
+  font-size: 24px;
   line-height: 54px;
   color: #333333;
 }
@@ -467,7 +418,7 @@ export default {
   font-family: "Kanit";
   font-style: normal;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 36px;
   color: #4c4c4c;
   overflow: hidden;
@@ -476,11 +427,14 @@ export default {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
+.p-title:hover, .p-title-slide:hover{
+color: #a89b84;
+}
 .p-title-slide {
   font-family: "Kanit";
   font-style: normal;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 36px;
   color: #4c4c4c;
   overflow: hidden;
@@ -493,7 +447,7 @@ export default {
   font-family: "Bai Jamjuree";
   font-style: normal;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 25px;
   color: #a89b84;
   overflow: hidden;
@@ -504,7 +458,7 @@ export default {
   font-family: "Bai Jamjuree";
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 20px;
   color: #ad9f86;
 }
@@ -512,10 +466,14 @@ export default {
   font-family: "Kanit";
   font-style: normal;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 30px;
   text-align: right;
   color: #a89b84;
+}
+
+.p-addition:hover {
+  color: #333333;
 }
 .p-subtitle {
   font-family: "Bai Jamjuree";
@@ -528,7 +486,7 @@ export default {
 .button-active {
   background: #ad9f86;
   color: #ffffff !important;
-  border-color: #ad9f86;
+  border-color: #ad9f86 !important;
 }
 .v-btn--outlined .non-active {
   border: thin solid #ede6da;
@@ -546,6 +504,67 @@ export default {
   cursor: pointer;
 }
 .v-btn > .v-btn__content .v-icon {
-    color: #A89B84;
+  color: #a89b84;
+}
+
+@media screen and (min-width: 320px) {
+  .test {
+    width: 90%;
+  }
+  .gps-homepage {
+    width: 100%;
+  }
+  .img-icon {
+    width: 36px;
+  }
+  ::v-deep .v-slide-group__next,
+  ::v-deep .v-slide-group__prev {
+    min-width: 32px;
+  }
+  .corousel-img {
+    width: 400px;
+    height: 200px;
+    object-fit: cover;
+  }
+  .pic-cover {
+    margin-top: 24px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .test {
+    width: 75%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .test {
+    width: 65%;
+  }
+  .pic-cover {
+    font-size: 28px;
+  }
+  .p-subtitle {
+    font-size: 20px;
+  }
+  .v-btn {
+    border-color: #ede6da;
+  }
+  .row {
+    padding: 10px 8px;
+  }
+  .p-addition {
+    font-size: 24px;
+  }
+  .p-date {
+    font-size: 16px;
+  }
+  .p-author {
+    font-size: 20px;
+  }
+  .corousel-img {
+    width: 440px;
+    height: 240px;
+  }
 }
 </style>>
