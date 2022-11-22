@@ -11,8 +11,8 @@
             />กลับหน้าแรก
           </p>
         </v-col>
-        <!-- v-if="creatorOfContent" -->
-        <v-col cols="12" sm="12" md="4" lg="4" class="col-crud-btn">
+        <!-- -->
+        <v-col  v-if="creatorOfContent"  cols="12" sm="12" md="4" lg="4" class="col-crud-btn">
           <v-row class="row-crud-btn">
             <div class="d-flex justify-center">
               <v-btn
@@ -639,6 +639,9 @@ export default {
 @media screen and (min-width: 1024px) {
   .wid-80 {
     width: 60%;
+  }
+  .all-content{
+    margin-bottom: 60px;
   }
   .row-top-article {
     display: flex;

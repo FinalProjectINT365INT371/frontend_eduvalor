@@ -634,8 +634,8 @@ $button-font-size: 0.8rem;
     display: flex;
   }
   #approve-stamp {
+    text-align: center;
     width: 50%;
-    text-align: left;
   }
   .editor-text-comment {
     padding-left: 5%;
@@ -681,6 +681,9 @@ $button-font-size: 0.8rem;
   }
   .publish-btn{
     font-size: 16px;
+  }
+  #approved{
+    width: 124px;
   }
 }
 </style>
