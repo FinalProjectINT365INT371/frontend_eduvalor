@@ -129,7 +129,7 @@ export default {
       localStorage.removeItem("login");
       this.$store.commit("setUser", null);
       this.$store.commit("setToken", null);
-      console.log(this.$store.state);
+      //console.log(this.$store.state);
       this.$cookies.remove("JWT_TOKEN");
       this.$cookies.remove("USER_DATA");
       window.alert("Logout successful");

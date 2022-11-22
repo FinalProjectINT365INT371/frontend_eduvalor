@@ -172,7 +172,7 @@ export default {
       let Url = this.userData.ImageUrl;
       const srcUrl = Url.split("imageUrl : ");
       this.url = srcUrl[1];
-      console.log(this.url);
+      //console.log(this.url);
     },
     async submitImage(imageConvert) {
       let token = this.$cookies.get("JWT_TOKEN");
@@ -196,7 +196,7 @@ export default {
         return new Blob([ia], { type: mimeString });
       }
       let convert_image = DataURIToBlob(imageConvert);
-      //console.log(convert_image);
+      ////console.log(convert_image);
       const formData = new FormData();
       //formData.append("Displayname", this.displayName);
       formData.append("ImageFile", convert_image);

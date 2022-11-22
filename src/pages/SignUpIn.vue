@@ -295,8 +295,8 @@ export default {
       reader.readAsDataURL(this.image);
       reader.onload = () => {
         this.imageUri = reader.result;
-        console.log(this.image);
-        console.log(this.imageUri);
+        //console.log(this.image);
+        //console.log(this.imageUri);
       };
     },
 
@@ -320,7 +320,7 @@ export default {
         return new Blob([ia], { type: mimeString });
       }
       let convert_image = DataURIToBlob(this.imageUri);
-      console.log(convert_image);
+      //console.log(convert_image);
       const formData = new FormData();
       formData.append("Username", this.username);
       formData.append("Password", this.password);
@@ -338,10 +338,10 @@ export default {
       const encryptpwd = require("encrypt-with-password");
       //const password = "EDUVALOR";
       const password = process.env.VUE_APP_DCRYPT_SECRET;
-      console.log(process.env.VUE_APP_DCRYPT_SECRET);
-      console.log(password);
+      //console.log(process.env.VUE_APP_DCRYPT_SECRET);
+      //console.log(password);
       const encrypted = encryptpwd.encrypt(this.passwordLogin, password);
-      console.log(encrypted);
+      //console.log(encrypted);
       let user = JSON.stringify({
         username: this.usernameLogin,
         password: encrypted,
@@ -352,7 +352,7 @@ export default {
           "Content-Type": "application/json",
         },
       };
-      console.log(user);
+      //console.log(user);
       const res = await axios
         .post(
           process.env.VUE_APP_BACKEND_API + "/authentication/login",
@@ -366,13 +366,13 @@ export default {
             // console.log(error.response.status);
             // console.log(error.response.headers);
             let res_Data = error.response.data;
-            console.log(res_Data);
+            //console.log(res_Data);
             window.alert(res_Data.message);
           }
         });
 
       if (res) {
-        console.log(res);
+        //console.log(res);
         let auth_check = await login_auth(res);
 
         //Vuex set data user

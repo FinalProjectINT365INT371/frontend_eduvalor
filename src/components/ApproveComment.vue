@@ -248,7 +248,7 @@ export default {
         this.getComment = res.data.Comment;
         this.approveData = res.data.ApproveData;
       }
-      console.log(this.approveData);
+      //console.log(this.approveData);
     },
     setUserData() {
       this.userData = this.$cookies.get("USER_DATA");
@@ -287,7 +287,7 @@ export default {
           Authorization: `Bearer ${token}`,
         },
       };
-      console.log(this.approvementEnum);
+      //console.log(this.approvementEnum);
       if (!this.checkbox) {
         if (this.commentID == undefined) {
           const res = await axios.post(
@@ -295,7 +295,7 @@ export default {
             objComment,
             config
           );
-          console.log(objComment);
+          //console.log(objComment);
           if (res) {
             this.getComment.push(objComment);
           }
@@ -320,7 +320,7 @@ export default {
       } else {
         if (this.approveID == undefined) {
           this.approvementEnum = "PASS";
-          console.log(this.approvementEnum);
+          //console.log(this.approvementEnum);
           objComment.ApproveStatus = this.approvementEnum;
 
           const res = await axios.post(
@@ -367,10 +367,10 @@ export default {
         this.approveID = originalValue._id;
         this.commentText = originalValue.Comment;
         this.approvementEnum = "PASS";
-        console.log(this.approveID);
+        //console.log(this.approveID);
       }
 
-      console.log(originalValue);
+      //console.log(originalValue);
     },
 
     deleteCm: async function (d) {
@@ -381,7 +381,7 @@ export default {
       this.contentID = this.params;
       this.commentID = deleteItem._id;
       this.approveID = deleteItem._id;
-      console.log(this.commentID);
+      //console.log(this.commentID);
       this.approvementEnum = deleteItem.ApproveStatus;
 
       if (this.approvementEnum !== "PASS") {

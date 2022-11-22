@@ -396,10 +396,10 @@ export default {
             url: places[i].url,
             geometry: places[i].geometry.location,
           };
-          console.log(morePlaces_obj);
+          //console.log(morePlaces_obj);
           let morePlaces_string = morePlaces_obj;
           this.moreCoordinates.push(JSON.stringify(morePlaces_string));
-          console.log(this.moreCoordinates);
+          //console.log(this.moreCoordinates);
         }
       }
     },
@@ -490,7 +490,7 @@ export default {
         formData.append("TextData[]", this.delta);
         formData.append("ContentCategory[]", bufferArray);
 
-        console.log(bufferArray);
+        //console.log(bufferArray);
         formData.append("CreateBy", this.author_name);
         formData.append("Coordinate[0]", this.coordinates);
 

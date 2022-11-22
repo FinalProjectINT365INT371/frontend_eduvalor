@@ -153,7 +153,7 @@ export default {
           this.markers.push({ position: JSON.parse(this.markersText[index]) });
         }
 
-        console.log(this.markers);
+        //console.log(this.markers);
       }
     },
   },

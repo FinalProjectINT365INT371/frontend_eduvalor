@@ -429,7 +429,7 @@ export default {
       //this.login = true;
     }
 
-    console.log(this.userData);
+    //console.log(this.userData);
   },
 };
 </script>

@@ -28,7 +28,7 @@ export async function login_auth(params) {
         res.user = user.data
         return res
     } catch (error) {
-        console.log(`cannot login : ${error}`);
+        //console.log(`cannot login : ${error}`);
     }
 
 }

@@ -152,7 +152,7 @@ export default {
           raw.push(e);
         }
       });
-      console.log(raw);
+      //console.log(raw);
       this.news = raw;
     },
     changePage(event){
@@ -265,7 +265,7 @@ export default {
   mounted() {
     // let buffer;
     const res = axios.get(process.env.VUE_APP_BACKEND_API + "/content/");
-    console.log(res);
+    //console.log(res);
     res.then((result) => {
       let reviewBuffer = [];
       // buffer = result.data;

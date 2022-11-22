@@ -88,7 +88,7 @@ export default {
         this.currentPlace = null;
 
         this.mainGPSRules = false;
-        console.log(this.mainGPSRules);
+        //console.log(this.mainGPSRules);
       }
     },
     geolocate: function () {
