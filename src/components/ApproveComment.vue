@@ -35,7 +35,7 @@
               </p>
             </div>
 
-            <div class="crud-editor">
+            <div v-if="checkCreatorOfApprove(approve)" class="crud-editor">
               <button
                 elevation="0"
                 class="btn-container"
@@ -105,7 +105,10 @@
               <div class="d-flex justify-space-between">
                 <p id="cmText">{{ comment.Comment }}</p>
               </div>
-              <div class="d-flex justify-end">
+              <div
+                v-if="checkCreatorOfComment(comment)"
+                class="d-flex justify-end"
+              >
                 <div class="d-flex justify-center">
                   <button
                     elevation="0"
@@ -228,7 +231,6 @@ export default {
     approveID: undefined,
     login: false,
     userData: null,
-    creatorOfComment: false,
     isAdmin: false,
   }),
 
@@ -255,6 +257,20 @@ export default {
       this.$router.push({
         path: "/Login",
       });
+    },
+    checkCreatorOfComment(comment) {
+      if (this.$cookies.get("USER_DATA") != null) {
+        if (this.userData.id == comment.UserId) {
+          return true;
+        } else return false;
+      } else return false;
+    },
+    checkCreatorOfApprove(approve) {
+      if (this.$cookies.get("USER_DATA") != null) {
+        if (this.userData.id == approve.UserId) {
+          return true;
+        } else return false;
+      } else return false;
     },
     async submit() {
       const objComment = {
