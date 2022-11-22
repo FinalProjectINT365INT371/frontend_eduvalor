@@ -132,7 +132,7 @@ export default {
       //console.log(this.$store.state);
       this.$cookies.remove("JWT_TOKEN");
       this.$cookies.remove("USER_DATA");
-      window.alert("Logout successful");
+      // window.alert("Logout successful");
       this.backHome();
       location.reload();
     },

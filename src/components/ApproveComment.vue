@@ -154,7 +154,10 @@
 
         <aside v-if="login" id="comment-card-box" class="card">
           <div class="d-flex align-center top-comment-box">
-            <img src="../assets/icon/user.png" id="avatar-comment-box" />
+
+            <v-avatar> <img :src="url" id="avatar-comment-box" /> </v-avatar>
+            <img v-if="!url" src="../assets/icon/user.png" id="avatar-comment-box" />
+            
             <h4 class="pl-5">{{ userData.Displayname }}</h4>
           </div>
 
@@ -252,6 +255,12 @@ export default {
     },
     setUserData() {
       this.userData = this.$cookies.get("USER_DATA");
+    },
+    setUserImage() {
+      let Url = this.userData.ImageUrl;
+      const srcUrl = Url.split("imageUrl : ");
+      this.url = srcUrl[1];
+      //console.log(this.url);
     },
     goToLogin() {
       this.$router.push({
@@ -432,6 +441,7 @@ export default {
   },
   mounted() {
     this.setUserData();
+    this.  setUserImage();
     if (this.$cookies.get("USER_DATA") != null) {
       this.login = true;
       this.userID = this.userData.id;
