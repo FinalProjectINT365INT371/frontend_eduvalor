@@ -609,13 +609,13 @@ $button-font-size: 0.8rem;
     justify-content: center;
   }
 
-  #apText{
+  #apText {
     font-size: 16px;
   }
 }
 
 @media screen and (min-width: 768px) {
-  .comment-date{
+  .comment-date {
     font-size: 14px;
   }
   .comment-bottom-text {
@@ -629,11 +629,11 @@ $button-font-size: 0.8rem;
   ::v-deep .v-input .v-label {
     font-size: 16px;
   }
-  .cover-text-stamp{
+  .cover-text-stamp {
     margin-top: 5%;
     display: flex;
   }
-  #approve-stamp{
+  #approve-stamp {
     width: 50%;
     text-align: left;
   }
@@ -641,17 +641,46 @@ $button-font-size: 0.8rem;
     padding-left: 5%;
     width: 75%;
   }
+  .editor-text-bottom {
+    display: flex;
+    justify-content: space-between;
+  }
+  .approved-date {
+    font-size: 14px;
+  }
 }
 
 @media screen and (min-width: 1024px) {
   .wid-80 {
     width: 50%;
   }
-  .social-container{
+  .social-container {
     width: 25%;
   }
-  .cover-text-stamp{
+  .cover-text-stamp {
     display: flex;
+  }
+  .editor-text-bottom {
+    font-size: 18px;
+  }
+  .approved-date {
+    font-size: 14px;
+  }
+  .comment-bottom-tex,
+  #cmText {
+    font-size: 16px;
+  }
+  .comment-bottom {
+    align-content: center;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+  }
+  .card{
+    padding: 24px;
+  }
+  .publish-btn{
+    font-size: 16px;
   }
 }
 </style>

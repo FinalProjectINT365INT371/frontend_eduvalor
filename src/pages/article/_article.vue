@@ -1,8 +1,8 @@
 <template>
   <div class="all-content">
     <div class="wid-80 ma-auto">
-      <v-row class="my-auto">
-        <v-col cols="8">
+      <v-row class="my-auto row-top-article">
+        <v-col>
           <p class="backHome d-flex align-center" @click="backHome">
             <img
               class="pr-3"
@@ -11,17 +11,9 @@
             />กลับหน้าแรก
           </p>
         </v-col>
-        <v-col
-          v-if="creatorOfContent"
-          cols="12"
-          sm="12"
-          md="4"
-          lg="4"
-          class="col-crud-btn"
-        >
-          <!-- <v-col cols="12" sm="12" md="4" lg="4" class="col-crud-btn"> -->
+        <!-- v-if="creatorOfContent" -->
+        <v-col cols="12" sm="12" md="4" lg="4" class="col-crud-btn">
           <v-row class="row-crud-btn">
-            <!-- <v-col> -->
             <div class="d-flex justify-center">
               <v-btn
                 elevation="0"
@@ -34,8 +26,6 @@
                 />แก้ไขเนื้อหา</v-btn
               >
             </div>
-            <!-- </v-col> -->
-            <!-- <v-col> -->
             <div class="d-flex justify-center">
               <v-btn elevation="0" class="text-brown" @click="deleteArticle"
                 ><img
@@ -44,12 +34,10 @@
                 />ลบบทความ</v-btn
               >
             </div>
-            <!-- </v-col> -->
           </v-row>
-          <!-- <v-divider inset></v-divider> -->
         </v-col>
       </v-row>
-      <v-row class="d-flex align-center">
+      <v-row class="d-flex align-center row-date">
         <v-col cols="9">
           <p class="user-name">
             <img
@@ -153,14 +141,15 @@
       <v-divider style="padding-bottom: 2%"></v-divider>
       <div>
         <!-- <div class="d-flex row align-center justify-space-between bottom-content"> -->
+          <p class="pic-cover-arti d-flex align-center">
+            <img
+              class="pr-3 img-icon"
+              src="../../assets/icon/tag.png"
+            />แท็กที่เกี่ยวข้อง
+          </p>
         <div class="d-flex bottom-content">
           <div id="tag-relate" class="pb-6">
-            <p class="pic-cover-arti d-flex align-center">
-              <img
-                class="pr-3 img-icon"
-                src="../../assets/icon/tag.png"
-              />แท็กที่เกี่ยวข้อง
-            </p>
+            
             <div>
               <v-btn
                 v-if="b1"
@@ -207,6 +196,7 @@
                 สิ่งแวดล้อม</v-btn
               >
             </div>
+            
           </div>
 
           <div class="d-flex justify-space-around social-container">
@@ -498,7 +488,7 @@ export default {
 .text-brown {
   color: #ad9f86 !important;
   border: 1px solid #ad9f86 !important;
-  background-color: white;
+  background-color: white !important;
   border-radius: 10px;
   font-family: "Kanit";
   font-style: normal;
@@ -552,7 +542,7 @@ export default {
     color: #ad9f86;
     font-size: 18px;
     cursor: pointer;
-    padding-top:5%;
+    padding-top: 5%;
   }
   .wid-80 {
     width: 90%;
@@ -623,5 +613,48 @@ export default {
   .social-container {
     width: 35%;
   }
+  .col-12,
+  .col-sm-12,
+  .col-md-4 {
+    flex: 0%;
+    align-self: center;
+  }
+  .row-crud-btn {
+    flex-wrap: nowrap;
+  }
+  .row-date{
+    flex-wrap: nowrap;
+  }
+  .col-9{
+    flex: 0%;
+    min-width: fit-content;
+    width: 50%;
+  }
+  .col-date{
+    margin-bottom: 0%;
+    max-width: fit-content;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .wid-80 {
+    width: 60%;
+  }
+  .row-top-article {
+    display: flex;
+  }
+  .col-crud-btn {
+    display: flex;
+  }
+  .row-crud-btn {
+    flex-direction: row;
+  }
+  .social-container{
+    width: 25%;
+  }
+  .bottom-content{
+    flex-direction: row;
+    justify-content: space-between;
+  }  
 }
 </style>
