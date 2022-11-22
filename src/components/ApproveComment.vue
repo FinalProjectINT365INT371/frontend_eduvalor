@@ -155,7 +155,7 @@
         <aside v-if="login" id="comment-card-box" class="card">
           <div class="d-flex align-center top-comment-box">
             <img src="../assets/icon/user.png" id="avatar-comment-box" />
-            <h4 class="pl-5">{{ userID }}</h4>
+            <h4 class="pl-5">{{ userData.Displayname }}</h4>
           </div>
 
           <div class="">
