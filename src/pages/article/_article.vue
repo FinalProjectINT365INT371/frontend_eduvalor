@@ -12,7 +12,6 @@
       </v-col>
       <v-col v-if="creatorOfContent" cols="12" sm="12" md="4" lg="4" class="col-crud-btn">
       <!-- <v-col cols="12" sm="12" md="4" lg="4" class="col-crud-btn"> -->
-
         <v-row>
           <v-col >
             <div class="d-flex justify-center">
@@ -127,14 +126,13 @@
               <v-card-text> {{ optGPS.formatted_address }}</v-card-text>
 
               <v-btn
-                style="font-size: 14px; padding: 1.5%"
                 :href="optGPS.url"
                 elevation="1"
                 x-large
                 color="#AD9F86"
-                class="text-white"
+                class="text-white more-info-btn"
                 ><img
-                  class="py-3 pr-3 img-icon"
+                  class=" img-icon-btn"
                   src="../../assets/icon/eva_pin-fill.png"
                 />
                 ข้อมูลเพิ่มเติม
@@ -438,7 +436,6 @@ export default {
   border-color: #ad9f86;
 }
 .wid-80 {
-  width: 80%;
   font-family: "Bai Jamjuree";
 }
 .gmap-pin {
@@ -511,7 +508,7 @@ export default {
   margin-bottom: 36px;
 }
 .body-content >>> img {
-  width: 100%;
+  max-width: 100%;
 }
 
 #coverPic {
@@ -532,6 +529,9 @@ export default {
 @media screen and (min-width: 320px) {
   .img-icon {
     width: 36px;
+  }
+  .img-icon-btn{
+    width: 28px;
   }
   #back-arrow {
     width: 36px;
@@ -576,6 +576,16 @@ export default {
   }
   .social-icons {
     height: 40px;
+  }
+  .v-card__title{
+    font-size: 1em;
+    font-weight: 600;
+  }
+  .more-info-btn{
+    height: fit-content !important;
+    font-size: 14px; 
+    padding: 4px !important;
+    margin:0px 0px 16px 16px;
   }
 }
 </style>
