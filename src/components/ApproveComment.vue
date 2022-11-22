@@ -12,7 +12,7 @@
               EduValor ว่าคอนเทนต์นี้ดี!
             </h3>
 
-            <div id="cover-text-stamp">
+            <div class="cover-text-stamp">
               <!-- <div id="approve-stamp" class="d-flex justify-end flex-column" style="background-color:blue"> -->
               <div id="approve-stamp">
                 <img
@@ -28,7 +28,7 @@
               </div>
             </div>
             <div style="font-family: 'Kanit'" class="editor-text-bottom">
-              <h4 style="font-weight: 500">ความคิดเห็นจาก บก. EduValor</h4>
+              <h4 style="font-weight: 500">ความคิดเห็นจาก บ.ก. EduValor</h4>
               <p class="approved-date">
                 Approved ล่าสุดเมื่อ <br />
                 {{ approve.UpdateDate }}
@@ -478,10 +478,6 @@ $button-font-size: 0.8rem;
   padding: 12px 8px;
   width: 100%;
 
-  .img-fulid {
-    padding: 1rem;
-  }
-
   .commentFrom {
     font-family: "Kanit";
     font-weight: bold;
@@ -548,8 +544,8 @@ $button-font-size: 0.8rem;
   // width: 75%;
   overflow-wrap: break-word;
   width: 100%;
+  font-size: 15px;
 }
-
 #divided-comment {
   margin: 12px 0px;
 }
@@ -568,7 +564,6 @@ $button-font-size: 0.8rem;
   }
 
   #approved {
-    // width: 124px;
     width: 108px;
     padding: 12px 0px;
   }
@@ -580,11 +575,8 @@ $button-font-size: 0.8rem;
   .approved-date {
     font-size: 13px;
   }
-  #cover-text-stamp {
+  .cover-text-stamp {
     width: 100%;
-  }
-  #apText {
-    width: auto;
   }
   .editor-text-bottom {
     text-align: end;
@@ -633,6 +625,83 @@ $button-font-size: 0.8rem;
   .comment-bottom {
     flex-direction: column;
     justify-content: center;
+  }
+
+  #apText {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .comment-date {
+    font-size: 14px;
+  }
+  .comment-bottom-text {
+    h4 {
+      font-size: 15px;
+    }
+  }
+  #approved {
+    width: 100px;
+  }
+  ::v-deep .v-input .v-label {
+    font-size: 16px;
+  }
+  .cover-text-stamp {
+    margin-top: 5%;
+    display: flex;
+  }
+  #approve-stamp {
+    text-align: center;
+    width: 50%;
+  }
+  .editor-text-comment {
+    padding-left: 5%;
+    width: 75%;
+  }
+  .editor-text-bottom {
+    display: flex;
+    justify-content: space-between;
+  }
+  .approved-date {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .wid-80 {
+    width: 50%;
+  }
+  .social-container {
+    width: 25%;
+  }
+  .cover-text-stamp {
+    display: flex;
+  }
+  .editor-text-bottom {
+    font-size: 18px;
+  }
+  .approved-date {
+    font-size: 14px;
+  }
+  .comment-bottom-tex,
+  #cmText {
+    font-size: 16px;
+  }
+  .comment-bottom {
+    align-content: center;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+  }
+  .card{
+    padding: 24px;
+  }
+  .publish-btn{
+    font-size: 16px;
+  }
+  #approved{
+    width: 124px;
   }
 }
 </style>
