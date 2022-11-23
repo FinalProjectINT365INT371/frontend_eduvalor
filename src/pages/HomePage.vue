@@ -12,7 +12,7 @@
             class="mx-2 corousel-img"
             @click="toggle, navTo(topLoop._id)"
           >
-            <v-img :src="topLoop.imgSrc" alt="" width="100%" />
+            <v-img :src="topLoop.imgSrc" alt="" class="img-corousel" width="100%" />
             <v-row class="fill-height" align="center" justify="center"> </v-row>
           </v-card>
         </v-slide-item>
@@ -562,9 +562,10 @@ color: #a89b84;
   .p-author {
     font-size: 20px;
   }
-  .corousel-img {
+  .corousel-img, .img-corousel {
     width: 440px;
-    height: 240px;
+    min-height: 240px;
+    max-height: 240px;
   }
 }
 </style>>

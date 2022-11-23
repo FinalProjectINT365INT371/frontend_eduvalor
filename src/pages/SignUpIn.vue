@@ -365,9 +365,9 @@ export default {
             // console.log(error.response.data);
             // console.log(error.response.status);
             // console.log(error.response.headers);
-            let res_Data = error.response.data;
+            //let res_Data = error.response.data;
             //console.log(res_Data);
-            window.alert(res_Data.message);
+            //window.alert(res_Data.message);
           }
         });
 
@@ -383,7 +383,7 @@ export default {
         //Set cookies
         this.$cookies.set("JWT_TOKEN", auth_check.token, auth_check.expire);
         this.$cookies.set("USER_DATA", auth_check.user, auth_check.expire);
-        window.alert("Login successful");
+        //window.alert("Login successful");
         this.$router.push({
           path: "/",
         });
